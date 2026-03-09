@@ -12,7 +12,7 @@ export default defineConfig({
         cssVariable: '--font-base',
         formats: ['woff2'],
         weights: [400, 500, 600, 700],
-        subsets: ['cyrillic'],
+        subsets: ['cyrillic', 'latin'],
       },
       {
         provider: fontProviders.local(),
@@ -34,5 +34,4 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-
 })
