@@ -4,8 +4,6 @@ import { Mail, Phone } from '@lucide/astro'
 import logo from '@/assets/logo.svg'
 import MaxIcon from '@/icons/max.svg'
 import TelegramIcon from '@/icons/telegram.svg'
-
-const yandexMapsApiKey = import.meta.env.PUBLIC_YANDEX_MAPS_API_KEY ?? 'c42d92ce-f66b-4a04-83fe-cc93bad19ff6'
 ---
 
 <footer id="contacts" class="bg-secondary py-12 text-white sm:py-16">
@@ -93,7 +91,7 @@ const yandexMapsApiKey = import.meta.env.PUBLIC_YANDEX_MAPS_API_KEY ?? 'c42d92ce
   </div>
 </footer>
 
-<script is:inline define:vars={{ yandexMapsApiKey }}>
+<script is:inline>
   const MAP_CENTER = [20.500366, 54.70739]
   const MAP_ZOOM = 12
 
@@ -108,7 +106,7 @@ const yandexMapsApiKey = import.meta.env.PUBLIC_YANDEX_MAPS_API_KEY ?? 'c42d92ce
     return
   }
 
-  const YMAPS_SRC = `https://api-maps.yandex.ru/v3/?apikey=${yandexMapsApiKey}&lang=ru_RU`
+  const YMAPS_SRC = `https://api-maps.yandex.ru/v3/?apikey=e324964a-42c8-4b01-881c-c69564023dd3&lang=ru_RU`
 
   const loadYandexMaps = () => {
     if (window.ymaps3) {
