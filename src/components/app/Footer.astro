@@ -5,218 +5,218 @@ import logo from '@/assets/logo.svg'
 import MaxIcon from '@/icons/max.svg'
 import TelegramIcon from '@/icons/telegram.svg'
 
-const yandexMapsApiKey = import.meta.env.PUBLIC_YANDEX_MAPS_API_KEY ?? 'e324964a-42c8-4b01-881c-c69564023dd3'
+const yandexMapsApiKey = import.meta.env.PUBLIC_YANDEX_MAPS_API_KEY ?? 'c42d92ce-f66b-4a04-83fe-cc93bad19ff6'
 ---
 
 <footer id="contacts" class="bg-secondary py-12 text-white sm:py-16">
-    <div class="container">
-        <div class="grid items-start gap-10 lg:gap-20 lg:grid-cols-2">
-            <div class="space-y-6">
-                <a href="/" class="inline-flex">
-                    <Image src={logo} alt="Завет" class="max-w-[240px] w-full" />
+  <div class="container">
+    <div class="grid items-start gap-10 lg:gap-20 lg:grid-cols-2">
+      <div class="space-y-6">
+        <a href="/" class="inline-flex">
+          <Image src={logo} alt="Завет" class="max-w-[240px] w-full" />
+        </a>
+
+        <p class="max-w-2xl text-sm text-white/80">В нашей мастерской работают люди с многолетним опытом обработки камня, которые смогут изготовить ваш индивидуальный заказ памятника для благоустройства захоронения.</p>
+
+        <div class="grid gap-6 rounded-2xl bg-white/5 p-6 sm:grid-cols-2">
+          <div>
+            <h3 class="mb-4 text-xl font-heading">Контакты</h3>
+            <ul class="space-y-3 text-white/80">
+              <li>
+                <a href="tel:+79106367313" class="inline-flex items-center gap-2 transition-colors hover:text-primary">
+                  <Phone class="size-4" />
+                  +7 (910) 636 73 13
                 </a>
+              </li>
+              <li>
+                <a href="mailto:andrey.zav@mail.ru" class="inline-flex items-center gap-2 transition-colors hover:text-primary">
+                  <Mail class="size-4" />
+                  andrey.zav@mail.ru
+                </a>
+              </li>
+            </ul>
+          </div>
 
-                <p class="max-w-2xl text-sm text-white/80">В нашей мастерской работают люди с многолетним опытом обработки камня, которые смогут изготовить ваш индивидуальный заказ памятника для благоустройства захоронения.</p>
-
-                <div class="grid gap-6 rounded-2xl bg-white/5 p-6 sm:grid-cols-2">
-                    <div>
-                        <h3 class="mb-4 text-xl font-heading">Контакты</h3>
-                        <ul class="space-y-3 text-white/80">
-                            <li>
-                                <a href="tel:+79106367313" class="inline-flex items-center gap-2 transition-colors hover:text-primary">
-                                    <Phone class="size-4" />
-                                    +7 (910) 636 73 13
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:andrey.zav@mail.ru" class="inline-flex items-center gap-2 transition-colors hover:text-primary">
-                                    <Mail class="size-4" />
-                                    andrey.zav@mail.ru
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="mb-4 text-xl font-heading">Мы в социальных сетях</h3>
-                        <div class="flex items-center gap-3">
-                            <a
-                                href="https://t.me"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Telegram"
-                                class="inline-flex size-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:-translate-y-0.5 hover:bg-primary hover:text-secondary"
-                            >
-                                <TelegramIcon />
-                            </a>
-                            <a
-                                href="https://max.ru"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="MAX"
-                                class="inline-flex size-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:-translate-y-0.5 hover:bg-primary hover:text-secondary"
-                            >
-                                <MaxIcon />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="max-w-2xl space-y-4 text-sm leading-relaxed text-white/70">
-                    <p>© 2020-2023 Салон памятников "Завет"</p>
-                    <p>
-                        Вся информация на сайте носит справочно-ознакомительный характер и не является публичной офертой (ст. 437 ГК РФ). Любое несоответствие информации о продукте на сайте с фактическими параметрами - лишь досадная неточность. Мы
-                        как производитель вправе изменять некоторые параметры продукции (не ухудшающие характеристики) без предварительного уведомления.
-                    </p>
-                    <p>Любое изделие изготавливается индивидуально под каждого заказчика, расчет стоимости происходит исходя из необходимых параметров, окончательная цена изделия и работ согласовывается при подписании договора.</p>
-                </div>
+          <div>
+            <h3 class="mb-4 text-xl font-heading">Мы в социальных сетях</h3>
+            <div class="flex items-center gap-3">
+              <a
+                href="https://t.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Telegram"
+                class="inline-flex size-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:-translate-y-0.5 hover:bg-primary hover:text-secondary"
+              >
+                <TelegramIcon />
+              </a>
+              <a
+                href="https://max.ru"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MAX"
+                class="inline-flex size-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:-translate-y-0.5 hover:bg-primary hover:text-secondary"
+              >
+                <MaxIcon />
+              </a>
             </div>
-
-            <div class="overflow-hidden rounded-2xl relative">
-                <div id="footer-map" class="h-80 lg:h-130 mb-5 rounded-2xl overflow-hidden w-full"></div>
-                <div class="grid gap-6 bg-white/5 px-6 py-6 lg:grid-cols-2 lg:absolute bottom-5 rounded-2xl left-5 right-5 backdrop-blur-xl">
-                    <div class="border-l-2 border-primary pl-4 z-10">
-                        <h3 class="mb-3 text-xl font-heading">Время работы</h3>
-                        <p class="text-white/80">Пн.-Пт.: 10:00-20:00</p>
-                        <p class="text-white/80">Суббота: 10:00-17:00</p>
-                        <p class="text-white/80">Воскресение: выходной</p>
-                    </div>
-
-                    <div class="border-l-2 border-primary pl-4 z-10">
-                        <h3 class="mb-3 text-xl font-heading">Наш адрес</h3>
-                        <p class="text-white/80">г. Калининград,</p>
-                        <p class="text-white/80">ул. Барнаульская, 5, 1 этаж</p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <div class="max-w-2xl space-y-4 text-sm leading-relaxed text-white/70">
+          <p>© 2020-2023 Салон памятников "Завет"</p>
+          <p>
+            Вся информация на сайте носит справочно-ознакомительный характер и не является публичной офертой (ст. 437 ГК РФ). Любое несоответствие информации о продукте на сайте с фактическими параметрами - лишь досадная неточность. Мы как
+            производитель вправе изменять некоторые параметры продукции (не ухудшающие характеристики) без предварительного уведомления.
+          </p>
+          <p>Любое изделие изготавливается индивидуально под каждого заказчика, расчет стоимости происходит исходя из необходимых параметров, окончательная цена изделия и работ согласовывается при подписании договора.</p>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-2xl relative">
+        <div id="footer-map" class="h-80 lg:h-130 mb-5 rounded-2xl overflow-hidden w-full"></div>
+        <div class="grid gap-6 bg-white/5 px-6 py-6 lg:grid-cols-2 lg:absolute bottom-5 rounded-2xl left-5 right-5 backdrop-blur-xl">
+          <div class="border-l-2 border-primary pl-4 z-10">
+            <h3 class="mb-3 text-xl font-heading">Время работы</h3>
+            <p class="text-white/80">Пн.-Пт.: 10:00-20:00</p>
+            <p class="text-white/80">Суббота: 10:00-17:00</p>
+            <p class="text-white/80">Воскресение: выходной</p>
+          </div>
+
+          <div class="border-l-2 border-primary pl-4 z-10">
+            <h3 class="mb-3 text-xl font-heading">Наш адрес</h3>
+            <p class="text-white/80">г. Калининград,</p>
+            <p class="text-white/80">ул. Барнаульская, 5, 1 этаж</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </footer>
 
 <script is:inline define:vars={{ yandexMapsApiKey }}>
-    const MAP_CENTER = [20.500366, 54.70739]
-    const MAP_ZOOM = 12
+  const MAP_CENTER = [20.500366, 54.70739]
+  const MAP_ZOOM = 12
 
-    const mapContainer = document.getElementById('footer-map')
-    if (!mapContainer) {
-        return
+  const mapContainer = document.getElementById('footer-map')
+  if (!mapContainer) {
+    return
+  }
+
+  if (!yandexMapsApiKey) {
+    mapContainer.classList.add('footer-map-fallback')
+    mapContainer.innerHTML = '<p>Для карты добавьте PUBLIC_YANDEX_MAPS_API_KEY в .env</p>'
+    return
+  }
+
+  const YMAPS_SRC = `https://api-maps.yandex.ru/v3/?apikey=${yandexMapsApiKey}&lang=ru_RU`
+
+  const loadYandexMaps = () => {
+    if (window.ymaps3) {
+      return Promise.resolve(window.ymaps3)
+    }
+    if (window.__ymaps3LoadingPromise) {
+      return window.__ymaps3LoadingPromise
     }
 
-    if (!yandexMapsApiKey) {
-        mapContainer.classList.add('footer-map-fallback')
-        mapContainer.innerHTML = '<p>Для карты добавьте PUBLIC_YANDEX_MAPS_API_KEY в .env</p>'
-        return
+    window.__ymaps3LoadingPromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = YMAPS_SRC
+      script.async = true
+      script.onload = () => resolve(window.ymaps3)
+      script.onerror = () => reject(new Error('Не удалось загрузить SDK Яндекс Карт'))
+      document.head.appendChild(script)
+    })
+
+    return window.__ymaps3LoadingPromise
+  }
+
+  const initMap = async () => {
+    try {
+      const ymaps3 = await loadYandexMaps()
+      await ymaps3.ready
+
+      const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker } = ymaps3
+
+      const map = new YMap(mapContainer, {
+        location: {
+          center: MAP_CENTER,
+          zoom: MAP_ZOOM,
+        },
+        theme: 'dark',
+      })
+
+      map.addChild(new YMapDefaultSchemeLayer())
+      map.addChild(new YMapDefaultFeaturesLayer())
+
+      const pin = document.createElement('div')
+      pin.className = 'footer-map-pin'
+      map.addChild(
+        new YMapMarker(
+          {
+            coordinates: MAP_CENTER,
+          },
+          pin,
+        ),
+      )
+    } catch (error) {
+      mapContainer.classList.add('footer-map-fallback')
+      mapContainer.innerHTML = '<p>Карта временно недоступна</p>'
+      console.error(error)
     }
+  }
 
-    const YMAPS_SRC = `https://api-maps.yandex.ru/v3/?apikey=${yandexMapsApiKey}&lang=ru_RU`
-
-    const loadYandexMaps = () => {
-        if (window.ymaps3) {
-            return Promise.resolve(window.ymaps3)
-        }
-        if (window.__ymaps3LoadingPromise) {
-            return window.__ymaps3LoadingPromise
-        }
-
-        window.__ymaps3LoadingPromise = new Promise((resolve, reject) => {
-            const script = document.createElement('script')
-            script.src = YMAPS_SRC
-            script.async = true
-            script.onload = () => resolve(window.ymaps3)
-            script.onerror = () => reject(new Error('Не удалось загрузить SDK Яндекс Карт'))
-            document.head.appendChild(script)
-        })
-
-        return window.__ymaps3LoadingPromise
-    }
-
-    const initMap = async () => {
-        try {
-            const ymaps3 = await loadYandexMaps()
-            await ymaps3.ready
-
-            const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker } = ymaps3
-
-            const map = new YMap(mapContainer, {
-                location: {
-                    center: MAP_CENTER,
-                    zoom: MAP_ZOOM,
-                },
-                theme: 'dark',
-            })
-
-            map.addChild(new YMapDefaultSchemeLayer())
-            map.addChild(new YMapDefaultFeaturesLayer())
-
-            const pin = document.createElement('div')
-            pin.className = 'footer-map-pin'
-            map.addChild(
-                new YMapMarker(
-                    {
-                        coordinates: MAP_CENTER,
-                    },
-                    pin,
-                ),
-            )
-        } catch (error) {
-            mapContainer.classList.add('footer-map-fallback')
-            mapContainer.innerHTML = '<p>Карта временно недоступна</p>'
-            console.error(error)
-        }
-    }
-
-    initMap()
+  initMap()
 </script>
 
 <style>
-    #footer-map {
-        position: relative;
-        isolation: isolate;
-    }
+  #footer-map {
+    position: relative;
+    isolation: isolate;
+  }
 
-    :global(.footer-map-fallback) {
-        display: grid;
-        place-items: center;
-        background: #1d2f4c;
-        color: #ffffffcc;
-        font-size: 14px;
-        text-align: center;
-        padding: 1rem;
-    }
+  :global(.footer-map-fallback) {
+    display: grid;
+    place-items: center;
+    background: #1d2f4c;
+    color: #ffffffcc;
+    font-size: 14px;
+    text-align: center;
+    padding: 1rem;
+  }
 
-    :global(.footer-map-pin) {
-        position: relative;
-        width: 36px;
-        height: 36px;
-        border-radius: 9999px;
-        background: #ffb04f;
-        border: 2px solid #fff;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-        transform: translate(-50%, -100%);
-    }
+  :global(.footer-map-pin) {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background: #ffb04f;
+    border: 2px solid #fff;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    transform: translate(-50%, -100%);
+  }
 
-    :global(.footer-map-pin)::after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: -9px;
-        width: 14px;
-        height: 14px;
-        background: #ffb04f;
-        transform: translateX(-50%) rotate(45deg);
-        border-right: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-    }
+  :global(.footer-map-pin)::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 14px;
+    height: 14px;
+    background: #ffb04f;
+    transform: translateX(-50%) rotate(45deg);
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+  }
 
-    :global(.footer-map-pin)::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 12px;
-        height: 12px;
-        border-radius: 9999px;
-        background: #fff;
-        transform: translate(-50%, -50%);
-    }
+  :global(.footer-map-pin)::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    background: #fff;
+    transform: translate(-50%, -50%);
+  }
 </style>
