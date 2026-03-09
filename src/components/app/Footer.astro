@@ -96,17 +96,6 @@ import TelegramIcon from '@/icons/telegram.svg'
   const MAP_ZOOM = 12
 
   const mapContainer = document.getElementById('footer-map')
-  if (!mapContainer) {
-    return
-  }
-
-  if (!yandexMapsApiKey) {
-    mapContainer.classList.add('footer-map-fallback')
-    mapContainer.innerHTML = '<p>Для карты добавьте PUBLIC_YANDEX_MAPS_API_KEY в .env</p>'
-    return
-  }
-
-  const YMAPS_SRC = `https://api-maps.yandex.ru/v3/?apikey=e324964a-42c8-4b01-881c-c69564023dd3&lang=ru_RU`
 
   const loadYandexMaps = () => {
     if (window.ymaps3) {
@@ -118,7 +107,7 @@ import TelegramIcon from '@/icons/telegram.svg'
 
     window.__ymaps3LoadingPromise = new Promise((resolve, reject) => {
       const script = document.createElement('script')
-      script.src = YMAPS_SRC
+      script.src = 'https://api-maps.yandex.ru/v3/?apikey=e324964a-42c8-4b01-881c-c69564023dd3&lang=ru_RU'
       script.async = true
       script.onload = () => resolve(window.ymaps3)
       script.onerror = () => reject(new Error('Не удалось загрузить SDK Яндекс Карт'))
