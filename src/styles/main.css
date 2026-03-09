@@ -28,10 +28,17 @@
   --color-primary: #ffb04f;
   --color-secondary: #271907;
   --color-foreground: #fff;
+  --color-link-breadcrumbs: oklch(1 0 0 / 0.8);
+  --color-card: #f6f6f6;
+  --color-border: #f6f6f6;
+
+  --color-input: var(--color-neutral-200);
+
+  --color-popover: var(--color-neutral-50);
+  --color-popover-foreground: var(--color-neutral-950);
+
   --font-sans: var(--font-base), sans-serif;
   --font-heading: var(--font-heading);
-
-  --color-link-breadcrumbs: oklch(1 0 0 / 0.8);
 
   --radius-2xl: 20px;
 }

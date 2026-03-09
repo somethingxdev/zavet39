@@ -28,3 +28,7 @@ collections:
           - { label: Горизонтальный, value: 'horizontal' }
           - { label: Гранистый, value: 'faceted' }
           - { label: Комбинированный, value: 'combined' }
+      - name: category
+        label: Категория
+        widget: hidden
+        default: 'monuments'

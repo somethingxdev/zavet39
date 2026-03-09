@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content'
+import heroImage from '@/assets/monuments/hero.png'
+import { Image } from 'astro:assets'
+import { Breadcrumbs } from 'astro-breadcrumbs'
+import 'astro-breadcrumbs/breadcrumbs.css'
+
+import Layout from '@/layouts/Layout.astro'
+import { Button } from '@/components/starwind/button'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/starwind/card'
+
+const TYPE_LABELS: Record<string, string> = {
+  vertical: 'Вертикальные',
+  horizontal: 'Горизонтальные',
+  combined: 'Комбинированные',
+  faceted: 'Гранитные',
+}
+
+const CATEGORY_LABELS: Record<string, string> = {
+  monuments: 'Памятники',
+}
+
+const prettify = (value: string) =>
+  CATEGORY_LABELS[value] ?? value.replace(/[-_]/g, ' ').replace(/^./, (char) => char.toUpperCase())
+
+export async function getStaticPaths() {
+  const monuments = await getCollection('monuments')
+  const pairs = [...new Set(monuments.map((item) => `${item.data.category}::${item.data.type}`))]
+
+  return pairs.map((pair) => {
+    const [category, type] = pair.split('::')
+
+    return {
+      params: { category, type, page: undefined },
+      props: { category, type },
+    }
+  })
+}
+
+const monuments = await getCollection('monuments')
+const category = Astro.props.category ?? Astro.params.category ?? ''
+const type = Astro.props.type ?? Astro.params.type ?? ''
+
+const categories = [...new Set(monuments.map((item) => item.data.category).filter(Boolean))]
+const categoryItems = monuments.filter((item) => item.data.category === category)
+const types = [...new Set(categoryItems.map((item) => item.data.type).filter(Boolean))]
+const items = categoryItems.filter((item) => item.data.type === type)
+
+const customCrumbs = [
+  { text: 'Home', href: '/' },
+  { text: 'Услуги', href: '/services' },
+  { text: prettify(category), href: `/services/${category}` },
+  { text: TYPE_LABELS[type] ?? type },
+]
+---
+
+<Layout>
+  <section class="relative pt-25 md:pt-10">
+    <Image src={heroImage} alt="Фон секции" class="absolute inset-0 h-full w-full object-cover" />
+    <div class="container relative pt-10 pb-20 md:pt-50 md:pb-24">
+      <div class="mb-10 md:mb-15">
+        <Breadcrumbs crumbs={customCrumbs} />
+      </div>
+
+      <h1 class="mb-8 font-heading text-[40px] leading-none text-white sm:text-6xl lg:text-8xl">{TYPE_LABELS[type] ?? type}</h1>
+      <p class="mb-12 max-w-5xl text-lg text-white/85 sm:text-xl">Каталог доступных памятников выбранного типа.</p>
+
+      <div class="mb-6 flex flex-wrap gap-3">
+        {
+          categories.map((categoryItem) => (
+            <Button href={`/services/${categoryItem}`} variant={categoryItem === category ? 'primary' : 'outline'} size="md">
+              {prettify(categoryItem)}
+            </Button>
+          ))
+        }
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        {
+          types.map((typeItem) => (
+            <Button href={`/services/${category}/${typeItem}`} variant={typeItem === type ? 'primary' : 'outline'} size="md">
+              {TYPE_LABELS[typeItem] ?? typeItem}
+            </Button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-16">
+    <div class="container">
+      {items.length ? (
+        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {
+            items.map((item) => (
+              <Card class="overflow-hidden border border-border/70 bg-card p-0">
+                <div class="relative h-64 overflow-hidden bg-muted">
+                  <img src={item.data.image} alt={item.data.title} class="h-full w-full object-cover" loading="lazy" />
+                </div>
+
+                <CardHeader class="pb-2">
+                  <CardTitle>{item.data.title}</CardTitle>
+                </CardHeader>
+
+                <CardContent class="space-y-2 pb-4 text-sm text-foreground/80">
+                  <p><span class="font-semibold text-foreground">Материалы:</span> {item.data.materials}</p>
+                  <p><span class="font-semibold text-foreground">Размеры:</span> {item.data.dimensions}</p>
+                </CardContent>
+
+                <CardFooter class="flex items-center justify-between border-t bg-transparent">
+                  {
+                    item.data.price?.trim() ? (
+                      <p class="text-lg font-semibold text-foreground">от {item.data.price} ₽</p>
+                    ) : (
+                      <Button href="/contacts" variant="primary" size="md">Узнать цену</Button>
+                    )
+                  }
+                </CardFooter>
+              </Card>
+            ))
+          }
+        </div>
+      ) : (
+        <p class="text-lg text-foreground/80">Для выбранного типа пока нет памятников.</p>
+      )}
+    </div>
+  </section>
+</Layout>
