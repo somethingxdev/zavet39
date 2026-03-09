@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { tv, type VariantProps } from 'tailwind-variants'
+
+interface Props extends HTMLAttributes<'button'>, Omit<HTMLAttributes<'a'>, 'type'>, VariantProps<typeof button> {}
+
+const { variant, size, class: className, ...rest } = Astro.props
+
+export const button = tv({
+    base: [
+        'inline-flex items-center justify-center gap-3 rounded-xl font-medium font-heading whitespace-nowrap',
+        '[&_svg]:pointer-events-none [&_svg]:shrink-0',
+        'transition-all outline-none focus-visible:ring-3',
+        'disabled:pointer-events-none disabled:opacity-50',
+        'aria-invalid:border-error aria-invalid:focus-visible:ring-error/40',
+    ],
+    variants: {
+        variant: {
+            default: 'bg-foreground text-secondary hover:bg-foreground/90 focus-visible:ring-outline/50',
+            primary: 'bg-primary text-secondary hover:bg-primary/90 focus-visible:ring-primary/50',
+            outline: 'focus-visible:ring-outline/50 bg-transparent focus-visible:border-outline hover:bg-white/20 hover:text-foreground text-white border border-white shadow-xs',
+        },
+        size: {
+            sm: "h-9 px-4 text-sm has-[>svg]:px-3 [&_svg:not([class*='size-'])]:size-3.5",
+            md: "h-11 px-5 text-base has-[>svg]:px-4 [&_svg:not([class*='size-'])]:size-4.5",
+            lg: "h-14 px-8 text-xl [&_svg:not([class*='size-'])]:size-5",
+            'icon-sm': "size-9 [&_svg:not([class*='size-'])]:size-3.5",
+            icon: "size-11 [&_svg:not([class*='size-'])]:size-4.5",
+            'icon-lg': "size-12 [&_svg:not([class*='size-'])]:size-5",
+        },
+    },
+    defaultVariants: { variant: 'default', size: 'lg' },
+})
+
+const Tag = Astro.props.href ? 'a' : 'button'
+---
+
+<Tag class={button({ variant, size, class: className })} data-slot="button" {...rest}>
+    <slot />
+</Tag>

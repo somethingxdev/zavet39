@@ -1,0 +1,107 @@
+---
+import { ArrowLeft, ArrowRight } from '@lucide/astro'
+import { Button } from '@/components/starwind/button'
+
+const salesItems = [
+  {
+    title: 'Длинное акционное предложение',
+    discount: '30%',
+    description: 'Очень длинное описание условий акции',
+    cta: 'Связаться с нами',
+  },
+  {
+    title: 'Длинное акционное предложение',
+    discount: '30%',
+    description: 'Очень длинное описание условий акции',
+    cta: 'Связаться с нами',
+  },
+  {
+    title: 'Длинное акционное предложение',
+    discount: '30%',
+    description: 'Очень длинное описание условий акции',
+    cta: 'Связаться с нами',
+  },
+  {
+    title: 'Длинное акционное предложение',
+    discount: '30%',
+    description: 'Очень длинное описание условий акции',
+    cta: 'Связаться с нами',
+  },
+]
+---
+
+<section class="py-10 sm:py-20">
+  <div class="container">
+    <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl md:mb-12 lg:text-6xl">Акционное предложение</h2>
+
+    <div class="embla" data-sales-embla>
+      <div class="embla__viewport overflow-visible mb-10">
+        <div class="embla__container flex gap-5 touch-pan-y">
+          {
+            salesItems.map((sale) => (
+              <div class="embla__slide p-8 bg-secondary rounded-xl">
+                <div class="embla__slide-content">
+                  <h3 class="font-heading text-3xl mb-4 text-white">
+                    {sale.title} <span class="text-primary">{sale.discount}</span>
+                  </h3>
+                  <p class="text-lg text-white/80 mb-8 max-w-xs">{sale.description}</p>
+                  <Button href="#" variant="primary" class="w-full">
+                    {sale.cta}
+                  </Button>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center gap-5">
+        <Button variant="primary" size="icon-lg" class="embla__prev"><ArrowLeft /></Button>
+        <Button variant="primary" size="icon-lg" class="embla__next"><ArrowRight /></Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import EmblaCarousel from 'embla-carousel'
+
+  const wrapperNode = document.querySelector('[data-sales-embla]') as HTMLElement
+  const viewportNode = wrapperNode?.querySelector('.embla__viewport') as HTMLElement
+  const prevButtonNode = wrapperNode?.querySelector('.embla__prev') as HTMLButtonElement
+  const nextButtonNode = wrapperNode?.querySelector('.embla__next') as HTMLButtonElement
+
+  const emblaApi = EmblaCarousel(viewportNode, { loop: false })
+
+  prevButtonNode.addEventListener('click', () => emblaApi.goToPrev(), false)
+  nextButtonNode.addEventListener('click', () => emblaApi.goToNext(), false)
+
+  const toggleButtonsDisabled = (emblaApi: any) => {
+    const setButtonState = (button: HTMLButtonElement, enabled: boolean) => {
+      button.toggleAttribute('disabled', !enabled)
+    }
+    setButtonState(prevButtonNode, emblaApi.canGoToPrev())
+    setButtonState(nextButtonNode, emblaApi.canGoToNext())
+  }
+
+  toggleButtonsDisabled(emblaApi)
+  emblaApi.on('select', toggleButtonsDisabled)
+  emblaApi.on('reinit', toggleButtonsDisabled)
+</script>
+
+<style>
+  .embla__slide {
+    flex: 0 0 32%;
+    min-width: 0;
+  }
+  @media (max-width: 992px) {
+    .embla__slide {
+      flex: 0 0 50%;
+    }
+  }
+  @media (max-width: 480px) {
+    .embla__slide {
+      flex: 0 0 100%;
+    }
+  }
+</style>

@@ -1,23 +1,28 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import '@/styles/main.css'
+import { Font, Image } from 'astro:assets'
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+import Header from '@/components/app/Header.astro'
+import Footer from '@/components/app/Footer.astro'
+---
+
+<!doctype html>
+<html lang="ru">
+    <head>
+        <Font cssVariable="--font-base" preload />
+        <Font cssVariable="--font-heading" preload />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Astro Basics</title>
+    </head>
+    <body class="relative">
+        <Header />
+        <main class="overflow-x-hidden">
+            <slot />
+        </main>
+        <Footer />
+    </body>
+</html>

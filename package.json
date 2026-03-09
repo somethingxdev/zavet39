@@ -9,6 +9,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.17.1"
+    "@lucide/astro": "^0.575.0",
+    "@tabler/icons": "^3",
+    "@tailwindcss/forms": "^0.5",
+    "@tailwindcss/vite": "^4",
+    "astro": "^5.17.1",
+    "astro-breadcrumbs": "^3.3.3",
+    "astro-sveltia-cms": "^0.1.0",
+    "embla-carousel": "9.0.0-rc01",
+    "tailwind-merge": "^3",
+    "tailwind-variants": "^3",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1"
   }
 }

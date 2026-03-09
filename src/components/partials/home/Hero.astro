@@ -1,0 +1,27 @@
+---
+import { Button } from '@/components/starwind/button'
+import { Image } from 'astro:assets'
+---
+
+<section class="relative pt-25 md:pt-10">
+  <Image src={import('@/assets/hero.png')} alt="Фон секции" class="absolute inset-0 h-full w-full object-cover object-[center_10%]" />
+  <div class="absolute inset-0 bg-black/70 size-full"></div>
+  <div class="container relative pt-10 pb-20 md:pt-70 md:pb-40">
+    <div class="mx-auto max-w-265 md:text-center text-white">
+      <h1 class="text-[40px] leading-none sm:text-6xl lg:text-8xl font-heading mb-8">
+        Мы поможем сохранить
+        <span class="text-primary">память о близком</span>
+      </h1>
+    </div>
+
+    <p class="text-lg sm:text-xl max-w-5xl mx-auto md:text-balance md:text-center text-white/85">
+      Наша компания предоставляет полный спектр услуг по изготовлению, оформлению и установке памятников из гранита, мрамора, мраморной крошки и других материалов. Любой вид благоустройства захоронений на территории
+      <b>Калининграда и области.</b>
+    </p>
+
+    <div class="mt-10 sm:mt-18 flex flex-col items-center justify-center sm:flex-row gap-5">
+      <Button variant="primary" class="w-full md:w-65 text-xl">Связаться с нами</Button>
+      <Button variant="outline" class="w-full md:w-65 text-xl">Наши услуги</Button>
+    </div>
+  </div>
+</section>

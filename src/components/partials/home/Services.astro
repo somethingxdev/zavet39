@@ -1,0 +1,96 @@
+﻿---
+import { Image } from 'astro:assets'
+import serviceCardDecor from '@/assets/service-card-decor.svg'
+
+import accessoriesImage from '@/assets/services/аксесуары.png'
+import landscapingImage from '@/assets/services/благоустройство.png'
+import complexesImage from '@/assets/services/комплексы.png'
+import crossesImage from '@/assets/services/кресты.png'
+import benchesImage from '@/assets/services/лавочки.png'
+import fencesImage from '@/assets/services/ограды.png'
+import monumentsImage from '@/assets/services/памятники.png'
+import soclesImage from '@/assets/services/цоколи.png'
+
+const services = [
+    { title: 'Памятники', image: monumentsImage, alt: 'Изготовление памятников' },
+    { title: 'Цоколи', image: soclesImage, alt: 'Изготовление цоколей' },
+    { title: 'Комплексы', image: complexesImage, alt: 'Мемориальные комплексы' },
+    { title: 'Ограды', image: fencesImage, alt: 'Изготовление оград' },
+    { title: 'Лавочки и столики', image: benchesImage, alt: 'Лавочки и столики для благоустройства' },
+    { title: 'Кресты', image: crossesImage, alt: 'Изготовление крестов' },
+    { title: 'Благоустройство', image: landscapingImage, alt: 'Благоустройство места захоронения' },
+    { title: 'Аксессуары', image: accessoriesImage, alt: 'Ритуальные аксессуары' },
+]
+---
+
+<section class="py-10 sm:py-20">
+    <div class="container">
+        <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl md:mb-12 lg:text-6xl">Наши услуги</h2>
+
+        <div class="embla sm:hidden" data-services-embla>
+            <div class="embla__viewport overflow-visible">
+                <ul class="embla__container flex gap-4 touch-pan-y">
+                    {
+                        services.map(({ title, image, alt }) => (
+                            <li class="embla__slide">
+                                <a href="#" class="group relative block h-58 overflow-hidden rounded-2xl">
+                                    <Image src={image} alt={alt} class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+
+                                    <div class="absolute inset-0 bg-secondary/80 transition-opacity duration-300 group-hover:opacity-0" />
+
+                                    <Image src={serviceCardDecor} alt="decor" aria-hidden="true" class="pointer-events-none absolute -right-15 -top-15 h-full w-auto opacity-90" />
+
+                                    <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+                                        <h3 class="font-heading text-2xl text-white">{title}</h3>
+                                    </div>
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <ul class="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-4">
+            {
+                services.map(({ title, image, alt }) => (
+                    <li>
+                        <a href="#" class="group relative block h-58 overflow-hidden rounded-2xl">
+                            <Image src={image} alt={alt} class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+
+                            <div class="absolute inset-0 bg-secondary/80 transition-opacity duration-300 group-hover:opacity-0" />
+
+                            <Image src={serviceCardDecor} alt="decor" aria-hidden="true" class="pointer-events-none absolute -right-15 -top-15 h-full w-auto opacity-90" />
+
+                            <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+                                <h3 class="font-heading text-2xl text-white">{title}</h3>
+                            </div>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</section>
+
+<script>
+    import EmblaCarousel from 'embla-carousel'
+
+    const emblaRoot = document.querySelector('[data-services-embla]') as HTMLElement | null
+    const viewportNode = emblaRoot?.querySelector('.embla__viewport') as HTMLElement | null
+
+    if (viewportNode) {
+        EmblaCarousel(viewportNode, {
+            loop: false,
+            align: 'start',
+            containScroll: 'trimSnaps',
+        })
+    }
+</script>
+
+<style>
+    .embla__slide {
+        flex: 0 0 95%;
+        min-width: 0;
+    }
+</style>

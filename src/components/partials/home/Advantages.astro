@@ -1,0 +1,45 @@
+﻿---
+import Medal from '@/icons/first.svg'
+import Factory from '@/icons/industry.svg'
+import BadgeCheck from '@/icons/features.svg'
+import KeyRound from '@/icons/key.svg'
+
+const advantages = [
+    {
+        title: 'Работаем с 1987 года',
+        description: 'Первая коммерческая организация по производству памятников',
+        Icon: Medal,
+    },
+    {
+        title: 'Собственное производство',
+        description: 'Большой цех, талантливые дизайнеры и скульпторы',
+        Icon: Factory,
+    },
+    {
+        title: 'Гарантия качества',
+        description: 'На изделия из гранита и мрамора, при заказе установки',
+        Icon: BadgeCheck,
+    },
+    {
+        title: 'Понимание потребностей',
+        description: 'Готовы изготавливать нестандартные, индивидуальные решения',
+        Icon: KeyRound,
+    },
+]
+---
+
+<section class="py-10 md:py-20">
+    <div class="container">
+        <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {
+                advantages.map(({ title, description, Icon }) => (
+                    <li class="mx-auto flex max-w-84 flex-col items-center text-center text-secondary">
+                        <Icon class="size-11 mb-8" aria-hidden="true" />
+                        <h2 class="mb-3 text-2xl font-heading leading-tight">{title}</h2>
+                        <p class=" text-secondary/80">{description}</p>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</section>

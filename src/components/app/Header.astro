@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets'
+import { Menu, Search } from '@lucide/astro'
+import { Button } from '@/components/starwind/button'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/starwind/sheet'
+import MaxIcon from '@/icons/max.svg'
+import TelegramIcon from '@/icons/telegram.svg'
+import PhoneIcon from '@/icons/phone.svg'
+
+const navItems = [
+    { label: 'Памятники', href: '#monuments' },
+    { label: 'Бордюры', href: '#borders' },
+    { label: 'Комплексы', href: '#complexes' },
+    { label: 'Цоколи', href: '#socles' },
+    { label: 'Ограды', href: '#fences' },
+    { label: 'Лавочки и столики', href: '#benches' },
+    { label: 'Кресты', href: '#crosses' },
+    { label: 'Аксессуары', href: '#accessories' },
+    { label: 'Наши работы', href: '#works' },
+    { label: 'Контакты', href: '#contacts' },
+]
+---
+
+<header class="fixed top-0 left-0 md:top-5 z-50 w-full transition-all" data-mobile-header-shell>
+    <div class="container">
+        <div class="py-4 sm:px-6 sm:py-5 rounded-2xl transition-all lg:bg-black/40 lg:backdrop-blur-3xl">
+            <div class="flex justify-between items-center gap-4 pb-5 border-b border-white/10">
+                <div class="flex items-center gap-6 lg:gap-15">
+                    <a href="/">
+                        <Image src={import('@/assets/logo.svg')} alt="Logo" class="w-55 sm:w-auto" />
+                    </a>
+
+                    <div class="relative hidden lg:block py-4 px-5 rounded-xl text-white w-[435px] bg-white/5">
+                        <input type="text" placeholder="Поиск товаров" class="w-full outline-none placeholder:text-white/80" />
+                        <Search class="absolute right-5 top-1/2 -translate-y-1/2 size-5" />
+                    </div>
+                </div>
+
+                <div class="hidden lg:flex items-center gap-4">
+                    <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
+                    <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
+                    <Button class="ml-2"> <PhoneIcon /> +7 (910) 636-73-13</Button>
+                </div>
+
+                <Sheet class="lg:hidden">
+                    <SheetTrigger class="inline-flex items-center justify-center rounded-full size-12 bg-white/10 text-white">
+                        <Menu class="size-6" />
+                        <span class="sr-only">Открыть меню</span>
+                    </SheetTrigger>
+
+                    <SheetContent side="right" class="bg-secondary text-white border-white/10 p-6">
+                        <div class="flex flex-col gap-6 pt-6">
+                            <div class="relative py-3 px-4 rounded-xl text-white bg-white/10">
+                                <input type="text" placeholder="Поиск товаров" class="w-full outline-none placeholder:text-white/70" />
+                                <Search class="absolute right-4 top-1/2 -translate-y-1/2 size-5" />
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
+                                <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
+                            </div>
+
+                            <Button class="w-full justify-center"> <PhoneIcon /> +7 (910) 636-73-13</Button>
+
+                            <nav>
+                                <ul class="flex flex-col gap-3 text-lg">
+                                    {
+                                        navItems.map((item) => (
+                                            <li>
+                                                <a href={item.href} class="text-white/90 hover:text-primary transition-colors">
+                                                    {item.label}
+                                                </a>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                    </SheetContent>
+                </Sheet>
+            </div>
+
+            <nav class="hidden lg:block mt-6">
+                <ul class="flex items-center justify-between gap-6 text-white">
+                    {
+                        navItems.map((item) => (
+                            <li>
+                                <a href={item.href} class="hover:text-primary transition-colors">
+                                    {item.label}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<script>
+    const headerShell = document.querySelector('[data-mobile-header-shell]')
+    const mobileMedia = window.matchMedia('(max-width: 1023px)')
+
+    const updateHeaderOnScroll = () => {
+        if (!headerShell) return
+
+        if (!mobileMedia.matches) {
+            headerShell.classList.remove('bg-black/75', 'backdrop-blur-xl', 'shadow-xl', 'shadow-black/30')
+            return
+        }
+
+        const isScrolled = window.scrollY > 8
+        headerShell.classList.toggle('bg-black/75', isScrolled)
+        headerShell.classList.toggle('backdrop-blur-xl', isScrolled)
+        headerShell.classList.toggle('shadow-xl', isScrolled)
+        headerShell.classList.toggle('shadow-black/30', isScrolled)
+    }
+
+    updateHeaderOnScroll()
+    window.addEventListener('scroll', updateHeaderOnScroll, { passive: true })
+    mobileMedia.addEventListener('change', updateHeaderOnScroll)
+</script>
