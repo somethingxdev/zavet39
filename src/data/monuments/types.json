@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "vertical",
+    "title": "Вертикальные"
+  },
+  {
+    "slug": "horizontal",
+    "title": "Горизонтальные"
+  },
+  {
+    "slug": "combined",
+    "title": "Комбинированные"
+  },
+  {
+    "slug": "faceted",
+    "title": "Гранитные"
+  }
+]

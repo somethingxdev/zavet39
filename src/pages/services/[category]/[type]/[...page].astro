@@ -1,128 +1,91 @@
 ---
 import { getCollection } from 'astro:content'
-import heroImage from '@/assets/monuments/hero.png'
-import { Image } from 'astro:assets'
-import { Breadcrumbs } from 'astro-breadcrumbs'
-import 'astro-breadcrumbs/breadcrumbs.css'
+import categories from '@/data/monuments/category.json'
+import types from '@/data/monuments/types.json'
 
 import Layout from '@/layouts/Layout.astro'
-import { Button } from '@/components/starwind/button'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/starwind/card'
+import MonumentCard from '@/components/services/MonumentCard.astro'
+import Pagination from '@/components/services/Pagination.astro'
+import ServicesHero from '@/components/services/ServicesHero.astro'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
 
-const TYPE_LABELS: Record<string, string> = {
-  vertical: 'Вертикальные',
-  horizontal: 'Горизонтальные',
-  combined: 'Комбинированные',
-  faceted: 'Гранитные',
-}
+const TYPE_LABELS = Object.fromEntries(types.map((type) => [type.slug, type.title]))
 
-const CATEGORY_LABELS: Record<string, string> = {
-  monuments: 'Памятники',
-}
+const CATEGORY_LABELS = Object.fromEntries(categories.map((category) => [category.slug, category.title]))
 
-const prettify = (value: string) =>
-  CATEGORY_LABELS[value] ?? value.replace(/[-_]/g, ' ').replace(/^./, (char) => char.toUpperCase())
+const prettify = (value: string) => CATEGORY_LABELS[value] ?? value.replace(/[-_]/g, ' ').replace(/^./, (char) => char.toUpperCase())
 
-export async function getStaticPaths() {
-  const monuments = await getCollection('monuments')
-  const pairs = [...new Set(monuments.map((item) => `${item.data.category}::${item.data.type}`))]
+export async function getStaticPaths({ paginate }) {
+    const monuments = await getCollection('monuments')
+    return categories.flatMap(({ slug }) => {
+        const categoryItems = monuments.filter((item) => item.data.category === slug)
+        const availableTypes = types.filter((type) => categoryItems.some((item) => item.data.type === type.slug))
 
-  return pairs.map((pair) => {
-    const [category, type] = pair.split('::')
+        return availableTypes.flatMap((type) => {
+            const typeSlug = type.slug
+            const typeItems = categoryItems.filter((item) => item.data.type === typeSlug)
+            if (!typeItems.length) return []
 
-    return {
-      params: { category, type, page: undefined },
-      props: { category, type },
-    }
-  })
+            return paginate(typeItems, {
+                pageSize: 12,
+                params: { category: slug, type: typeSlug },
+                props: { category: slug, type: typeSlug },
+            })
+        })
+    })
 }
 
 const monuments = await getCollection('monuments')
 const category = Astro.props.category ?? Astro.params.category ?? ''
 const type = Astro.props.type ?? Astro.params.type ?? ''
 
-const categories = [...new Set(monuments.map((item) => item.data.category).filter(Boolean))]
 const categoryItems = monuments.filter((item) => item.data.category === category)
-const types = [...new Set(categoryItems.map((item) => item.data.type).filter(Boolean))]
-const items = categoryItems.filter((item) => item.data.type === type)
+const availableTypes = types.filter((typeItem) => categoryItems.some((item) => item.data.type === typeItem.slug))
+const { page } = Astro.props
 
-const customCrumbs = [
-  { text: 'Home', href: '/' },
-  { text: 'Услуги', href: '/services' },
-  { text: prettify(category), href: `/services/${category}` },
-  { text: TYPE_LABELS[type] ?? type },
-]
+const items = page.data
+const currentPage = page.currentPage
+const lastPage = page.lastPage
+
+const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href: '/services' }, { text: prettify(category) }]
 ---
 
 <Layout>
-  <section class="relative pt-25 md:pt-10">
-    <Image src={heroImage} alt="Фон секции" class="absolute inset-0 h-full w-full object-cover" />
-    <div class="container relative pt-10 pb-20 md:pt-50 md:pb-24">
-      <div class="mb-10 md:mb-15">
-        <Breadcrumbs crumbs={customCrumbs} />
-      </div>
+    <ServicesHero crumbs={customCrumbs} title={prettify(category)} description="Наша компания предоставляет полный спектр услуг по изготовлению, оформлениюи установке памятников из гранита, мрамора, мраморной крошки и других материалов." />
 
-      <h1 class="mb-8 font-heading text-[40px] leading-none text-white sm:text-6xl lg:text-8xl">{TYPE_LABELS[type] ?? type}</h1>
-      <p class="mb-12 max-w-5xl text-lg text-white/85 sm:text-xl">Каталог доступных памятников выбранного типа.</p>
+    <section class="py-12 md:py-16">
+        <div class="container">
+            <div class="mb-6 flex items-center gap-4">
+                <Select id="type-filter" name="type-filter" class="w-50" defaultValue={`/services/${category}/${type}`}>
+                    <SelectTrigger class="min-w-50">
+                        <SelectValue placeholder="Все типы" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value={`/services/${category}`} href={`/services/${category}`}>Все типы</SelectItem>
+                        {
+                            availableTypes.map((typeItem) => (
+                                <SelectItem value={`/services/${category}/${typeItem.slug}`} href={`/services/${category}/${typeItem.slug}`}>
+                                    {typeItem.title}
+                                </SelectItem>
+                            ))
+                        }
+                    </SelectContent>
+                </Select>
+            </div>
 
-      <div class="mb-6 flex flex-wrap gap-3">
-        {
-          categories.map((categoryItem) => (
-            <Button href={`/services/${categoryItem}`} variant={categoryItem === category ? 'primary' : 'outline'} size="md">
-              {prettify(categoryItem)}
-            </Button>
-          ))
-        }
-      </div>
+            {
+                items.length ? (
+                    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+                        {items.map((item) => (
+                            <MonumentCard item={item} typeLabel={TYPE_LABELS[item.data.type] ?? item.data.type} />
+                        ))}
+                    </div>
+                ) : (
+                    <p class="text-lg text-foreground/80">Для выбранного типа пока нет памятников.</p>
+                )
+            }
 
-      <div class="flex flex-wrap gap-3">
-        {
-          types.map((typeItem) => (
-            <Button href={`/services/${category}/${typeItem}`} variant={typeItem === type ? 'primary' : 'outline'} size="md">
-              {TYPE_LABELS[typeItem] ?? typeItem}
-            </Button>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="py-12 md:py-16">
-    <div class="container">
-      {items.length ? (
-        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {
-            items.map((item) => (
-              <Card class="overflow-hidden border border-border/70 bg-card p-0">
-                <div class="relative h-64 overflow-hidden bg-muted">
-                  <img src={item.data.image} alt={item.data.title} class="h-full w-full object-cover" loading="lazy" />
-                </div>
-
-                <CardHeader class="pb-2">
-                  <CardTitle>{item.data.title}</CardTitle>
-                </CardHeader>
-
-                <CardContent class="space-y-2 pb-4 text-sm text-foreground/80">
-                  <p><span class="font-semibold text-foreground">Материалы:</span> {item.data.materials}</p>
-                  <p><span class="font-semibold text-foreground">Размеры:</span> {item.data.dimensions}</p>
-                </CardContent>
-
-                <CardFooter class="flex items-center justify-between border-t bg-transparent">
-                  {
-                    item.data.price?.trim() ? (
-                      <p class="text-lg font-semibold text-foreground">от {item.data.price} ₽</p>
-                    ) : (
-                      <Button href="/contacts" variant="primary" size="md">Узнать цену</Button>
-                    )
-                  }
-                </CardFooter>
-              </Card>
-            ))
-          }
+            <Pagination currentPage={currentPage} lastPage={lastPage} basePath={`/services/${category}/${type}`} />
         </div>
-      ) : (
-        <p class="text-lg text-foreground/80">Для выбранного типа пока нет памятников.</p>
-      )}
-    </div>
-  </section>
+    </section>
 </Layout>

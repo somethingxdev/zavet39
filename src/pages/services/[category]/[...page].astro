@@ -1,152 +1,80 @@
 ---
 import { getCollection } from 'astro:content'
-import heroImage from '@/assets/monuments/hero.png'
-import { Image } from 'astro:assets'
-import { Breadcrumbs } from 'astro-breadcrumbs'
-import 'astro-breadcrumbs/breadcrumbs.css'
+import categories from '@/data/monuments/category.json'
+import types from '@/data/monuments/types.json'
 
 import Layout from '@/layouts/Layout.astro'
-import { Button } from '@/components/starwind/button'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/starwind/card'
+import MonumentCard from '@/components/services/MonumentCard.astro'
+import Pagination from '@/components/services/Pagination.astro'
+import ServicesHero from '@/components/services/ServicesHero.astro'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
 
-const TYPE_LABELS: Record<string, string> = {
-  vertical: 'Вертикальные',
-  horizontal: 'Горизонтальные',
-  combined: 'Комбинированные',
-  faceted: 'Гранитные',
-}
+const TYPE_LABELS = Object.fromEntries(types.map((type) => [type.slug, type.title]))
 
-const CATEGORY_LABELS: Record<string, string> = {
-  monuments: 'Памятники',
-}
+const CATEGORY_LABELS = Object.fromEntries(categories.map((category) => [category.slug, category.title]))
 
 const prettify = (value: string) => CATEGORY_LABELS[value] ?? value.replace(/[-_]/g, ' ').replace(/^./, (char) => char.toUpperCase())
 
-const monuments = await getCollection('monuments')
+export async function getStaticPaths({ paginate }) {
+    const monuments = await getCollection('monuments')
+    return categories.flatMap(({ slug }) => {
+        const categoryItems = monuments.filter((item) => item.data.category === slug)
+        if (!categoryItems.length) return []
 
-export async function getStaticPaths() {
-  const monuments = await getCollection('monuments')
-  const categories = [...new Set(monuments.map((item) => item.data.category).filter(Boolean))]
-
-  return categories.map((category) => ({
-    params: { category, page: undefined },
-    props: { category },
-  }))
+        return paginate(categoryItems, {
+            pageSize: 12,
+            params: { category: slug },
+            props: { category: slug },
+        })
+    })
 }
 
+const monuments = await getCollection('monuments')
 const category = Astro.props.category ?? Astro.params.category ?? ''
-const categories = [...new Set(monuments.map((item) => item.data.category).filter(Boolean))]
-const items = monuments.filter((item) => item.data.category === category)
-const types = [...new Set(items.map((item) => item.data.type).filter(Boolean))]
+const allCategoryItems = monuments.filter((item) => item.data.category === category)
+const { page } = Astro.props
+if (!page) {
+    throw new Error('Expected `page` in Astro.props for paginated route /services/[category]/[...page]')
+}
+
+const items = page.data
+
+console.log(items)
+const availableTypes = types.filter((type) => allCategoryItems.some((item) => item.data.type === type.slug))
+const currentPage = page.currentPage
+const lastPage = page.lastPage
 
 const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href: '/services' }, { text: prettify(category) }]
 ---
 
 <Layout>
-  <section class="relative pt-25 md:pt-10">
-    <Image src={heroImage} alt="Фон секции" class="absolute inset-0 h-full w-full object-cover" />
-    <div class="container relative pt-15 pb-20 md:pt-60 md:pb-24">
-      <div class="mb-10 md:mb-15">
-        <Breadcrumbs crumbs={customCrumbs}>
-          <svg slot="index" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_81_360)">
-              <path
-                d="M18.3333 4.77V1.66666C18.3333 1.20666 17.9608 0.83333 17.5 0.83333C17.0392 0.83333 16.6667 1.20666 16.6667 1.66666V3.63833L12.3308 0.712496C10.915 -0.242504 9.085 -0.242504 7.66917 0.712496L1.83583 4.64916C0.686667 5.425 0 6.71583 0 8.10333V15.8333C0 18.1308 1.86917 20 4.16667 20H5.83333C6.29417 20 6.66667 19.6267 6.66667 19.1667V11.6667C6.66667 11.2075 7.04 10.8333 7.5 10.8333H12.5C12.96 10.8333 13.3333 11.2075 13.3333 11.6667V19.1667C13.3333 19.6267 13.7058 20 14.1667 20H15.8333C18.1308 20 20 18.1308 20 15.8333V8.10333C20 6.78583 19.38 5.555 18.3333 4.77Z"
-                fill="white"
-                fill-opacity="0.8"></path>
-            </g>
-            <defs>
-              <clipPath id="clip0_81_360">
-                <rect width="20" height="20" fill="white"></rect>
-              </clipPath>
-            </defs>
-          </svg>
-          <svg slot="separator" width="7" height="16" viewBox="0 0 7 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M-9.76622e-05 15.072L5.2799 -9.53674e-07H6.3199L1.0399 15.072H-9.76622e-05Z" fill="white" fill-opacity="0.6"></path>
-          </svg>
-        </Breadcrumbs>
-      </div>
+    <ServicesHero crumbs={customCrumbs} title={prettify(category)} description="Наша компания предоставляет полный спектр услуг по изготовлению, оформлениюи установке памятников из гранита, мрамора, мраморной крошки и других материалов." />
 
-      <h1 class="mb-8 font-heading text-[40px] leading-none text-white sm:text-6xl lg:text-8xl">{prettify(category)}</h1>
-      <p class="mb-12 max-w-5xl text-lg text-white/85 sm:text-xl">Наша компания предоставляет полный спектр услуг по изготовлению, оформлениюи установке памятников из гранита, мрамора, мраморной крошки и других материалов.</p>
+    <section class="py-12 md:py-16">
+        <div class="container">
+            <div class="mb-6 flex items-center gap-4">
+                <Select id="type-filter" name="type-filter" class="w-50" defaultValue={`/services/${category}`}>
+                    <SelectTrigger class="min-w-50">
+                        <SelectValue placeholder="Все типы" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value={`/services/${category}`} href={`/services/${category}`}>Все типы</SelectItem>
+                        {
+                            availableTypes.map((type) => (
+                                <SelectItem value={`/services/${category}/${type.slug}`} href={`/services/${category}/${type.slug}`}>
+                                    {type.title}
+                                </SelectItem>
+                            ))
+                        }
+                    </SelectContent>
+                </Select>
+            </div>
 
-      <div class="flex flex-wrap gap-3">
-        <Button href="#" variant="primary" size="lg"> Заказать памятник </Button>
-      </div>
-    </div>
-  </section>
+            <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+                {items.map((item) => <MonumentCard item={item} typeLabel={TYPE_LABELS[item.data.type] ?? item.data.type} />)}
+            </div>
 
-  <section class="py-12 md:py-16">
-    <div class="container">
-      <div class="mb-6 flex items-center gap-4">
-        <Select id="type-filter" name="type-filter" class="w-[200px]">
-          <SelectTrigger class="min-w-[200px]">
-            <SelectValue placeholder="Все типы" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="">Все типы</SelectItem>
-            {types.map((type) => <SelectItem value={type}>{TYPE_LABELS[type] ?? type}</SelectItem>)}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4" id="monuments-grid">
-        {
-          items.map((item) => (
-            <Card class="gap-5 monument-card" data-type={item.data.type}>
-              <CardHeader class="px-0">
-                <div class="relative h-69 overflow-hidden bg-muted">
-                  <Image width={335} height={276} src={item.data.image} alt={item.data.title} class="h-full w-full object-cover" />
-                  <span class="absolute top-4 left-4 rounded bg-white px-3 py-2 text-secondary">{TYPE_LABELS[item.data.type] ?? item.data.type}</span>
-                </div>
-              </CardHeader>
-
-              <CardContent class="space-y-2">
-                <CardTitle class="mb-4">{item.data.title}</CardTitle>
-                <p>
-                  <span class="font-semibold ">Материалы:</span> {item.data.materials}
-                </p>
-                <p>
-                  <span class="font-semibold">Размеры:</span> {item.data.dimensions}
-                </p>
-              </CardContent>
-
-              <CardFooter>
-                {item.data.price?.trim() ? (
-                  <p class="text-xl font-heading">от {item.data.price} ₽</p>
-                ) : (
-                  <Button href="/contacts" variant="primary" size="md" class="w-full">
-                    Узнать цену
-                  </Button>
-                )}
-              </CardFooter>
-            </Card>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <script>
-    const typeFilter = document.querySelector('#type-filter') as HTMLElement | null
-    const monumentsGrid = document.querySelector('#monuments-grid') as HTMLElement | null
-
-    if (typeFilter && monumentsGrid) {
-      typeFilter.addEventListener('starwind-select:change', (e: Event) => {
-        const customEvent = e as CustomEvent<{ value: string }>
-        const selectedType = customEvent.detail.value
-        const cards = monumentsGrid.querySelectorAll('.monument-card')
-
-        cards.forEach((card) => {
-          const cardType = card.getAttribute('data-type')
-          if (!selectedType || cardType === selectedType) {
-            ;(card as HTMLElement).style.display = ''
-          } else {
-            ;(card as HTMLElement).style.display = 'none'
-          }
-        })
-      })
-    }
-  </script>
+            <Pagination currentPage={currentPage} lastPage={lastPage} basePath={`/services/${category}`} />
+        </div>
+    </section>
 </Layout>

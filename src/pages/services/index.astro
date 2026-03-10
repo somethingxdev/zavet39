@@ -1,53 +1,21 @@
 ---
 import Layout from '@/layouts/Layout.astro'
-import { Button } from '@/components/starwind/button'
-import { Image } from 'astro:assets'
-
-import { Breadcrumbs } from 'astro-breadcrumbs'
-
-import 'astro-breadcrumbs/breadcrumbs.css'
+import ServicesHero from '@/components/services/ServicesHero.astro'
 
 const customCrumbs = [
-  {
-    text: 'Home',
-    href: '/',
-  },
-  {
-    text: 'Услуги',
-  },
-  {
-    text: 'Памятники',
-  },
+    {
+        text: 'Home',
+        href: '/',
+    },
+    {
+        text: 'Услуги',
+    },
+    {
+        text: 'Памятники',
+    },
 ]
 ---
 
 <Layout>
-  <section class="relative pt-25 md:pt-10">
-    <Image src={import('@/assets/monuments/hero.png')} alt="Фон секции" class="absolute inset-0 h-full w-full object-cover" />
-    <div class="container pt-10 pb-20 md:pt-50 md:pb-40 relative">
-      <div class="mb-10 md:mb-15">
-        <Breadcrumbs crumbs={customCrumbs}>
-          <svg slot="index" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_81_360)">
-              <path
-                d="M18.3333 4.77V1.66666C18.3333 1.20666 17.9608 0.83333 17.5 0.83333C17.0392 0.83333 16.6667 1.20666 16.6667 1.66666V3.63833L12.3308 0.712496C10.915 -0.242504 9.085 -0.242504 7.66917 0.712496L1.83583 4.64916C0.686667 5.425 0 6.71583 0 8.10333V15.8333C0 18.1308 1.86917 20 4.16667 20H5.83333C6.29417 20 6.66667 19.6267 6.66667 19.1667V11.6667C6.66667 11.2075 7.04 10.8333 7.5 10.8333H12.5C12.96 10.8333 13.3333 11.2075 13.3333 11.6667V19.1667C13.3333 19.6267 13.7058 20 14.1667 20H15.8333C18.1308 20 20 18.1308 20 15.8333V8.10333C20 6.78583 19.38 5.555 18.3333 4.77Z"
-                fill="white"
-                fill-opacity="0.8"></path>
-            </g>
-            <defs>
-              <clipPath id="clip0_81_360">
-                <rect width="20" height="20" fill="white"></rect>
-              </clipPath>
-            </defs>
-          </svg>
-          <svg slot="separator" width="7" height="16" viewBox="0 0 7 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M-9.76622e-05 15.072L5.2799 -9.53674e-07H6.3199L1.0399 15.072H-9.76622e-05Z" fill="white" fill-opacity="0.6"></path>
-          </svg>
-        </Breadcrumbs>
-      </div>
-      <h1 class="text-[40px] leading-none sm:text-6xl lg:text-8xl font-heading mb-8 text-white">Памятники</h1>
-      <p class="text-lg sm:text-xl max-w-5xl text-white/85 mb-15">Наша компания предоставляет полный спектр услуг по изготовлению, оформлениюи установке памятников из гранита, мрамора, мраморной крошки и других материалов.</p>
-      <Button variant="primary" class="w-full md:w-65 text-xl">Заказать памятник</Button>
-    </div>
-  </section>
+    <ServicesHero crumbs={customCrumbs} title="Памятники" description="Наша компания предоставляет полный спектр услуг по изготовлению, оформлениюи установке памятников из гранита, мрамора, мраморной крошки и других материалов." />
 </Layout>

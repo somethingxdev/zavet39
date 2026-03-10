@@ -12,7 +12,7 @@ import monumentsImage from '@/assets/services/памятники.png'
 import soclesImage from '@/assets/services/цоколи.png'
 
 const services = [
-    { title: 'Памятники', image: monumentsImage, alt: 'Изготовление памятников' },
+    { title: 'Памятники', image: monumentsImage, alt: 'Изготовление памятников', href: '/services/monuments' },
     { title: 'Цоколи', image: soclesImage, alt: 'Изготовление цоколей' },
     { title: 'Комплексы', image: complexesImage, alt: 'Мемориальные комплексы' },
     { title: 'Ограды', image: fencesImage, alt: 'Изготовление оград' },
@@ -31,9 +31,9 @@ const services = [
             <div class="embla__viewport overflow-visible">
                 <ul class="embla__container flex gap-4 touch-pan-y">
                     {
-                        services.map(({ title, image, alt }) => (
+                        services.map(({ title, image, alt, href }) => (
                             <li class="embla__slide">
-                                <a href="#" class="group relative block h-58 overflow-hidden rounded-2xl">
+                                <a href={href} class="group relative block h-58 overflow-hidden rounded-2xl">
                                     <Image src={image} alt={alt} class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
 
                                     <div class="absolute inset-0 bg-secondary/80 transition-opacity duration-300 group-hover:opacity-0" />
@@ -53,9 +53,9 @@ const services = [
 
         <ul class="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-4">
             {
-                services.map(({ title, image, alt }) => (
+                services.map(({ title, image, alt, href }) => (
                     <li>
-                        <a href="#" class="group relative block h-58 overflow-hidden rounded-2xl">
+                        <a href={href} class="group relative block h-58 overflow-hidden rounded-2xl">
                             <Image src={image} alt={alt} class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
 
                             <div class="absolute inset-0 bg-secondary/80 transition-opacity duration-300 group-hover:opacity-0" />

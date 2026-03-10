@@ -1,0 +1,53 @@
+---
+import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight } from '@lucide/astro'
+
+interface Props {
+    currentPage: number
+    lastPage: number
+    basePath: string
+}
+
+const { currentPage, lastPage, basePath } = Astro.props
+const pages = Array.from({ length: lastPage }, (_, index) => index + 1)
+
+const getPageHref = (pageNumber: number) => {
+    const cleanBasePath = basePath.replace(/\/+$/, '')
+    return pageNumber === 1 ? cleanBasePath : `${cleanBasePath}/${pageNumber}`
+}
+---
+
+{
+    lastPage > 1 && (
+        <nav class="mt-10 flex items-center justify-center gap-3" aria-label="Пагинация">
+            <>
+                <a href={getPageHref(currentPage - 1)} aria-label="Предыдущая страница" class="transition-colors hover:text-primary" class:list={currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}>
+                    <ChevronsLeft />
+                </a>
+                <a href={getPageHref(1)} aria-label="Первая страница" class="transition-colors hover:text-primary" class:list={currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}>
+                    <ChevronLeft />
+                </a>
+            </>
+
+            {pages.map((pageNumber) => {
+                const isActive = pageNumber === currentPage
+
+                return (
+                    <a href={getPageHref(pageNumber)} class:list={['size-10 flex items-center justify-center rounded-md transition-colors font-bold', isActive ? 'bg-[#E6A23C] text-white' : 'hover:text-primary']}>
+                        {pageNumber}
+                    </a>
+                )
+            })}
+
+            {currentPage < lastPage && (
+                <>
+                    <a href={getPageHref(currentPage + 1)} aria-label="Следующая страница" class="transition-colors hover:text-primary">
+                        <ChevronRight />
+                    </a>
+                    <a href={getPageHref(lastPage)} aria-label="Последняя страница" class="transition-colors hover:text-primary">
+                        <ChevronsRight />
+                    </a>
+                </>
+            )}
+        </nav>
+    )
+}
