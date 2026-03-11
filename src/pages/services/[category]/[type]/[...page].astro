@@ -36,6 +36,8 @@ export async function getStaticPaths({ paginate }) {
 }
 
 const monuments = await getCollection('monuments')
+
+console.log(monuments)
 const category = Astro.props.category ?? Astro.params.category ?? ''
 const type = Astro.props.type ?? Astro.params.type ?? ''
 
@@ -55,7 +57,7 @@ const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href:
 
     <section class="py-12 md:py-16">
         <div class="container">
-            <div class="mb-6 flex items-center gap-4">
+            <div class="mb-10 flex items-center justify-end gap-4">
                 <Select id="type-filter" name="type-filter" class="w-50" defaultValue={`/services/${category}/${type}`}>
                     <SelectTrigger class="min-w-50">
                         <SelectValue placeholder="Все типы" />

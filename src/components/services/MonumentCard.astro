@@ -10,18 +10,25 @@ type Props = {
 }
 
 const { item, typeLabel } = Astro.props
+const productHref = `/services/${item.data.category}/${item.data.type}/${item.id}`
 ---
 
 <Card class="gap-5">
     <CardHeader class="px-0">
-        <div class="relative h-69 overflow-hidden bg-muted">
-            <Image width="335" height="276" src={item.data.image} alt={item.data.title} class="h-full w-full object-contain" />
-            <span class="absolute top-4 left-4 rounded bg-white px-3 py-2 text-secondary">{typeLabel}</span>
-        </div>
+        <a href={productHref} class="group block">
+            <div class="relative h-69 overflow-hidden bg-muted">
+                <Image width="335" height="276" src={item.data.image} alt={item.data.title} class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
+                <span class="absolute top-4 left-4 rounded bg-white px-3 py-2 text-secondary">{typeLabel}</span>
+            </div>
+        </a>
     </CardHeader>
 
     <CardContent class="space-y-2">
-        <CardTitle class="mb-4">{item.data.title}</CardTitle>
+        <CardTitle class="mb-4">
+            <a href={productHref} class="transition-colors hover:text-primary">
+                {item.data.title}
+            </a>
+        </CardTitle>
         <p>
             <span class="font-semibold">Материалы:</span>
             {item.data.materials}

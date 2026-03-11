@@ -1,9 +1,13 @@
 ---
 import '@/styles/main.css'
-import { Font, Image } from 'astro:assets'
+import { Font } from 'astro:assets'
 
 import Header from '@/components/app/Header.astro'
 import Footer from '@/components/app/Footer.astro'
+import { Toaster } from '@/components/starwind/toast'
+
+console.log(Astro.params)
+
 ---
 
 <!doctype html>
@@ -18,11 +22,12 @@ import Footer from '@/components/app/Footer.astro'
         <meta name="generator" content={Astro.generator} />
         <title>Astro Basics</title>
     </head>
-    <body class="relative">
+    <body class="relative" class:list={Astro.params.slug && "bg-[#F6F6F6]"}>
         <Header />
         <main class="overflow-x-hidden">
             <slot />
         </main>
         <Footer />
+        <Toaster position="bottom-right" />
     </body>
 </html>
