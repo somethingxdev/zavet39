@@ -5,13 +5,10 @@ import { Font } from 'astro:assets'
 import Header from '@/components/app/Header.astro'
 import Footer from '@/components/app/Footer.astro'
 import { Toaster } from '@/components/starwind/toast'
-
-console.log(Astro.params)
-
 ---
 
 <!doctype html>
-<html lang="ru">
+<html lang="ru" class="scroll-smooth">
     <head>
         <Font cssVariable="--font-base" preload />
         <Font cssVariable="--font-heading" preload />
@@ -22,7 +19,7 @@ console.log(Astro.params)
         <meta name="generator" content={Astro.generator} />
         <title>Astro Basics</title>
     </head>
-    <body class="relative" class:list={Astro.params.slug && "bg-[#F6F6F6]"}>
+    <body class="relative" class:list={Astro.params.slug && 'bg-[#F6F6F6]'}>
         <Header />
         <main class="overflow-x-hidden">
             <slot />

@@ -2,7 +2,7 @@
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import { Breadcrumbs } from 'astro-breadcrumbs'
-import { Button } from '@/components/starwind/button'
+import OrderModal from '@/components/services/OrderModal.astro'
 import defaultHeroImage from '@/assets/monuments/hero.png'
 
 import 'astro-breadcrumbs/breadcrumbs.css'
@@ -22,13 +22,14 @@ interface Props {
     imageSrc?: ImageMetadata
 }
 
-const { crumbs, title, description, buttonText = 'Заказать памятник', buttonHref = '#', showButton = true, imageSrc = defaultHeroImage } = Astro.props
+const { crumbs, title, description, showButton = true, imageSrc = defaultHeroImage } = Astro.props
 ---
 
 <section class="relative pt-25 md:pt-10">
-    <Image src={imageSrc} alt="Фон секции" class="absolute inset-0 h-full w-full object-cover" />
+    <Image src={imageSrc} alt="Фон секции" class="absolute inset-0 size-full object-cover object-right sm:object-top" />
+    <div class="absolute inset-0 bg-linear-to-b from-secondary/60 to-black/80"></div>
     <div class="container relative pt-15 pb-20 md:pt-60 md:pb-24">
-        <div class="mb-10 md:mb-15">
+        <div class="mb-10 md:mb-15 text-white">
             <Breadcrumbs crumbs={crumbs}>
                 <svg slot="index" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_81_360)">
@@ -52,16 +53,8 @@ const { crumbs, title, description, buttonText = 'Заказать памятн�
         <h1 class="mb-8 font-heading text-[40px] leading-none text-white sm:text-6xl lg:text-8xl">{title}</h1>
         <p class="mb-12 max-w-5xl text-lg text-white/85 sm:text-xl">{description}</p>
 
-        {
-            showButton && (
-                <div class="flex flex-wrap gap-3">
-                    <Button href={buttonHref} variant="primary" size="lg">
-                        {buttonText}
-                    </Button>
-                </div>
-            )
-        }
-
-        <slot name="afterCta" />
+        <div class="w-fit">
+            <OrderModal buttonText="Заказать памятник" />
+        </div>
     </div>
 </section>

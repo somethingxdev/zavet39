@@ -32,8 +32,6 @@
     --color-card: #f6f6f6;
     --color-border: #f6f6f6;
 
-    
-
     --color-input: var(--color-neutral-200);
 
     --color-popover: var(--color-neutral-50);
@@ -61,6 +59,24 @@
     margin-inline: auto;
 }
 
-.c-breadcrumbs__link{
+.c-breadcrumbs__link {
     color: currentColor !important;
+}
+
+.link-underline {
+    border-bottom-width: 0;
+    background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+    background-size: 0 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s ease-in-out;
+}
+
+.link-underline-black {
+    background-image: linear-gradient(transparent, transparent), linear-gradient(#000, #000);
+}
+
+.link-underline:hover {
+    background-size: 100% 2px;
+    background-position: 0 100%;
 }

@@ -16,7 +16,7 @@ const productHref = `/services/${item.data.category}/${item.data.type}/${item.id
 <Card class="gap-5">
     <CardHeader class="px-0">
         <a href={productHref} class="group block">
-            <div class="relative h-69 overflow-hidden bg-muted">
+            <div class="relative h-50 sm:h-69 overflow-hidden bg-muted">
                 <Image width="335" height="276" src={item.data.image} alt={item.data.title} class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
                 <span class="absolute top-4 left-4 rounded bg-white px-3 py-2 text-secondary">{typeLabel}</span>
             </div>
@@ -42,7 +42,7 @@ const productHref = `/services/${item.data.category}/${item.data.type}/${item.id
     <CardFooter>
         {
             item.data.price?.trim() ? (
-                <p class="text-xl font-heading">от {item.data.price} ₽</p>
+                <p class="text-xl font-heading"> {item.data.price} ₽</p>
             ) : (
                 <Button href="/contacts" variant="primary" size="md" class="w-full">
                     Узнать цену

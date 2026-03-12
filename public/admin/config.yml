@@ -6,6 +6,25 @@ backend:
 
 media_folder: /assets
 
+media_libraries:
+  default:
+    config:
+      max_file_size: 1024000 # default: Infinity
+      slugify_filename: true # default: false
+
+singletons:
+  - name: gallery
+    label: Галерея
+    file: /src/data/gallery.json
+    fields:
+      - name: items
+        label: Фотографии
+        widget: list
+        summary: '{{fields.alt}}'
+        fields:
+          - { label: Изображение, name: image, widget: image, media_folder: /src/assets/gallery }
+          - { label: Alt, name: alt, widget: string }
+
 collections:
   - name: monuments
     label: Памятники

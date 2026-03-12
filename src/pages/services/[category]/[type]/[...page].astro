@@ -37,7 +37,6 @@ export async function getStaticPaths({ paginate }) {
 
 const monuments = await getCollection('monuments')
 
-console.log(monuments)
 const category = Astro.props.category ?? Astro.params.category ?? ''
 const type = Astro.props.type ?? Astro.params.type ?? ''
 

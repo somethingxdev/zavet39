@@ -3,224 +3,225 @@ import { Button } from '@/components/starwind/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/starwind/dialog'
 
 interface Props {
-  productTitle: string
-  productPrice?: string
+    productTitle?: string
+    productPrice?: string
+    buttonText?: string
 }
 
-const { productTitle, productPrice } = Astro.props
+const { productTitle, productPrice, buttonText = 'Заказать' } = Astro.props
 ---
 
 <Dialog class="w-full" data-order-modal>
-  <DialogTrigger asChild>
-    <Button variant="primary" size="lg" class="w-full md:flex-1"> Заказать </Button>
-  </DialogTrigger>
+    <DialogTrigger asChild>
+        <Button variant="primary" size="lg" class="w-full md:flex-1"> {buttonText} </Button>
+    </DialogTrigger>
 
-  <DialogContent class="sm:max-w-[560px]">
-    <DialogHeader>
-      <DialogTitle>Оставить заявку</DialogTitle>
-      <DialogDescription>
-        Заполните форму, и мы свяжемся с вами по заказу
-        <span class="text-primary font-semibold"> {productTitle}</span>
-        {productPrice && <span class="block mt-1 text-secondary/70">Стоимость: {productPrice} ₽</span>}
-      </DialogDescription>
-    </DialogHeader>
+    <DialogContent class="sm:max-w-[560px]">
+        <DialogHeader>
+            <DialogTitle>Оставить заявку</DialogTitle>
+            <DialogDescription>
+                Заполните форму, и мы свяжемся с вами по заказу
+                <span class="text-primary font-semibold"> {productTitle}</span>
+                {productPrice && <span class="block mt-1 text-secondary/70">Стоимость: {productPrice} ₽</span>}
+            </DialogDescription>
+        </DialogHeader>
 
-    <form class="mt-6 space-y-4" data-order-form data-product-title={productTitle} data-product-price={productPrice || ''} novalidate>
-      <div class="space-y-2">
-        <label class="text-sm font-medium block">
-          Имя <span class="text-red-500">*</span>
-        </label>
-        <input name="name" type="text" class="h-11 w-full rounded-xl border border-secondary/15 bg-white px-4 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 data-invalid:border-red-500" placeholder="Введите ваше имя" />
-        <p class="text-sm text-red-500 hidden" data-error="name"></p>
-      </div>
+        <form class="mt-6 space-y-4" data-order-form data-product-title={productTitle} data-product-price={productPrice || ''} novalidate>
+            <div class="space-y-2">
+                <label class="text-sm font-medium block">
+                    Имя <span class="text-red-500">*</span>
+                </label>
+                <input name="name" type="text" class="h-11 w-full rounded-xl border border-secondary/15 bg-white px-4 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 data-invalid:border-red-500" placeholder="Введите ваше имя" />
+                <p class="text-sm text-red-500 hidden" data-error="name"></p>
+            </div>
 
-      <div class="space-y-2">
-        <label class="text-sm font-medium block">Почта</label>
-        <input name="email" type="email" class="h-11 w-full rounded-xl border border-secondary/15 bg-white px-4 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 data-invalid:border-red-500" placeholder="example@mail.com" />
-        <p class="text-sm text-red-500 hidden" data-error="email"></p>
-      </div>
+            <div class="space-y-2">
+                <label class="text-sm font-medium block">Почта</label>
+                <input name="email" type="email" class="h-11 w-full rounded-xl border border-secondary/15 bg-white px-4 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 data-invalid:border-red-500" placeholder="example@mail.com" />
+                <p class="text-sm text-red-500 hidden" data-error="email"></p>
+            </div>
 
-      <div class="space-y-2">
-        <label class="text-sm font-medium block">
-          Номер телефона <span class="text-red-500">*</span>
-        </label>
-        <input
-          name="phone"
-          type="tel"
-          inputmode="tel"
-          class="h-11 w-full rounded-xl border border-secondary/15 bg-white px-4 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 data-invalid:border-red-500"
-          placeholder="+7 (___) ___-__-__"
-        />
-        <p class="text-sm text-red-500 hidden" data-error="phone"></p>
-      </div>
+            <div class="space-y-2">
+                <label class="text-sm font-medium block">
+                    Номер телефона <span class="text-red-500">*</span>
+                </label>
+                <input
+                    name="phone"
+                    type="tel"
+                    inputmode="tel"
+                    class="h-11 w-full rounded-xl border border-secondary/15 bg-white px-4 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 data-invalid:border-red-500"
+                    placeholder="+7 (___) ___-__-__"
+                />
+                <p class="text-sm text-red-500 hidden" data-error="phone"></p>
+            </div>
 
-      <div class="space-y-2">
-        <label class="text-sm font-medium block">Комментарий</label>
-        <textarea
-          name="comment"
-          rows="3"
-          class="w-full rounded-xl border border-secondary/15 bg-white px-4 py-3 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 resize-none data-invalid:border-red-500"
-          placeholder="Дополнительная информация о заказе..."></textarea>
-        <p class="text-sm text-red-500 hidden" data-error="comment"></p>
-      </div>
+            <div class="space-y-2">
+                <label class="text-sm font-medium block">Комментарий</label>
+                <textarea
+                    name="comment"
+                    rows="3"
+                    class="w-full rounded-xl border border-secondary/15 bg-white px-4 py-3 outline-none focus-visible:ring-3 focus-visible:ring-primary/40 resize-none data-invalid:border-red-500"
+                    placeholder="Дополнительная информация о заказе..."></textarea>
+                <p class="text-sm text-red-500 hidden" data-error="comment"></p>
+            </div>
 
-      <DialogFooter class="mt-6 sm:justify-end">
-        <Button type="submit" variant="primary" size="md" class="w-full sm:w-auto" data-submit-btn> Отправить заявку </Button>
-      </DialogFooter>
-    </form>
-  </DialogContent>
+            <DialogFooter class="mt-6 sm:justify-end">
+                <Button type="submit" variant="primary" size="md" class="w-full sm:w-auto" data-submit-btn> Отправить заявку </Button>
+            </DialogFooter>
+        </form>
+    </DialogContent>
 </Dialog>
 
 <script>
-  import { z } from 'astro/zod'
-  import { toast } from '@/components/starwind/toast'
+    import { z } from 'astro/zod'
+    import { toast } from '@/components/starwind/toast'
 
-  const orderSchema = z.object({
-    name: z
-      .string()
-      .trim()
-      .min(2, 'Имя должно содержать минимум 2 символа')
-      .max(50, 'Имя слишком длинное')
-      .regex(/^[а-яА-Яa-zA-Z\s'-]+$/, 'Имя может содержать только буквы'),
-    email: z.email('Введите корректный email').optional().or(z.literal('')),
-    phone: z
-      .string()
-      .trim()
-      .min(10, 'Введите корректный номер телефона')
-      .regex(/^[\+\d\s\-\(\)]+$/, 'Некорректный формат телефона'),
-    comment: z.string().trim().max(500, 'Комментарий слишком длинный').optional().or(z.literal('')),
-  })
-
-  function clearErrors(form: HTMLFormElement) {
-    form.querySelectorAll('[data-invalid]').forEach((el) => {
-      el.removeAttribute('data-invalid')
+    const orderSchema = z.object({
+        name: z
+            .string()
+            .trim()
+            .min(2, 'Имя должно содержать минимум 2 символа')
+            .max(50, 'Имя слишком длинное')
+            .regex(/^[а-яА-Яa-zA-Z\s'-]+$/, 'Имя может содержать только буквы'),
+        email: z.email('Введите корректный email').optional().or(z.literal('')),
+        phone: z
+            .string()
+            .trim()
+            .min(10, 'Введите корректный номер телефона')
+            .regex(/^[\+\d\s\-\(\)]+$/, 'Некорректный формат телефона'),
+        comment: z.string().trim().max(500, 'Комментарий слишком длинный').optional().or(z.literal('')),
     })
 
-    form.querySelectorAll('[data-error]').forEach((el) => {
-      el.classList.add('hidden')
-      el.textContent = ''
-    })
-  }
+    function clearErrors(form: HTMLFormElement) {
+        form.querySelectorAll('[data-invalid]').forEach((el) => {
+            el.removeAttribute('data-invalid')
+        })
 
-  function showFieldError(form: HTMLFormElement, fieldName: string, message: string) {
-    const input = form.querySelector(`[name="${fieldName}"]`) as HTMLElement | null
-    const errorEl = form.querySelector(`[data-error="${fieldName}"]`) as HTMLElement | null
-
-    if (input) input.setAttribute('data-invalid', '')
-    if (errorEl) {
-      errorEl.textContent = message
-      errorEl.classList.remove('hidden')
-    }
-  }
-
-  function setSubmittingState(button: HTMLButtonElement | null, submitting: boolean) {
-    if (!button) return
-    button.disabled = submitting
-    button.textContent = submitting ? 'Отправка...' : 'Отправить заявку'
-  }
-
-  function normalizePhoneInput(value: string) {
-    let digits = value.replace(/\D/g, '')
-
-    if (!digits.length) return ''
-
-    if (digits[0] === '8') digits = '7' + digits.slice(1)
-    if (digits[0] !== '7') digits = '7' + digits
-
-    digits = digits.slice(0, 11)
-
-    let formatted = '+'
-    if (digits.length > 0) formatted += digits[0]
-    if (digits.length > 1) formatted += ` (${digits.slice(1, 4)}`
-    if (digits.length > 4) formatted += `) ${digits.slice(4, 7)}`
-    if (digits.length > 7) formatted += `-${digits.slice(7, 9)}`
-    if (digits.length > 9) formatted += `-${digits.slice(9, 11)}`
-
-    return formatted
-  }
-
-  const WORKER_URL = 'https://morning-disk-8bb6.hevnxv19.workers.dev'
-
-  async function submitOrder(data: { name: string; email: string; phone: string; comment: string; productTitle: string; productPrice: string }) {
-    const response = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(errorText || 'Не удалось отправить заявку')
+        form.querySelectorAll('[data-error]').forEach((el) => {
+            el.classList.add('hidden')
+            el.textContent = ''
+        })
     }
 
-    return response.json()
-  }
+    function showFieldError(form: HTMLFormElement, fieldName: string, message: string) {
+        const input = form.querySelector(`[name="${fieldName}"]`) as HTMLElement | null
+        const errorEl = form.querySelector(`[data-error="${fieldName}"]`) as HTMLElement | null
 
-  document.querySelectorAll('[data-order-form]').forEach((formEl) => {
-    const form = formEl as HTMLFormElement
-    const submitBtn = form.querySelector('[data-submit-btn]') as HTMLButtonElement | null
-    const phoneInput = form.querySelector('[name="phone"]') as HTMLInputElement | null
+        if (input) input.setAttribute('data-invalid', '')
+        if (errorEl) {
+            errorEl.textContent = message
+            errorEl.classList.remove('hidden')
+        }
+    }
 
-    phoneInput?.addEventListener('input', (e) => {
-      const target = e.currentTarget as HTMLInputElement
-      target.value = normalizePhoneInput(target.value)
+    function setSubmittingState(button: HTMLButtonElement | null, submitting: boolean) {
+        if (!button) return
+        button.disabled = submitting
+        button.textContent = submitting ? 'Отправка...' : 'Отправить заявку'
+    }
+
+    function normalizePhoneInput(value: string) {
+        let digits = value.replace(/\D/g, '')
+
+        if (!digits.length) return ''
+
+        if (digits[0] === '8') digits = '7' + digits.slice(1)
+        if (digits[0] !== '7') digits = '7' + digits
+
+        digits = digits.slice(0, 11)
+
+        let formatted = '+'
+        if (digits.length > 0) formatted += digits[0]
+        if (digits.length > 1) formatted += ` (${digits.slice(1, 4)}`
+        if (digits.length > 4) formatted += `) ${digits.slice(4, 7)}`
+        if (digits.length > 7) formatted += `-${digits.slice(7, 9)}`
+        if (digits.length > 9) formatted += `-${digits.slice(9, 11)}`
+
+        return formatted
+    }
+
+    const WORKER_URL = 'https://morning-disk-8bb6.hevnxv19.workers.dev'
+
+    async function submitOrder(data: { name: string; email: string; phone: string; comment: string; productTitle: string; productPrice: string }) {
+        const response = await fetch(WORKER_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const errorText = await response.text()
+            throw new Error(errorText || 'Не удалось отправить заявку')
+        }
+
+        return response.json()
+    }
+
+    document.querySelectorAll('[data-order-form]').forEach((formEl) => {
+        const form = formEl as HTMLFormElement
+        const submitBtn = form.querySelector('[data-submit-btn]') as HTMLButtonElement | null
+        const phoneInput = form.querySelector('[name="phone"]') as HTMLInputElement | null
+
+        phoneInput?.addEventListener('input', (e) => {
+            const target = e.currentTarget as HTMLInputElement
+            target.value = normalizePhoneInput(target.value)
+        })
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            clearErrors(form)
+
+            const rawData = new FormData(form)
+            const data = {
+                name: String(rawData.get('name') || ''),
+                email: String(rawData.get('email') || ''),
+                phone: String(rawData.get('phone') || ''),
+                comment: String(rawData.get('comment') || ''),
+            }
+
+            const result = orderSchema.safeParse(data)
+
+            if (!result.success) {
+                const errors = result.error.flatten().fieldErrors
+                Object.entries(errors).forEach(([field, messages]) => {
+                    if (messages?.length) {
+                        showFieldError(form, field, messages[0]!)
+                    }
+                })
+                return
+            }
+
+            try {
+                setSubmittingState(submitBtn, true)
+
+                const productTitle = form.dataset.productTitle || 'Неизвестный товар'
+                const productPrice = form.dataset.productPrice || ''
+
+                await submitOrder({
+                    name: result.data.name,
+                    email: result.data.email,
+                    phone: result.data.phone,
+                    comment: result.data.comment,
+                    productTitle,
+                    productPrice,
+                })
+
+                toast.success('Заявка успешно отправлена!', {
+                    description: 'Мы свяжемся с вами в ближайшее время',
+                })
+
+                form.reset()
+
+                const dialogRoot = form.closest('[data-order-modal]') as HTMLElement | null
+                const closeBtn = dialogRoot?.querySelector('[data-dialog-close]') as HTMLButtonElement | null
+                closeBtn?.click()
+            } catch (error) {
+                toast.error('Ошибка при отправке заявки', {
+                    description: error instanceof Error ? error.message : 'Пожалуйста, попробуйте позже или свяжитесь с нами по телефону',
+                })
+            } finally {
+                setSubmittingState(submitBtn, false)
+            }
+        })
     })
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      clearErrors(form)
-
-      const rawData = new FormData(form)
-      const data = {
-        name: String(rawData.get('name') || ''),
-        email: String(rawData.get('email') || ''),
-        phone: String(rawData.get('phone') || ''),
-        comment: String(rawData.get('comment') || ''),
-      }
-
-      const result = orderSchema.safeParse(data)
-
-      if (!result.success) {
-        const errors = result.error.flatten().fieldErrors
-        Object.entries(errors).forEach(([field, messages]) => {
-          if (messages?.length) {
-            showFieldError(form, field, messages[0]!)
-          }
-        })
-        return
-      }
-
-      try {
-        setSubmittingState(submitBtn, true)
-
-        const productTitle = form.dataset.productTitle || 'Неизвестный товар'
-        const productPrice = form.dataset.productPrice || ''
-
-        await submitOrder({
-          name: result.data.name,
-          email: result.data.email,
-          phone: result.data.phone,
-          comment: result.data.comment,
-          productTitle,
-          productPrice,
-        })
-
-        toast.success('Заявка успешно отправлена!', {
-          description: 'Мы свяжемся с вами в ближайшее время',
-        })
-
-        form.reset()
-
-        const dialogRoot = form.closest('[data-order-modal]') as HTMLElement | null
-        const closeBtn = dialogRoot?.querySelector('[data-dialog-close]') as HTMLButtonElement | null
-        closeBtn?.click()
-      } catch (error) {
-        toast.error('Ошибка при отправке заявки', {
-          description: error instanceof Error ? error.message : 'Пожалуйста, попробуйте позже или свяжитесь с нами по телефону',
-        })
-      } finally {
-        setSubmittingState(submitBtn, false)
-      }
-    })
-  })
 </script>
