@@ -68,7 +68,7 @@ const crumbs = [{ text: 'Главная', href: '/' }, { text: prettify(item.dat
             <section class="pt-5 md:py-10">
                 <div class="grid gap-5 lg:grid-cols-2 items-start">
                     <div class="overflow-hidden rounded-xl bg-white h-80 sm:h-125 py-5 sm:py-8">
-                        <Image src={item.data.image} alt={item.data.title} width="420" height="428" class="lg:max-w-110 h-full mx-auto object-contain" />
+                        <Image src={item.data.image} alt={item.data.title} width="420" height="600" class="lg:max-w-110 h-full mx-auto object-contain" />
                     </div>
 
                     <article class="rounded-xl bg-white p-6 md:p-10">
@@ -107,7 +107,7 @@ const crumbs = [{ text: 'Главная', href: '/' }, { text: prettify(item.dat
                                         <article class="embla__slide overflow-hidden rounded-2xl bg-white">
                                             <a href={`/services/${similarItem.data.category}/${similarItem.data.type}/${similarItem.id}`} class="group block h-full">
                                                 <div class="relative h-64 bg-muted">
-                                                    <Image src={similarItem.data.image} alt={similarItem.data.title} width="430" height="260" class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
+                                                    <Image src={similarItem.data.image} alt={similarItem.data.title} width="430" height="600" class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
                                                     <span class="absolute top-4 left-4 rounded bg-white px-3 py-1 text-sm text-secondary">{TYPE_LABELS[similarItem.data.type] ?? similarItem.data.type}</span>
                                                 </div>
 

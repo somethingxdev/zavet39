@@ -17,7 +17,7 @@ const productHref = `/services/${item.data.category}/${item.data.type}/${item.id
     <CardHeader class="px-0">
         <a href={productHref} class="group block">
             <div class="relative h-50 sm:h-69 overflow-hidden bg-muted">
-                <Image width="335" height="276" src={item.data.image} alt={item.data.title} class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
+                <Image width="335" height="500" src={item.data.image} alt={item.data.title} class="size-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
                 <span class="absolute top-4 left-4 rounded bg-white px-3 py-2 text-secondary">{typeLabel}</span>
             </div>
         </a>
