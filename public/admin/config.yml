@@ -2,7 +2,7 @@
 
 backend:
   name: github
-  repo: user/repo
+  repo: somethingxdev/zavet39
 
 media_folder: /assets
 
