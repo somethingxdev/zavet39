@@ -12,6 +12,9 @@ media_libraries:
       max_file_size: 1024000 # default: Infinity
       slugify_filename: true # default: false
 
+
+
+
 singletons:
   - name: gallery
     label: Галерея
@@ -29,8 +32,9 @@ collections:
   - name: monuments
     label: Памятники
     label_singular: Monument
+    editor:
+      preview: false
     folder: /src/data/monuments
-    preview: false
     fields:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/monuments }
