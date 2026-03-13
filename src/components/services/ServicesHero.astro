@@ -54,7 +54,7 @@ const { crumbs, title, description, showButton = true, imageSrc = defaultHeroIma
         <p class="mb-12 max-w-5xl text-lg text-white/85 sm:text-xl">{description}</p>
 
         <div class="w-fit">
-            <OrderModal buttonText="Заказать памятник" />
+            <OrderModal buttonText={`Заказать ${title.toLowerCase()}`} />
         </div>
     </div>
 </section>

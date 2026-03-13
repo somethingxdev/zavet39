@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content'
+import ServiceListPage from '@/components/services/ServiceListPage.astro'
+
+const categorySlug = 'crosses'
+const categoryTitle = 'Кресты'
+
+export async function getStaticPaths({ paginate }) {
+    const items = await getCollection('crosses')
+    if (!items.length) return []
+    return paginate(items, { pageSize: 12 })
+}
+
+const { page } = Astro.props
+if (!page) {
+    throw new Error('Expected `page` in Astro.props for paginated route /services/crosses/[...page]')
+}
+---
+
+<ServiceListPage title={categoryTitle} categorySlug={categorySlug} page={page} />

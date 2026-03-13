@@ -12,9 +12,6 @@ media_libraries:
       max_file_size: 1024000 # default: Infinity
       slugify_filename: true # default: false
 
-
-
-
 singletons:
   - name: gallery
     label: Галерея
@@ -44,11 +41,139 @@ collections:
       - name: type
         label: Тип
         widget: select
+        required: false
         options:
           - { label: Вертикальный, value: 'vertical' }
           - { label: Горизонтальный, value: 'horizontal' }
           - { label: Гранистый, value: 'faceted' }
           - { label: Комбинированный, value: 'combined' }
-      - name: category
-        widget: hidden
-        default: 'monuments'
+  - name: curbs
+    label: Бордюры
+    label_singular: Curb
+    editor:
+      preview: false
+    folder: /src/data/curbs
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/curbs }
+      - { label: Материалы, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string }
+      - { label: Стоимость, name: price, widget: string }
+  - name: complexes
+    label: Комплексы
+    label_singular: Complex
+    editor:
+      preview: false
+    folder: /src/data/complexes
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/complexes }
+      - { label: Материалы, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string }
+      - { label: Стоимость, name: price, widget: string }
+
+  - name: socles
+    label: Цоколи
+    label_singular: Socle
+    editor:
+      preview: false
+    folder: /src/data/socles
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/socles }
+      - { label: Материалы, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string }
+      - { label: Стоимость, name: price, widget: string }
+      - name: type
+        label: Тип
+        widget: select
+        required: false
+        options:
+          - { label: Вертикальный, value: 'vertical' }
+          - { label: Горизонтальный, value: 'horizontal' }
+          - { label: Гранистый, value: 'faceted' }
+          - { label: Комбинированный, value: 'combined' }
+  - name: fences
+    label: Ограды
+    label_singular: Fence
+    editor:
+      preview: false
+    folder: /src/data/fences
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/fences }
+      - { label: Материалы, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string }
+      - { label: Стоимость, name: price, widget: string }
+      - name: type
+        label: Тип
+        widget: select
+        required: false
+        options:
+          - { label: Вертикальный, value: 'vertical' }
+          - { label: Горизонтальный, value: 'horizontal' }
+          - { label: Гранистый, value: 'faceted' }
+          - { label: Комбинированный, value: 'combined' }
+  - name: benches-and-tables
+    label: Лавочки и столики
+    label_singular: BenchAndTable
+    editor:
+      preview: false
+    folder: /src/data/benches-and-tables
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/benches-and-tables }
+      - { label: Материалы, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string }
+      - { label: Стоимость, name: price, widget: string }
+      - name: type
+        label: Тип
+        widget: select
+        required: false
+        options:
+          - { label: Вертикальный, value: 'vertical' }
+          - { label: Горизонтальный, value: 'horizontal' }
+          - { label: Гранистый, value: 'faceted' }
+          - { label: Комбинированный, value: 'combined' }
+  - name: crosses
+    label: Кресты
+    label_singular: Cross
+    editor:
+      preview: false
+    folder: /src/data/crosses
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/crosses }
+      - { label: Материалы, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string }
+      - { label: Стоимость, name: price, widget: string }
+      - name: type
+        label: Тип
+        widget: select
+        required: false
+        options:
+          - { label: Вертикальный, value: 'vertical' }
+          - { label: Горизонтальный, value: 'horizontal' }
+          - { label: Гранистый, value: 'faceted' }
+          - { label: Комбинированный, value: 'combined' }
+  - name: accessories
+    label: Аксессуары
+    label_singular: Accessory
+    editor:
+      preview: false
+    folder: /src/data/accessories
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/accessories }
+      - { label: Материалы, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string }
+      - { label: Стоимость, name: price, widget: string }
+      - name: type
+        label: Тип
+        widget: select
+        required: false
+        options:
+          - { label: Вертикальный, value: 'vertical' }
+          - { label: Горизонтальный, value: 'horizontal' }
+          - { label: Гранистый, value: 'faceted' }
+          - { label: Комбинированный, value: 'combined' }
