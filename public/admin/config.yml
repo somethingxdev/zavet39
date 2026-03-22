@@ -32,6 +32,7 @@ collections:
     editor:
       preview: false
     folder: /src/data/monuments
+    create: true
     fields:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/monuments }
@@ -39,66 +40,67 @@ collections:
       - { label: Размеры, name: dimensions, widget: string }
       - { label: Стоимость, name: price, widget: string }
       - name: type
-        label: Тип
+        label: Подкатегория
         widget: select
         required: false
         options:
           - { label: Вертикальный, value: 'vertical' }
           - { label: Горизонтальный, value: 'horizontal' }
-          - { label: Гранистый, value: 'faceted' }
+          - { label: Гранитный крест, value: 'granite-cross' }
           - { label: Комбинированный, value: 'combined' }
-  - name: curbs
-    label: Бордюры
-    label_singular: Curb
+          - { label: Резной, value: 'carved' }
+          - { label: Мраморная крошка, value: 'marble-chips' }
+  - name: improvement
+    label: Благоустройство
+    label_singular: Improvement
     editor:
       preview: false
-    folder: /src/data/curbs
+    folder: /src/data/improvement
+    create: true
     fields:
       - { label: Название, name: title, widget: string }
-      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/curbs }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/improvement }
       - { label: Материалы, name: materials, widget: text }
       - { label: Размеры, name: dimensions, widget: string }
       - { label: Стоимость, name: price, widget: string }
+      - name: type
+        label: Подкатегория
+        widget: select
+        required: false
+        options:
+          - { label: Подиумы, value: 'socles' }
+          - { label: Бордюры, value: 'curbs' }
   - name: complexes
     label: Комплексы
     label_singular: Complex
     editor:
       preview: false
     folder: /src/data/complexes
+    create: true
     fields:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/complexes }
       - { label: Материалы, name: materials, widget: text }
       - { label: Размеры, name: dimensions, widget: string }
       - { label: Стоимость, name: price, widget: string }
-
-  - name: socles
-    label: Цоколи
-    label_singular: Socle
-    editor:
-      preview: false
-    folder: /src/data/socles
-    fields:
-      - { label: Название, name: title, widget: string }
-      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/socles }
-      - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
       - name: type
-        label: Тип
+        label: Подкатегория
         widget: select
         required: false
         options:
-          - { label: Вертикальный, value: 'vertical' }
-          - { label: Горизонтальный, value: 'horizontal' }
-          - { label: Гранистый, value: 'faceted' }
-          - { label: Комбинированный, value: 'combined' }
+          - { label: Вертикальные, value: 'vertical' }
+          - { label: Горизонтальные, value: 'horizontal' }
+          - { label: Гранитные кресты, value: 'granite-cross' }
+          - { label: Комбинированные, value: 'combined' }
+          - { label: Резные, value: 'carved' }
+          - { label: Мраморная крошка, value: 'marble-chips' }
   - name: fences
     label: Ограды
     label_singular: Fence
     editor:
       preview: false
     folder: /src/data/fences
+    create: true
     fields:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/fences }
@@ -106,20 +108,20 @@ collections:
       - { label: Размеры, name: dimensions, widget: string }
       - { label: Стоимость, name: price, widget: string }
       - name: type
-        label: Тип
+        label: Подкатегория
         widget: select
         required: false
         options:
-          - { label: Вертикальный, value: 'vertical' }
-          - { label: Горизонтальный, value: 'horizontal' }
-          - { label: Гранистый, value: 'faceted' }
-          - { label: Комбинированный, value: 'combined' }
+          - { label: Металлические, value: 'metal' }
+          - { label: Кованые, value: 'forged' }
+          - { label: Гранитные, value: 'granite' }
   - name: benches-and-tables
     label: Лавочки и столики
     label_singular: BenchAndTable
     editor:
       preview: false
     folder: /src/data/benches-and-tables
+    create: true
     fields:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/benches-and-tables }
@@ -127,20 +129,20 @@ collections:
       - { label: Размеры, name: dimensions, widget: string }
       - { label: Стоимость, name: price, widget: string }
       - name: type
-        label: Тип
+        label: Подкатегория
         widget: select
         required: false
         options:
-          - { label: Вертикальный, value: 'vertical' }
-          - { label: Горизонтальный, value: 'horizontal' }
-          - { label: Гранистый, value: 'faceted' }
-          - { label: Комбинированный, value: 'combined' }
+          - { label: Лавочки, value: 'benches' }
+          - { label: Столики, value: 'tables' }
+          - { label: Комплекты, value: 'sets' }
   - name: crosses
     label: Кресты
     label_singular: Cross
     editor:
       preview: false
     folder: /src/data/crosses
+    create: true
     fields:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/crosses }
@@ -148,20 +150,43 @@ collections:
       - { label: Размеры, name: dimensions, widget: string }
       - { label: Стоимость, name: price, widget: string }
       - name: type
-        label: Тип
+        label: Подкатегория
         widget: select
         required: false
         options:
-          - { label: Вертикальный, value: 'vertical' }
-          - { label: Горизонтальный, value: 'horizontal' }
-          - { label: Гранистый, value: 'faceted' }
-          - { label: Комбинированный, value: 'combined' }
+          - { label: Гранитный крест, value: 'granite' }
+          - { label: Металлический крест, value: 'metal' }
+  - name: monument-design
+    label: Оформление памятника
+    label_singular: MonumentDesign
+    editor:
+      preview: false
+    folder: /src/data/monument-design
+    create: true
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/monument-design }
+      - { label: Описание, name: materials, widget: text }
+      - { label: Размеры, name: dimensions, widget: string, required: false }
+      - { label: Стоимость, name: price, widget: string }
+      - name: type
+        label: Подкатегория
+        widget: select
+        required: false
+        options:
+          - { label: Гравировка портрета, value: 'portrait-engraving' }
+          - { label: Гравировка букв, value: 'letter-engraving' }
+          - { label: Шрифты, value: 'fonts' }
+          - { label: Буквы из металла, value: 'metal-letters' }
+          - { label: Религиозная гравировка, value: 'religious-engraving' }
+          - { label: Комплекс гравировки, value: 'engraving-complex' }
   - name: accessories
     label: Аксессуары
     label_singular: Accessory
     editor:
       preview: false
     folder: /src/data/accessories
+    create: true
     fields:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/accessories }
@@ -169,11 +194,11 @@ collections:
       - { label: Размеры, name: dimensions, widget: string }
       - { label: Стоимость, name: price, widget: string }
       - name: type
-        label: Тип
+        label: Подкатегория
         widget: select
         required: false
         options:
-          - { label: Вертикальный, value: 'vertical' }
-          - { label: Горизонтальный, value: 'horizontal' }
-          - { label: Гранистый, value: 'faceted' }
-          - { label: Комбинированный, value: 'combined' }
+          - { label: Вазы, value: 'vases' }
+          - { label: Лампады, value: 'lamps' }
+          - { label: Крестики, value: 'small-crosses' }
+          - { label: Цветы, value: 'flowers' }
