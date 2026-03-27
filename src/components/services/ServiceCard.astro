@@ -1,0 +1,136 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import { Button } from '@/components/starwind/button'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/starwind/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
+
+type Props = {
+    item: CollectionEntry<'monuments' | 'curbs' | 'complexes' | 'socles' | 'fences' | 'benches-and-tables' | 'crosses' | 'accessories'>
+    typeLabel?: string
+    categorySlug: string
+}
+
+const { item, typeLabel, categorySlug } = Astro.props
+const productHref = `/services/${categorySlug}/${item.id}`
+
+const variants = item.data.dimensionsAndPrice ?? []
+const firstVariant = variants[0]
+const initialDimensions = firstVariant?.dimensions ?? '—'
+const initialPrice = firstVariant?.price?.trim() ?? ''
+const variantPrices = variants.map((variant) => variant.price?.trim() ?? '')
+---
+
+<Card class="gap-5" data-service-card data-variant-prices={JSON.stringify(variantPrices)}>
+    <CardHeader class="px-0">
+        <a href={productHref} class="group block w-full">
+            <div class="relative h-50 sm:h-69 w-full overflow-hidden bg-muted">
+                <Image width="335" height="600" src={item.data.image} alt={item.data.title} class="w-full max-h-70 object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
+                {typeLabel && <span class="absolute top-4 left-4 rounded bg-white px-3 py-2 text-secondary">{typeLabel}</span>}
+            </div>
+        </a>
+    </CardHeader>
+
+    <CardContent class="space-y-3">
+        <CardTitle class="mb-4">
+            <a href={productHref} class="transition-colors hover:text-primary">
+                {item.data.title}
+            </a>
+        </CardTitle>
+
+        <p>
+            <span class="font-semibold">Материалы:</span>
+            {item.data.materials}
+        </p>
+
+        {
+            variants.length > 1 ? (
+                <div class="flex items-center gap-3">
+                    <label class="font-semibold shrink-0" for={`dimensions-${item.id}`}>
+                        Размеры:
+                    </label>
+
+                    <Select data-dimensions-select class="flex-1" defaultValue="0">
+                        <SelectTrigger id={`dimensions-${item.id}`} class="w-full bg-white" size="sm">
+                            <SelectValue placeholder={initialDimensions} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {variants.map((variant, index) => (
+                                <SelectItem value={`${index}`}>{variant.dimensions}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+            ) : (
+                <p>
+                    <span class="font-semibold">Размеры:</span>
+                    {initialDimensions}
+                </p>
+            )
+        }
+    </CardContent>
+
+    <CardFooter>
+        <p data-card-price class:list={['text-xl font-heading', !initialPrice && 'hidden']}>
+            {initialPrice}
+        </p>
+
+        <div data-card-fallback class:list={['w-full', !!initialPrice && 'hidden']}>
+            <Button href="/contacts" variant="primary" size="md" class="w-full"> Узнать цену </Button>
+        </div>
+    </CardFooter>
+</Card>
+
+<script>
+    type StarwindSelectChangeDetail = {
+        value: string
+        selectId?: string
+        label?: string
+    }
+
+    const cards = document.querySelectorAll('[data-service-card]')
+
+    cards.forEach((cardNode) => {
+        const card = cardNode as HTMLElement
+        const selectRoot = card.querySelector('[data-dimensions-select]') as HTMLElement | null
+        const priceEl = card.querySelector('[data-card-price]') as HTMLElement | null
+        const fallbackEl = card.querySelector('[data-card-fallback]') as HTMLElement | null
+
+        if (!priceEl || !fallbackEl) return
+
+        const pricesRaw = card.dataset.variantPrices ?? '[]'
+        let prices: string[] = []
+
+        try {
+            const parsed = JSON.parse(pricesRaw)
+            if (Array.isArray(parsed)) prices = parsed.map((value) => String(value ?? '').trim())
+        } catch {
+            prices = []
+        }
+
+        const syncPrice = (indexValue: string) => {
+            const index = Number(indexValue)
+            const nextPrice = Number.isNaN(index) ? '' : (prices[index] ?? '')
+
+            priceEl.textContent = nextPrice
+            priceEl.classList.toggle('hidden', !nextPrice)
+            fallbackEl.classList.toggle('hidden', !!nextPrice)
+        }
+
+        if (!selectRoot) {
+            syncPrice('0')
+            return
+        }
+
+        const hiddenNativeSelect = selectRoot.querySelector('.starwind-sr-only') as HTMLSelectElement | null
+
+        const handleStarwindChange = (event: Event) => {
+            const customEvent = event as CustomEvent<StarwindSelectChangeDetail>
+            syncPrice(customEvent.detail?.value ?? '0')
+        }
+
+        selectRoot.addEventListener('starwind-select:change', handleStarwindChange)
+        hiddenNativeSelect?.addEventListener('change', () => syncPrice(hiddenNativeSelect.value))
+        syncPrice(hiddenNativeSelect?.value ?? '0')
+    })
+</script>

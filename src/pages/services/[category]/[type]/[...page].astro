@@ -1,0 +1,116 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection, type CollectionEntry } from 'astro:content'
+import types from '@/data/monuments/types.json'
+import Layout from '@/layouts/Layout.astro'
+
+import Pagination from '@/components/services/Pagination.astro'
+import ServicesHero from '@/components/services/ServicesHero.astro'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
+import { SERVICE_CATEGORIES, getServiceCategoryBySlug, type ServiceCollectionName, type ServiceCategorySlug } from '@/data/service-categories'
+import Card from '@/components/services/ServiceCard.astro'
+
+type ServiceItem = CollectionEntry<ServiceCollectionName>
+
+type TypeItem = {
+    slug: string
+    title: string
+}
+
+type PagePayload = {
+    data: ServiceItem[]
+    currentPage: number
+    lastPage: number
+}
+
+const TYPE_LABELS = Object.fromEntries(types.map((type) => [type.slug, type.title]))
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+    const categoriesWithTypeFilters = SERVICE_CATEGORIES.filter((category) => category.hasTypeFilters)
+
+    const paginatedPaths = await Promise.all(
+        categoriesWithTypeFilters.map(async (category) => {
+            const items = await getCollection(category.collection)
+            const categoryTypes = types.filter((type) => items.some((item) => item.data.type === type.slug))
+
+            return categoryTypes.flatMap((type) => {
+                const typeItems = items.filter((item) => item.data.type === type.slug)
+                if (!typeItems.length) return []
+
+                return paginate(typeItems, {
+                    pageSize: 12,
+                    params: { category: category.slug, type: type.slug },
+                })
+            })
+        }),
+    )
+
+    return paginatedPaths.flat()
+}
+
+const categorySlug = (Astro.params.category ?? '') as ServiceCategorySlug
+const selectedType = Astro.params.type ?? ''
+const category = getServiceCategoryBySlug(categorySlug)
+
+if (!category || !category.hasTypeFilters) {
+    throw new Error(`Category "${categorySlug}" does not support type filters`)
+}
+
+const allItems = await getCollection(category.collection)
+const availableTypes: TypeItem[] = types.filter((type) => allItems.some((item) => item.data.type === type.slug))
+
+const { page } = Astro.props as { page: PagePayload }
+if (!page) {
+    throw new Error('Expected `page` in Astro.props for paginated route /services/[category]/[type]/[...page]')
+}
+
+const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href: '/services' }, { text: category.title }]
+const items = page.data
+const currentPage = page.currentPage
+const lastPage = page.lastPage
+const basePath = selectedType ? `/services/${category.slug}/${selectedType}` : `/services/${category.slug}`
+---
+
+<Layout>
+    <ServicesHero crumbs={customCrumbs} title={category.title} description="Наша компания предоставляет полный спектр услуг по изготовлению, оформлениюи установке памятников из гранита, мрамора, мраморной крошки и других материалов." />
+
+    <section class="py-12 md:py-16">
+        <div class="container">
+            {
+                availableTypes.length > 0 && (
+                    <div class="mb-10 flex items-center justify-end gap-4">
+                        <Select id="type-filter" name="type-filter" class="w-50" defaultValue={selectedType ? `/services/${category.slug}/${selectedType}` : `/services/${category.slug}`}>
+                            <SelectTrigger class="min-w-50">
+                                <SelectValue placeholder="Все типы" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value={`/services/${category.slug}`} href={`/services/${category.slug}`}>
+                                    Все типы
+                                </SelectItem>
+                                {availableTypes.map((type) => (
+                                    <SelectItem value={`/services/${category.slug}/${type.slug}`} href={`/services/${category.slug}/${type.slug}`}>
+                                        {type.title}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )
+            }
+
+            {
+                items.length ? (
+                    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+                        {items.map((item) => (
+                            <Card item={item} categorySlug={category.slug} typeLabel={item.data.type ? (TYPE_LABELS[item.data.type] ?? item.data.type) : ''} />
+                        ))}
+                    </div>
+                ) : (
+                    <p class="text-lg text-foreground/80">Для выбранного типа пока нет товаров.</p>
+                )
+            }
+
+            <Pagination currentPage={currentPage} lastPage={lastPage} basePath={basePath} />
+        </div>
+    </section>
+</Layout>

@@ -1,72 +1,75 @@
 ﻿---
-import Button from '@/components/starwind/button/Button.astro'
-import galleryData from '@/data/gallery.json'
-
-import type { ImageMetadata } from 'astro'
+import { getCollection } from 'astro:content'
 import { Image, getImage } from 'astro:assets'
+import Button from '@/components/starwind/button/Button.astro'
 
-type GalleryItem = {
-    image: string
-    alt: string
-}
-
-const imageModules = import.meta.glob<{ default: ImageMetadata }>('/src/assets/gallery/*.{png,jpg,jpeg,webp,avif}', {
-    eager: true,
-})
+const galleryEntries = (await getCollection('gallery'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 5)
 
 const galleryItems = await Promise.all(
-    (galleryData.items as GalleryItem[]).map(async ({ image, alt }) => {
-        const imageModule = imageModules[image]?.default
+  galleryEntries.map(async (entry) => {
+    const optimizedImage = await getImage({ src: entry.data.image })
 
-        if (!imageModule) throw new Error(`Gallery image not found: ${image}`)
-
-        const optimizedImage = await getImage({ src: imageModule })
-
-        return {
-            alt,
-            image: imageModule,
-            href: optimizedImage.src,
-            width: optimizedImage.attributes.width,
-            height: optimizedImage.attributes.height,
-        }
-    }),
+    return {
+      title: entry.data.title,
+      alt: entry.data.alt,
+      image: entry.data.image,
+      href: optimizedImage.src,
+      width: optimizedImage.attributes.width,
+      height: optimizedImage.attributes.height,
+    }
+  }),
 )
 ---
 
 <section class="py-10 sm:py-20">
-    <div class="container">
-        <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl lg:text-6xl">Галерея работ</h2>
+  <div class="container">
+    <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl lg:text-6xl">Галерея работ</h2>
 
-        <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12" id="gallery">
-            {
-                galleryItems.map(({ alt, image, href, width, height }, index) => {
-                    const cardClass = index === 0 ? 'lg:col-span-6 lg:row-span-2' : 'lg:col-span-3'
+    <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12" id="home-gallery">
+      {
+        galleryItems.map(({ title, alt, image, href, width, height }, index) => {
+          const cardClass = index === 0 ? 'lg:col-span-6 lg:row-span-2' : 'lg:col-span-3'
 
-                    return (
-                        <li class={cardClass}>
-                            <a href={href} class="group block h-full overflow-hidden rounded-2xl" data-pswp-width={width} data-pswp-height={height}>
-                                <Image src={image} alt={alt} class:list={['h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]', index === 0 ? 'aspect-16/11' : 'aspect-16/10']} />
-                            </a>
-                        </li>
-                    )
-                })
-            }
-        </ul>
+          return (
+            <li class={cardClass}>
+              <a
+                href={href}
+                class="group block h-full overflow-hidden rounded-2xl"
+                data-pswp-width={width}
+                data-pswp-height={height}
+                aria-label={title}
+              >
+                <Image
+                  src={image}
+                  alt={alt}
+                  class:list={[
+                    'h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]',
+                    index === 0 ? 'aspect-16/11' : 'aspect-16/10',
+                  ]}
+                />
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
 
-        <div class="mt-8 flex justify-center sm:mt-10">
-            <Button href="#" variant="primary" size="lg" class="shadow-lg shadow-primary/25"> Смотреть все фото </Button>
-        </div>
+    <div class="mt-8 flex justify-center sm:mt-10">
+      <Button href="/works" variant="primary" size="lg" class="shadow-lg shadow-primary/25">Смотреть все фото</Button>
     </div>
+  </div>
 </section>
 
 <script>
-    import PhotoSwipeLightbox from 'photoswipe/lightbox'
-    import 'photoswipe/style.css'
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+  import 'photoswipe/style.css'
 
-    const lightbox = new PhotoSwipeLightbox({
-        gallery: '#gallery',
-        children: 'a',
-        pswpModule: () => import('photoswipe'),
-    })
-    lightbox.init()
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#home-gallery',
+    children: 'a',
+    pswpModule: () => import('photoswipe'),
+  })
+  lightbox.init()
 </script>

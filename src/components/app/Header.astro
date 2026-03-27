@@ -19,70 +19,79 @@ const navItems = [
     { label: 'Наши работы', href: '/works' },
     { label: 'Контакты', href: '/contacts' },
 ]
+
+const isInnerPage = Boolean(Astro.params.slug) || Astro.url.pathname === '/contacts'
 ---
 
-<header class="fixed sm:absolute top-0 left-0 md:top-5 z-50 w-full transition-all" class:list={Astro.params.slug ? 'bg-black/70 md:bg-transparent' : ''} data-mobile-header-shell>
+<header class="fixed sm:absolute left-0 md:top-5 z-50 w-full transition-all" class:list={isInnerPage ? 'bg-secondary xl:bg-transparent' : ''} data-mobile-header-shell>
     <div class="container">
-        <div class="flex justify-between items-center gap-4 py-4 sm:px-6 sm:py-5 rounded-2xl transition-all" class:list={Astro.params.slug ? 'lg:bg-secondary' : 'pb-5 lg:bg-black/30 lg:backdrop-blur-3xl'}>
-            <div class="flex items-center gap-6 lg:gap-15">
+        <div class="flex justify-between items-center gap-4 py-4 sm:px-6 sm:py-5 rounded-2xl transition-all" class:list={isInnerPage ? 'xl:bg-secondary' : 'pb-5 xl:bg-black/30 xl:backdrop-blur-3xl'}>
+            <div class="flex items-center gap-6 xl:gap-15">
                 <a href="/" class="flex items-center gap-2">
-                    <Image src={import('@/assets/logo.svg')} alt="Logo" class="w-55 sm:w-auto" />
+                    <Image src={import('@/assets/logo.svg')} alt="Logo" class="size-12 w-auto" />
                     <div class="flex flex-col text-white">
                         <span class="uppercase tracking-wider text-2xl font-heading">Завет</span>
                         <span class="uppercase text-xs font-medium tracking-tight">Память о наших предках</span>
                     </div>
                 </a>
 
-                <div class="relative hidden lg:block py-4 px-5 rounded-xl text-white w-[435px] bg-white/5">
+                <div class="relative hidden xl:block py-4 px-5 rounded-xl text-white w-[435px] bg-white/5">
                     <input type="text" placeholder="Поиск товаров" class="w-full outline-none placeholder:text-white/80" />
                     <Search class="absolute right-5 top-1/2 -translate-y-1/2 size-5" />
                 </div>
             </div>
 
-            <div class="hidden lg:flex items-center gap-4">
+            <div class="hidden xl:flex items-center gap-4">
                 <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
                 <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
                 <Button class="ml-2" href="tel:+79106367313"> <PhoneIcon /> +7 (910) 636-73-13</Button>
             </div>
 
-            <Sheet class="lg:hidden">
-                <SheetTrigger class="inline-flex items-center justify-center rounded-full size-12 bg-white/10 text-white">
-                    <Menu class="size-6" />
-                    <span class="sr-only">Открыть меню</span>
-                </SheetTrigger>
+            <div class="xl:hidden flex items-center gap-3">
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon class="size-10" /> </a>
+                    <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon class="size-10" /> </a>
+                    <Button class="ml-2" size="sm" href="tel:+79106367313"> <PhoneIcon /> +7 (910) 636-73-13</Button>
+                </div>
+                <Sheet>
+                    <SheetTrigger class="inline-flex items-center justify-center rounded-full size-12 bg-white/10 text-white">
+                        <Menu class="size-6" />
+                        <span class="sr-only">Открыть меню</span>
+                    </SheetTrigger>
 
-                <SheetContent side="right" class="bg-secondary text-white border-white/10 p-6">
-                    <div class="flex flex-col gap-6 pt-6">
-                        <div class="flex items-center gap-4">
-                            <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
-                            <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
+                    <SheetContent side="right" class="bg-secondary text-white border-white/10 p-6">
+                        <div class="flex flex-col gap-6 pt-6">
+                            <div class="flex items-center gap-4">
+                                <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
+                                <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
+                            </div>
+
+                            <Button class="w-full justify-center" href="tel:+79106367313"> <PhoneIcon /> +7 (910) 636-73-13</Button>
+
+                            <nav>
+                                <ul class="flex flex-col gap-3 text-lg">
+                                    {
+                                        navItems.map((item) => (
+                                            <li>
+                                                <a href={item.href} class="text-white/90 hover:text-primary transition-colors">
+                                                    {item.label}
+                                                </a>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </nav>
                         </div>
-
-                        <Button class="w-full justify-center" href="tel:+79106367313"> <PhoneIcon /> +7 (910) 636-73-13</Button>
-
-                        <nav>
-                            <ul class="flex flex-col gap-3 text-lg">
-                                {
-                                    navItems.map((item) => (
-                                        <li>
-                                            <a href={item.href} class="text-white/90 hover:text-primary transition-colors">
-                                                {item.label}
-                                            </a>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </nav>
-                    </div>
-                </SheetContent>
-            </Sheet>
+                    </SheetContent>
+                </Sheet>
+            </div>
         </div>
 
-        <nav class="hidden lg:block mt-6">
+        <nav class="hidden xl:block border-b-2 border-[#2719071A] py-4">
             <ul class="flex items-center justify-between gap-6">
                 {
                     navItems.map((item) => (
-                        <li class=" transition-colors font-medium" class:list={Astro.params.slug ? 'text-secondary link-underline link-underline-black' : 'text-white/90 hover:text-primary'}>
+                        <li class=" transition-colors font-medium" class:list={isInnerPage ? 'text-secondary link-underline link-underline-black' : 'text-white/90 hover:text-primary'}>
                             <a href={item.href}>{item.label}</a>
                         </li>
                     ))

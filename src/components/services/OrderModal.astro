@@ -21,8 +21,10 @@ const { productTitle, productPrice, buttonText = 'Заказать' } = Astro.pr
             <DialogTitle>Оставить заявку</DialogTitle>
             <DialogDescription>
                 Заполните форму, и мы свяжемся с вами по заказу
-                <span class="text-primary font-semibold"> {productTitle}</span>
-                {productPrice && <span class="block mt-1 text-secondary/70">Стоимость: {productPrice} ₽</span>}
+                <span class="text-primary font-semibold" data-order-product-title> {productTitle}</span>
+                <span class="block mt-1 text-secondary/70" data-order-product-price hidden={!productPrice}>
+                    Стоимость: {productPrice}
+                </span>
             </DialogDescription>
         </DialogHeader>
 
@@ -199,9 +201,9 @@ const { productTitle, productPrice, buttonText = 'Заказать' } = Astro.pr
 
                 await submitOrder({
                     name: result.data.name,
-                    email: result.data.email,
+                    email: result.data.email ?? '',
                     phone: result.data.phone,
-                    comment: result.data.comment,
+                    comment: result.data.comment ?? '',
                     productTitle,
                     productPrice,
                 })

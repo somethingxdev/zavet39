@@ -7,8 +7,14 @@ const serviceSchema = ({ image }: { image: () => any }) =>
     title: z.string(),
     image: image(),
     materials: z.string(),
-    dimensions: z.string(),
-    price: z.string().optional(),
+    dimensionsAndPrice: z
+      .array(
+        z.object({
+          dimensions: z.string(),
+          price: z.string(),
+        }),
+      )
+      .nonempty(),
     type: z.string().optional(),
   })
 
@@ -52,6 +58,19 @@ const accessories = defineCollection({
   schema: serviceSchema,
 })
 
+const gallery = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/data/gallery' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      image: image(),
+      alt: z.string(),
+      tags: z.array(z.string()).default([]),
+      featured: z.boolean().optional(),
+      order: z.number().default(0),
+    }),
+})
+
 export const collections = {
   monuments,
   curbs,
@@ -61,4 +80,5 @@ export const collections = {
   'benches-and-tables': benchesAndTables,
   crosses,
   accessories,
+  gallery,
 }

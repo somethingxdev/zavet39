@@ -24,6 +24,18 @@ singletons:
         fields:
           - { label: Изображение, name: image, widget: image, media_folder: /src/assets/gallery }
           - { label: Alt, name: alt, widget: string }
+  - name: contacts
+    label: Контакты
+    file: /src/data/contacts.json
+    fields:
+      - { label: Заголовок страницы, name: pageTitle, widget: string }
+      - { label: Заголовок адреса, name: addressLabel, widget: string }
+      - { label: Адрес, name: address, widget: text, hint: 'Можно указывать адрес в несколько строк' }
+      - { label: Заголовок телефонов, name: phoneLabel, widget: string }
+      - { label: Телефон (для отображения), name: phoneDisplay, widget: string }
+      - { label: Телефон (для ссылки, без символов), name: phoneHref, widget: string, hint: 'Пример: +79106367313' }
+      - { label: Заголовок email, name: emailLabel, widget: string }
+      - { label: Email, name: email, widget: string }
 
 collections:
   - name: monuments
@@ -37,8 +49,12 @@ collections:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/monuments }
       - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select
