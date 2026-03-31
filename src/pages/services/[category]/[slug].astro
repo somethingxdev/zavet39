@@ -46,6 +46,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 const { item, similarItems, categorySlug, categoryTitle } = Astro.props as StaticPathProps
+const limitedSimilarItems = similarItems.slice(0, 6)
 
 const TYPE_LABELS = types.reduce<Record<string, string>>((acc, typeItem) => {
     acc[typeItem.slug] = typeItem.title
@@ -64,7 +65,7 @@ const mainInitialPrice = mainOptions[0]?.price ?? ''
 <Layout>
     <div class="py-30 md:pt-50 md:pb-20">
         <div class="container">
-            <div class="text-secondary border-t-2 border-[#2719071A] pt-6">
+            <div class="text-secondary">
                 <Breadcrumbs crumbs={crumbs}>
                     <svg slot="index" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_81_360)">
@@ -131,23 +132,23 @@ const mainInitialPrice = mainOptions[0]?.price ?? ''
             </section>
 
             {
-                similarItems.length > 0 && (
+                limitedSimilarItems.length > 0 && (
                     <section class="py-20">
                         <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl lg:text-6xl">Похожие товары</h2>
 
                         <div class="embla" data-similar-embla>
                             <div class="embla__viewport mb-8 overflow-visible">
                                 <div class="embla__container flex gap-5 touch-pan-y">
-                                    {similarItems.map((similarItem) => {
+                                    {limitedSimilarItems.map((similarItem) => {
                                         const similarOptions = similarItem.data.dimensionsAndPrice ?? []
                                         const similarInitialPrice = similarOptions[0]?.price ?? ''
                                         const similarTypeLabel = similarItem.data.type ? (TYPE_LABELS[similarItem.data.type] ?? similarItem.data.type) : ''
 
                                         return (
-                                            <article class="embla__slide overflow-hidden rounded-2xl bg-white" data-similar-card data-similar-variant-prices={JSON.stringify(similarOptions.map((option) => option.price?.trim() ?? ''))}>
+                                            <article class="embla__slide rounded-2xl bg-white" data-similar-card data-similar-variant-prices={JSON.stringify(similarOptions.map((option) => option.price?.trim() ?? ''))}>
                                                 <a href={`/services/${categorySlug}/${similarItem.id}`} class="group block">
                                                     <div class="relative h-64 bg-muted">
-                                                        <Image src={similarItem.data.image} alt={similarItem.data.title} width="430" height="600" class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
+                                                        <Image src={similarItem.data.image} alt={similarItem.data.title} width="430" height="600" class="h-full w-full object-contain transition-transform duration-300" />
                                                         {similarTypeLabel && <span class="absolute top-4 left-4 rounded bg-white px-3 py-1 text-sm text-secondary">{similarTypeLabel}</span>}
                                                     </div>
 

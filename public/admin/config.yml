@@ -46,6 +46,13 @@ collections:
     folder: /src/data/monuments
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/monuments }
       - { label: Материалы, name: materials, widget: text }
@@ -74,6 +81,13 @@ collections:
     folder: /src/data/improvement
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/improvement }
       - { label: Материалы, name: materials, widget: text }
@@ -94,6 +108,13 @@ collections:
     folder: /src/data/complexes
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/complexes }
       - { label: Материалы, name: materials, widget: text }
@@ -118,6 +139,13 @@ collections:
     folder: /src/data/fences
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/fences }
       - { label: Материалы, name: materials, widget: text }
@@ -139,6 +167,13 @@ collections:
     folder: /src/data/benches-and-tables
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/benches-and-tables }
       - { label: Материалы, name: materials, widget: text }
@@ -160,6 +195,13 @@ collections:
     folder: /src/data/crosses
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/crosses }
       - { label: Материалы, name: materials, widget: text }
@@ -180,6 +222,13 @@ collections:
     folder: /src/data/monument-design
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/monument-design }
       - { label: Описание, name: materials, widget: text }
@@ -204,6 +253,13 @@ collections:
     folder: /src/data/accessories
     create: true
     fields:
+      - name: seo
+        label: SEO
+        widget: object
+        required: true
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/accessories }
       - { label: Материалы, name: materials, widget: text }
