@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "image": "/src/assets/gallery/yaqen3z9ve-—-копия.jpg",
+      "alt": "300х240 см"
+    },
+    {
+      "image": "/src/assets/gallery/f6ldpvi5oxm.jpg",
+      "alt": "210х240 см"
+    },
+    {
+      "image": "/src/assets/gallery/для-сайта.jpg",
+      "alt": "Ангел"
+    },
+    {
+      "image": "/src/assets/gallery/20230924_005233.jpg",
+      "alt": "270х240 см"
+    },
+    {
+      "image": "/src/assets/gallery/для-сайта-1.jpg",
+      "alt": "одиночное захоронение"
+    },
+    {
+      "image": "/src/assets/gallery/для-сайта-2.jpg",
+      "alt": "падающая звезда"
+    },
+    {
+      "image": "/src/assets/gallery/для-сайта-3.jpg",
+      "alt": "тройной захоронение"
+    }
+  ]
+}
