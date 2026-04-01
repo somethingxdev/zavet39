@@ -21,7 +21,8 @@ const navItems = [
 ]
 
 const normalizedPathname = Astro.url.pathname.replace(/\/+$/, '') || '/'
-const isInnerPage = Boolean(Astro.params.slug) || normalizedPathname === '/contacts'
+const isServicesListPage = normalizedPathname.startsWith('/services') && !Astro.params.slug
+const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServicesListPage
 ---
 
 <header class="fixed sm:absolute left-0 md:top-5 z-50 w-full transition-all" class:list={isInnerPage ? 'bg-secondary xl:bg-transparent' : ''} data-mobile-header-shell>

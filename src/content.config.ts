@@ -1,6 +1,6 @@
-import { defineCollection } from 'astro:content'
+import { file, glob } from 'astro/loaders'
 import { z } from 'astro/zod'
-import { glob } from 'astro/loaders'
+import { defineCollection } from 'astro:content'
 
 const serviceSchema = ({ image }: { image: () => any }) =>
   z.object({
@@ -59,15 +59,18 @@ const accessories = defineCollection({
 })
 
 const gallery = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/data/gallery' }),
+  loader: file('./src/data/gallery.json', {
+    parser: (text) =>
+      JSON.parse(text).items.map((item: { image: string; alt: string }, index: number) => ({
+        id: `gallery-${index + 1}`,
+        ...item,
+        title: item.alt,
+      })),
+  }),
   schema: ({ image }) =>
     z.object({
-      title: z.string(),
       image: image(),
       alt: z.string(),
-      tags: z.array(z.string()).default([]),
-      featured: z.boolean().optional(),
-      order: z.number().default(0),
     }),
 })
 

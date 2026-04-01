@@ -1,75 +1,61 @@
 ﻿---
 import { getCollection } from 'astro:content'
-import { Image, getImage } from 'astro:assets'
+import { Image } from 'astro:assets'
 import Button from '@/components/starwind/button/Button.astro'
 
-const galleryEntries = (await getCollection('gallery'))
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 5)
-
-const galleryItems = await Promise.all(
-  galleryEntries.map(async (entry) => {
-    const optimizedImage = await getImage({ src: entry.data.image })
-
-    return {
-      title: entry.data.title,
-      alt: entry.data.alt,
-      image: entry.data.image,
-      href: optimizedImage.src,
-      width: optimizedImage.attributes.width,
-      height: optimizedImage.attributes.height,
-    }
-  }),
-)
+const items = await getCollection('gallery')
 ---
 
 <section class="py-10 sm:py-20">
-  <div class="container">
-    <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl lg:text-6xl">Галерея работ</h2>
+	<div class="container">
+		<h2 class="mb-10 text-center font-heading text-4xl md:text-5xl lg:text-6xl">Галерея работ</h2>
 
-    <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12" id="home-gallery">
-      {
-        galleryItems.map(({ title, alt, image, href, width, height }, index) => {
-          const cardClass = index === 0 ? 'lg:col-span-6 lg:row-span-2' : 'lg:col-span-3'
+		<ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12" id="home-gallery">
+			{
+				items.slice(0, 5).map((item, index) => {
+					const cardClass = index === 0 ? 'lg:col-span-6 lg:row-span-2' : 'lg:col-span-3'
 
-          return (
-            <li class={cardClass}>
-              <a
-                href={href}
-                class="group block h-full overflow-hidden rounded-2xl"
-                data-pswp-width={width}
-                data-pswp-height={height}
-                aria-label={title}
-              >
-                <Image
-                  src={image}
-                  alt={alt}
-                  class:list={[
-                    'h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]',
-                    index === 0 ? 'aspect-16/11' : 'aspect-16/10',
-                  ]}
-                />
-              </a>
-            </li>
-          )
-        })
-      }
-    </ul>
+					return (
+						<li class={cardClass}>
+							<a
+								href={item.data.image.src}
+								class="group block h-full overflow-hidden rounded-2xl"
+								data-pswp-width={item.data.image.width}
+								data-pswp-height={item.data.image.height}
+								aria-label={item.data.alt}
+							>
+								<Image
+									src={item.data.image}
+									alt={item.data.alt}
+									class:list={['h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]', index === 0 ? 'aspect-16/11' : 'aspect-16/10']}
+								/>
+							</a>
+						</li>
+					)
+				})
+			}
+		</ul>
 
-    <div class="mt-8 flex justify-center sm:mt-10">
-      <Button href="/works" variant="primary" size="lg" class="shadow-lg shadow-primary/25">Смотреть все фото</Button>
-    </div>
-  </div>
+		<div class="mt-8 flex justify-center sm:mt-10">
+			<Button
+				href="/works"
+				variant="primary"
+				size="lg"
+				class="shadow-lg shadow-primary/25"
+				>Смотреть все фото</Button
+			>
+		</div>
+	</div>
 </section>
 
 <script>
-  import PhotoSwipeLightbox from 'photoswipe/lightbox'
-  import 'photoswipe/style.css'
+	import PhotoSwipeLightbox from 'photoswipe/lightbox'
+	import 'photoswipe/style.css'
 
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: '#home-gallery',
-    children: 'a',
-    pswpModule: () => import('photoswipe'),
-  })
-  lightbox.init()
+	const lightbox = new PhotoSwipeLightbox({
+		gallery: '#home-gallery',
+		children: 'a',
+		pswpModule: () => import('photoswipe')
+	})
+	lightbox.init()
 </script>
