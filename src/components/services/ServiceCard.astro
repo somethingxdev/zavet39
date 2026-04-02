@@ -28,12 +28,15 @@ const initialPrice = firstVariant?.price ?? ''
 const variantPrices = variants.map((variant) => variant.price)
 ---
 
-<Card class:list={['gap-5', cardClass]} data-service-card data-variant-prices={JSON.stringify(variantPrices)}>
-    <CardHeader class="px-0">
+<Card data-service-card data-variant-prices={JSON.stringify(variantPrices)}>
+
+    {typeLabel && <div class="absolute top-3 right-3 font-heading z-10 text-sm rounded-lg bg-primary px-3 py-1.5  text-secondary">{typeLabel}</div>}
+
+    <CardHeader class="py-5">
         <a href={productHref} class="group block w-full">
             <div class="relative h-50 sm:h-69 w-full overflow-hidden bg-muted">
-                <Image width="335" height="600" src={item.data.image} alt={item.data.title} class="w-full max-h-70 object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
-                {typeLabel && <span class="absolute top-4 left-4 rounded bg-white px-3 py-2 text-secondary">{typeLabel}</span>}
+                <Image width="335" height="600" src={item.data.image} alt={item.data.title} class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
+               
             </div>
         </a>
     </CardHeader>
@@ -44,6 +47,8 @@ const variantPrices = variants.map((variant) => variant.price)
                 {item.data.title}
             </a>
         </CardTitle>
+
+      
 
         <p class="text-sm">
             <span class="font-semibold">Материалы:</span>

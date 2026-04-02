@@ -19,7 +19,7 @@ import { Toaster } from '@/components/starwind/toast'
         <meta name="generator" content={Astro.generator} />
         <title>Zavet 39</title>
     </head>
-    <body class="relative" class:list={Astro.params.slug && 'bg-[#F6F6F6]'}>
+    <body class="relative" class:list={Astro.url.pathname !== '/' && 'bg-[#F6F6F6]'}>
         <Header />
         <main class="overflow-x-hidden">
             <slot />

@@ -5,7 +5,7 @@ import { tv, type VariantProps } from 'tailwind-variants'
 type Props = HTMLAttributes<'div'> & VariantProps<typeof card>
 
 export const card = tv({
-    base: ['bg-card text-secondary overflow-hidden group/card ring-border flex flex-col rounded-xl ring-1', 'has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0', '*:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl'],
+    base: ['bg-white relative text-secondary overflow-hidden group/card ring-border flex flex-col rounded-xl ring-1', 'has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0', '*:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl'],
     variants: {
         size: {
             default: 'gap-6 py-0',
