@@ -56,7 +56,7 @@ export const SERVICE_CATEGORIES = [
     slug: 'accessories',
     title: 'Аксессуары',
     collection: 'accessories',
-    hasTypeFilters: false,
+    hasTypeFilters: true,
   },
 ] as const satisfies readonly ServiceCategory[]
 

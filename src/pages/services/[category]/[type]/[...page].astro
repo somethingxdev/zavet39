@@ -1,21 +1,16 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { getCollection, type CollectionEntry } from 'astro:content'
-import types from '@/data/monuments/types.json'
 import Layout from '@/layouts/Layout.astro'
 
 import Pagination from '@/components/services/Pagination.astro'
 import ServicesHero from '@/components/services/ServicesHero.astro'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
 import { SERVICE_CATEGORIES, getServiceCategoryBySlug, type ServiceCollectionName, type ServiceCategorySlug } from '@/data/service-categories'
+import { getServiceTypesByCategory, type ServiceTypeItem } from '@/data/service-types'
 import Card from '@/components/services/ServiceCard.astro'
 
 type ServiceItem = CollectionEntry<ServiceCollectionName>
-
-type TypeItem = {
-    slug: string
-    title: string
-}
 
 type PagePayload = {
     data: ServiceItem[]
@@ -23,15 +18,14 @@ type PagePayload = {
     lastPage: number
 }
 
-const TYPE_LABELS = Object.fromEntries(types.map((type) => [type.slug, type.title]))
-
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
     const categoriesWithTypeFilters = SERVICE_CATEGORIES.filter((category) => category.hasTypeFilters)
 
     const paginatedPaths = await Promise.all(
         categoriesWithTypeFilters.map(async (category) => {
             const items = await getCollection(category.collection)
-            const categoryTypes = types.filter((type) => items.some((item) => item.data.type === type.slug))
+            const declaredTypes = getServiceTypesByCategory(category.slug)
+            const categoryTypes = declaredTypes.filter((type) => items.some((item) => item.data.type === type.slug))
 
             return categoryTypes.flatMap((type) => {
                 const typeItems = items.filter((item) => item.data.type === type.slug)
@@ -57,7 +51,9 @@ if (!category || !category.hasTypeFilters) {
 }
 
 const allItems = await getCollection(category.collection)
-const availableTypes: TypeItem[] = types.filter((type) => allItems.some((item) => item.data.type === type.slug))
+const categoryTypes = getServiceTypesByCategory(category.slug)
+const availableTypes: ServiceTypeItem[] = categoryTypes.filter((type) => allItems.some((item) => item.data.type === type.slug))
+const TYPE_LABELS = Object.fromEntries(categoryTypes.map((type) => [type.slug, type.title]))
 
 const { page } = Astro.props as { page: PagePayload }
 if (!page) {

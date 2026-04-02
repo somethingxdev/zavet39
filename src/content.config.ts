@@ -2,20 +2,43 @@ import { file, glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection } from 'astro:content'
 
+const dimensionsAndPriceItemSchema = z.object({
+  dimensions: z.string().optional(),
+  price: z.string().optional(),
+})
+
 const serviceSchema = ({ image }: { image: () => any }) =>
   z.object({
     title: z.string(),
     image: image(),
     materials: z.string(),
-    dimensionsAndPrice: z
-      .array(
-        z.object({
-          dimensions: z.string(),
-          price: z.string(),
-        }),
-      )
-      .nonempty(),
+    dimensionsAndPrice: z.array(dimensionsAndPriceItemSchema).optional(),
+    dimensions: z.string().optional(),
+    price: z.string().optional(),
     type: z.string().optional(),
+  })
+  .transform((data) => {
+    const normalizedFromList = (data.dimensionsAndPrice ?? [])
+      .map((item) => ({
+        dimensions: item.dimensions?.trim() ?? '',
+        price: item.price?.trim() ?? '',
+      }))
+      .filter((item) => item.dimensions || item.price)
+
+    const legacyDimensions = data.dimensions?.trim() ?? ''
+    const legacyPrice = data.price?.trim() ?? ''
+
+    const normalizedDimensionsAndPrice =
+      normalizedFromList.length > 0
+        ? normalizedFromList
+        : legacyDimensions || legacyPrice
+          ? [{ dimensions: legacyDimensions, price: legacyPrice }]
+          : undefined
+
+    return {
+      ...data,
+      dimensionsAndPrice: normalizedDimensionsAndPrice,
+    }
   })
 
 const monuments = defineCollection({

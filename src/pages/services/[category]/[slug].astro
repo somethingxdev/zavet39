@@ -6,12 +6,13 @@ import { ArrowLeft, ArrowRight } from '@lucide/astro'
 import { Breadcrumbs } from 'astro-breadcrumbs'
 import 'astro-breadcrumbs/breadcrumbs.css'
 
-import types from '@/data/monuments/types.json'
 import Layout from '@/layouts/Layout.astro'
 import { Button } from '@/components/starwind/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
+import ServiceCard from '@/components/services/ServiceCard.astro'
 import OrderModal from '@/components/services/OrderModal.astro'
 import { SERVICE_CATEGORIES, type ServiceCategorySlug, type ServiceCollectionName } from '@/data/service-categories'
+import { getServiceTypesByCategory } from '@/data/service-types'
 
 type ServiceItem = CollectionEntry<ServiceCollectionName>
 
@@ -47,8 +48,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const { item, similarItems, categorySlug, categoryTitle } = Astro.props as StaticPathProps
 const limitedSimilarItems = similarItems.slice(0, 6)
+const categoryTypes = getServiceTypesByCategory(categorySlug)
 
-const TYPE_LABELS = types.reduce<Record<string, string>>((acc, typeItem) => {
+const TYPE_LABELS = categoryTypes.reduce<Record<string, string>>((acc, typeItem) => {
     acc[typeItem.slug] = typeItem.title
     return acc
 }, {})
@@ -57,9 +59,15 @@ const currentTypeLabel = item.data.type ? (TYPE_LABELS[item.data.type] ?? item.d
 const crumbs = [{ text: 'Главная', href: '/' }, { text: categoryTitle, href: `/services/${categorySlug}` }, { text: item.data.title }]
 
 const getDisplayPrice = (price: string | undefined) => (price?.trim() ? price : 'по запросу')
-const mainOptions = item.data.dimensionsAndPrice ?? []
-const mainVariantPrices = mainOptions.map((option) => option.price?.trim() ?? '')
-const mainInitialPrice = mainOptions[0]?.price ?? ''
+const mainOptions = (item.data.dimensionsAndPrice ?? []).map((option) => ({
+    dimensions: option.dimensions?.trim() ?? '',
+    price: option.price?.trim() ?? '',
+}))
+const mainOptionsWithDimensions = mainOptions.filter((option) => Boolean(option.dimensions))
+const hasMainDimensions = mainOptionsWithDimensions.length > 0
+const mainVariantPrices = (hasMainDimensions ? mainOptionsWithDimensions : mainOptions).map((option) => option.price)
+const mainInitialPrice = mainOptions.find((option) => option.price)?.price ?? ''
+const hasMainPrice = mainVariantPrices.some((price) => Boolean(price))
 ---
 
 <Layout>
@@ -105,27 +113,33 @@ const mainInitialPrice = mainOptions[0]?.price ?? ''
                                 {item.data.materials}
                             </p>
 
-                            <div data-detail-pricing data-main-variant-prices={JSON.stringify(mainVariantPrices)} class="space-y-2">
-                                <div class="flex items-center gap-3">
-                                    <label class="text-secondary/60 shrink-0" for="product-size-select">Размеры:</label>
-                                    <Select data-size-select class="flex-1" defaultValue="0">
-                                        <SelectTrigger id="product-size-select" class="w-full bg-white">
-                                            <SelectValue placeholder={mainOptions[0]?.dimensions ?? '—'} />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {mainOptions.map((option, index) => <SelectItem value={`${index}`}>{option.dimensions}</SelectItem>)}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </div>
+                            {
+                                hasMainDimensions && (
+                                    <div data-detail-pricing data-main-variant-prices={JSON.stringify(mainVariantPrices)} class="space-y-2">
+                                        <div class="flex items-center gap-3">
+                                            <label class="text-secondary/60 shrink-0" for="product-size-select">Размеры:</label>
+                                            <Select data-size-select class="flex-1" defaultValue="0">
+                                                <SelectTrigger id="product-size-select" class="w-full bg-white">
+                                                    <SelectValue placeholder={mainOptionsWithDimensions[0]?.dimensions ?? '—'} />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {mainOptionsWithDimensions.map((option, index) => <SelectItem value={`${index}`}>{option.dimensions}</SelectItem>)}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    </div>
+                                )
+                            }
                         </div>
 
                         <div class="flex flex-col gap-4 md:flex-row md:items-center w-full" data-detail-order data-base-product-title={item.data.title}>
                             <OrderModal productTitle={item.data.title} productPrice={mainInitialPrice} />
-                            <div class="border-l border-primary/60 pl-4 shrink-0">
-                                <p class="text-sm text-secondary/60">Стоимость:</p>
-                                <p class="font-heading text-2xl" data-current-price>{getDisplayPrice(mainInitialPrice)}</p>
-                            </div>
+                            {hasMainPrice && (
+                                <div class="border-l border-primary/60 pl-4 shrink-0">
+                                    <p class="text-sm text-secondary/60">Стоимость:</p>
+                                    <p class="font-heading text-2xl" data-current-price>{`${getDisplayPrice(mainInitialPrice)} ₽`}</p>
+                                </div>
+                            )}
                         </div>
                     </article>
                 </div>
@@ -139,50 +153,16 @@ const mainInitialPrice = mainOptions[0]?.price ?? ''
                         <div class="embla" data-similar-embla>
                             <div class="embla__viewport mb-8 overflow-visible">
                                 <div class="embla__container flex gap-5 touch-pan-y">
-                                    {limitedSimilarItems.map((similarItem) => {
-                                        const similarOptions = similarItem.data.dimensionsAndPrice ?? []
-                                        const similarInitialPrice = similarOptions[0]?.price ?? ''
-                                        const similarTypeLabel = similarItem.data.type ? (TYPE_LABELS[similarItem.data.type] ?? similarItem.data.type) : ''
-
-                                        return (
-                                            <article class="embla__slide rounded-2xl bg-white" data-similar-card data-similar-variant-prices={JSON.stringify(similarOptions.map((option) => option.price?.trim() ?? ''))}>
-                                                <a href={`/services/${categorySlug}/${similarItem.id}`} class="group block">
-                                                    <div class="relative h-64 bg-muted">
-                                                        <Image src={similarItem.data.image} alt={similarItem.data.title} width="430" height="600" class="h-full w-full object-contain transition-transform duration-300" />
-                                                        {similarTypeLabel && <span class="absolute top-4 left-4 rounded bg-white px-3 py-1 text-sm text-secondary">{similarTypeLabel}</span>}
-                                                    </div>
-
-                                                    <div class="p-5 space-y-2">
-                                                        <h3 class="text-xl font-heading">{similarItem.data.title}</h3>
-                                                        <p>
-                                                            <span class="font-semibold">Материалы:</span>
-                                                            {similarItem.data.materials}
-                                                        </p>
-                                                    </div>
-                                                </a>
-
-                                                <div class="px-5 pb-5 space-y-3">
-                                                    <div>
-                                                        <label class="mb-1 block text-sm text-secondary/70">Размеры:</label>
-                                                        <Select data-similar-size-select class="w-full" defaultValue="0">
-                                                            <SelectTrigger class="w-full h-10 bg-white text-sm">
-                                                                <SelectValue placeholder={similarOptions[0]?.dimensions ?? '—'} />
-                                                            </SelectTrigger>
-                                                            <SelectContent size="sm">
-                                                                {similarOptions.map((option, index) => (
-                                                                    <SelectItem value={`${index}`}>{option.dimensions}</SelectItem>
-                                                                ))}
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </div>
-
-                                                    <p class="text-lg text-secondary/85" data-similar-price>
-                                                        {getDisplayPrice(similarInitialPrice)}
-                                                    </p>
-                                                </div>
-                                            </article>
-                                        )
-                                    })}
+                                    {limitedSimilarItems.map((similarItem) => (
+                                        <div class="embla__slide">
+                                            <ServiceCard
+                                                item={similarItem}
+                                                categorySlug={categorySlug}
+                                                typeLabel={similarItem.data.type ? (TYPE_LABELS[similarItem.data.type] ?? similarItem.data.type) : ''}
+                                                class="bg-white"
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
 
@@ -259,7 +239,7 @@ const mainInitialPrice = mainOptions[0]?.price ?? ''
         const resolvedTitle = selectedDimensions ? `${baseTitle} (${selectedDimensions})` : baseTitle
 
         if (detailPriceNode) {
-            detailPriceNode.textContent = selectedPrice || 'по запросу'
+            detailPriceNode.textContent = `${selectedPrice || 'по запросу'} ₽`
         }
 
         if (detailOrderForm) {
@@ -286,38 +266,6 @@ const mainInitialPrice = mainOptions[0]?.price ?? ''
     detailNativeSelect?.addEventListener('change', () => applyDetailSelection(detailNativeSelect.value))
     applyDetailSelection(detailNativeSelect?.value ?? '0')
 
-    document.querySelectorAll('[data-similar-card]').forEach((cardNode) => {
-        const card = cardNode as HTMLElement
-        const selectRoot = card.querySelector('[data-similar-size-select]') as HTMLElement | null
-        const nativeSelect = selectRoot?.querySelector('.starwind-sr-only') as HTMLSelectElement | null
-        const priceNode = card.querySelector('[data-similar-price]') as HTMLElement | null
-
-        const pricesRaw = card.dataset.similarVariantPrices ?? '[]'
-        let prices: string[] = []
-
-        try {
-            const parsed = JSON.parse(pricesRaw)
-            if (Array.isArray(parsed)) prices = parsed.map((value) => String(value ?? '').trim())
-        } catch {
-            prices = []
-        }
-
-        const applySimilarSelection = (indexValue: string) => {
-            if (!priceNode) return
-            const index = Number(indexValue)
-            const selectedPrice = Number.isNaN(index) ? '' : (prices[index] ?? '')
-            priceNode.textContent = selectedPrice || 'по запросу'
-        }
-
-        const onSimilarSelectChange = (event: Event) => {
-            const customEvent = event as CustomEvent<StarwindSelectChangeDetail>
-            applySimilarSelection(customEvent.detail?.value ?? '0')
-        }
-
-        selectRoot?.addEventListener('starwind-select:change', onSimilarSelectChange)
-        nativeSelect?.addEventListener('change', () => applySimilarSelection(nativeSelect.value))
-        applySimilarSelection(nativeSelect?.value ?? '0')
-    })
 </script>
 
 <style>

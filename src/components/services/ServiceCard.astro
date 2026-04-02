@@ -9,19 +9,26 @@ type Props = {
     item: CollectionEntry<'monuments' | 'curbs' | 'complexes' | 'socles' | 'fences' | 'benches-and-tables' | 'crosses' | 'accessories'>
     typeLabel?: string
     categorySlug: string
+    class?: string
 }
 
-const { item, typeLabel, categorySlug } = Astro.props
+const { item, typeLabel, categorySlug, class: cardClass } = Astro.props
 const productHref = `/services/${categorySlug}/${item.id}`
+const phoneHref = 'tel:+79106367313'
 
-const variants = item.data.dimensionsAndPrice ?? []
+const variants = (item.data.dimensionsAndPrice ?? [])
+    .map((variant) => ({
+        dimensions: variant.dimensions?.trim() ?? '',
+        price: variant.price?.trim() ?? '',
+    }))
+    .filter((variant) => Boolean(variant.dimensions))
 const firstVariant = variants[0]
-const initialDimensions = firstVariant?.dimensions ?? '—'
-const initialPrice = firstVariant?.price?.trim() ?? ''
-const variantPrices = variants.map((variant) => variant.price?.trim() ?? '')
+const initialDimensions = firstVariant?.dimensions ?? ''
+const initialPrice = firstVariant?.price ?? ''
+const variantPrices = variants.map((variant) => variant.price)
 ---
 
-<Card class="gap-5" data-service-card data-variant-prices={JSON.stringify(variantPrices)}>
+<Card class:list={['gap-5', cardClass]} data-service-card data-variant-prices={JSON.stringify(variantPrices)}>
     <CardHeader class="px-0">
         <a href={productHref} class="group block w-full">
             <div class="relative h-50 sm:h-69 w-full overflow-hidden bg-muted">
@@ -33,50 +40,50 @@ const variantPrices = variants.map((variant) => variant.price?.trim() ?? '')
 
     <CardContent class="space-y-3">
         <CardTitle class="mb-4">
-            <a href={productHref} class="transition-colors hover:text-primary">
+            <a href={productHref} class="transition-colors hover:text-primary line-clamp-1">
                 {item.data.title}
             </a>
         </CardTitle>
 
-        <p>
+        <p class="text-sm">
             <span class="font-semibold">Материалы:</span>
             {item.data.materials}
         </p>
 
-        {
-            variants.length > 1 ? (
-                <div class="flex items-center gap-3">
-                    <label class="font-semibold shrink-0" for={`dimensions-${item.id}`}>
-                        Размеры:
-                    </label>
+        {variants.length > 1 ? (
+            <div class="flex items-center gap-3">
+                <label class="font-semibold shrink-0 text-sm" for={`dimensions-${item.id}`}>
+                    Размеры:
+                </label>
 
-                    <Select data-dimensions-select class="flex-1" defaultValue="0">
-                        <SelectTrigger id={`dimensions-${item.id}`} class="w-full bg-white" size="sm">
-                            <SelectValue placeholder={initialDimensions} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {variants.map((variant, index) => (
-                                <SelectItem value={`${index}`}>{variant.dimensions}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-            ) : (
-                <p>
+                <Select data-dimensions-select class="flex-1" defaultValue="0">
+                    <SelectTrigger id={`dimensions-${item.id}`} class="w-full bg-white" size="sm">
+                        <SelectValue placeholder={initialDimensions} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {variants.map((variant, index) => (
+                            <SelectItem value={`${index}`}>{variant.dimensions}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+        ) : (
+            variants.length === 1 && (
+                <p class="text-sm">
                     <span class="font-semibold">Размеры:</span>
                     {initialDimensions}
                 </p>
             )
-        }
+        )}
     </CardContent>
 
     <CardFooter>
         <p data-card-price class:list={['text-xl font-heading', !initialPrice && 'hidden']}>
-            {initialPrice}
+            Цена: {initialPrice} ₽
         </p>
 
         <div data-card-fallback class:list={['w-full', !!initialPrice && 'hidden']}>
-            <Button href="/contacts" variant="primary" size="md" class="w-full"> Узнать цену </Button>
+            <Button href={phoneHref} variant="primary" size="md" class="w-full">Узнать цену</Button>
         </div>
     </CardFooter>
 </Card>
@@ -112,7 +119,7 @@ const variantPrices = variants.map((variant) => variant.price?.trim() ?? '')
             const index = Number(indexValue)
             const nextPrice = Number.isNaN(index) ? '' : (prices[index] ?? '')
 
-            priceEl.textContent = nextPrice
+            priceEl.textContent = nextPrice ? `Цена: ${nextPrice} ₽` : ''
             priceEl.classList.toggle('hidden', !nextPrice)
             fallbackEl.classList.toggle('hidden', !!nextPrice)
         }

@@ -1,25 +1,20 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { getCollection, type CollectionEntry } from 'astro:content'
-import types from '@/data/monuments/types.json'
 import Layout from '@/layouts/Layout.astro'
 import Pagination from '@/components/services/Pagination.astro'
 import ServicesHero from '@/components/services/ServicesHero.astro'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
 import { SERVICE_CATEGORIES, type ServiceCategorySlug, type ServiceCollectionName } from '@/data/service-categories'
+import { getServiceTypesByCategory, type ServiceTypeItem } from '@/data/service-types'
 import Card from '@/components/services/ServiceCard.astro'
 
 type ServiceItem = CollectionEntry<ServiceCollectionName>
 
-type TypeItem = {
-    slug: string
-    title: string
-}
-
 type RouteProps = {
     categorySlug: ServiceCategorySlug
     categoryTitle: string
-    availableTypes: TypeItem[]
+    availableTypes: ServiceTypeItem[]
 }
 
 type PagePayload = {
@@ -28,18 +23,14 @@ type PagePayload = {
     lastPage: number
 }
 
-const TYPE_LABELS = types.reduce<Record<string, string>>((acc, type) => {
-    acc[type.slug] = type.title
-    return acc
-}, {})
-
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
     const paginatedPaths = await Promise.all(
         SERVICE_CATEGORIES.map(async (category) => {
             const items = await getCollection(category.collection)
             if (!items.length) return []
 
-            const availableTypes = category.hasTypeFilters ? types.filter((type) => items.some((item) => item.data.type && item.data.type === type.slug)) : []
+            const categoryTypes = getServiceTypesByCategory(category.slug)
+            const availableTypes = category.hasTypeFilters ? categoryTypes.filter((type) => items.some((item) => item.data.type && item.data.type === type.slug)) : []
 
             return paginate(items, {
                 pageSize: 12,
@@ -65,7 +56,7 @@ const {
     page: PagePayload
     categorySlug: ServiceCategorySlug
     categoryTitle: string
-    availableTypes?: TypeItem[]
+    availableTypes?: ServiceTypeItem[]
 }
 
 if (!page) {
@@ -77,6 +68,11 @@ const items = page.data
 const currentPage = page.currentPage
 const lastPage = page.lastPage
 const basePath = `/services/${categorySlug}`
+const categoryTypes = getServiceTypesByCategory(categorySlug)
+const TYPE_LABELS = categoryTypes.reduce<Record<string, string>>((acc, type) => {
+    acc[type.slug] = type.title
+    return acc
+}, {})
 ---
 
 <Layout>
