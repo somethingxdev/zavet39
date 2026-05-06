@@ -2,13 +2,14 @@
 import type { GetStaticPaths } from 'astro'
 import { getCollection, type CollectionEntry } from 'astro:content'
 import Layout from '@/layouts/Layout.astro'
-
 import Pagination from '@/components/services/Pagination.astro'
 import ServicesHero from '@/components/services/ServicesHero.astro'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
 import { SERVICE_CATEGORIES, getServiceCategoryBySlug, type ServiceCollectionName, type ServiceCategorySlug } from '@/data/service-categories'
 import { getServiceTypesByCategory, type ServiceTypeItem } from '@/data/service-types'
 import Card from '@/components/services/ServiceCard.astro'
+import ServicePriceFilter from '@/components/services/ServicePriceFilter.astro'
+import ServiceSort from '@/components/services/ServiceSort.astro'
 
 type ServiceItem = CollectionEntry<ServiceCollectionName>
 
@@ -56,9 +57,6 @@ const availableTypes: ServiceTypeItem[] = categoryTypes.filter((type) => allItem
 const TYPE_LABELS = Object.fromEntries(categoryTypes.map((type) => [type.slug, type.title]))
 
 const { page } = Astro.props as { page: PagePayload }
-if (!page) {
-    throw new Error('Expected `page` in Astro.props for paginated route /services/[category]/[type]/[...page]')
-}
 
 const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href: '/services' }, { text: category.title }]
 const items = page.data
@@ -72,35 +70,42 @@ const basePath = selectedType ? `/services/${category.slug}/${selectedType}` : `
 
     <section class="py-12 md:py-16">
         <div class="container">
-            {
-                availableTypes.length > 0 && (
-                    <div class="mb-10 flex items-center justify-end gap-4">
-                        <Select id="type-filter" name="type-filter" class="w-50" defaultValue={selectedType ? `/services/${category.slug}/${selectedType}` : `/services/${category.slug}`}>
-                            <SelectTrigger class="min-w-50">
-                                <SelectValue placeholder="Все типы" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value={`/services/${category.slug}`} href={`/services/${category.slug}`}>
-                                    Все типы
-                                </SelectItem>
-                                {availableTypes.map((type) => (
-                                    <SelectItem value={`/services/${category.slug}/${type.slug}`} href={`/services/${category.slug}/${type.slug}`}>
-                                        {type.title}
+            <div class="mb-10 flex items-center justify-end">
+
+
+                    {
+                        availableTypes.length > 0 && (
+                            <Select id="type-filter" name="type-filter" defaultValue={selectedType ? `/services/${category.slug}/${selectedType}` : `/services/${category.slug}`}>
+                                <SelectTrigger class="min-w-50">
+                                    <SelectValue placeholder="Все типы" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value={`/services/${category.slug}`} href={`/services/${category.slug}`}>
+                                        Все типы
                                     </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
-                )
-            }
+                                    {availableTypes.map((type) => (
+                                        <SelectItem value={`/services/${category.slug}/${type.slug}`} href={`/services/${category.slug}/${type.slug}`}>
+                                            {type.title}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        )
+                    }
+
+
+            </div>
 
             {
                 items.length ? (
-                    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-                        {items.map((item) => (
-                            <Card item={item} categorySlug={category.slug} typeLabel={item.data.type ? (TYPE_LABELS[item.data.type] ?? item.data.type) : ''} />
-                        ))}
-                    </div>
+                    <>
+                        <div data-services-grid class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+                            {items.map((item) => (
+                                <Card item={item} categorySlug={category.slug} typeLabel={item.data.type ? (TYPE_LABELS[item.data.type] ?? item.data.type) : ''} />
+                            ))}
+                        </div>
+                        <p data-price-empty class="hidden mt-8 text-lg text-foreground/80">По выбранному диапазону цен ничего не найдено.</p>
+                    </>
                 ) : (
                     <p class="text-lg text-foreground/80">Для выбранного типа пока нет товаров.</p>
                 )

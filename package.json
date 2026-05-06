@@ -13,9 +13,9 @@
     "@tabler/icons": "^3",
     "@tailwindcss/forms": "^0.5",
     "@tailwindcss/vite": "^4",
-    "astro": "6.1.2",
+    "astro": "6.2.2",
     "astro-breadcrumbs": "^3.3.3",
-    "embla-carousel": "9.0.0-rc01",
+    "embla-carousel": "9.0.0-rc02",
     "photoswipe": "^5.4.4",
     "tailwind-merge": "^3",
     "tailwind-variants": "^3",
@@ -23,7 +23,7 @@
     "tw-animate-css": "^1"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
+    "@astrojs/check": "^0.9.9",
     "typescript": "^6.0.2"
   }
 }

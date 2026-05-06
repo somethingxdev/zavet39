@@ -1,0 +1,61 @@
+---
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
+---
+
+<Select data-sort-select defaultValue="default">
+    <SelectTrigger class="min-w-48">
+        <SelectValue placeholder="По умолчанию" />
+    </SelectTrigger>
+    <SelectContent>
+        <SelectItem value="default">По умолчанию</SelectItem>
+        <SelectItem value="price-asc">Сначала дешевле</SelectItem>
+        <SelectItem value="price-desc">Сначала дороже</SelectItem>
+        <SelectItem value="alpha-asc">По алфавиту (А–Я)</SelectItem>
+        <SelectItem value="alpha-desc">По алфавиту (Я–А)</SelectItem>
+    </SelectContent>
+</Select>
+
+<script>
+    const grid = document.querySelector<HTMLElement>('[data-services-grid]')
+    const originalOrder = Array.from(document.querySelectorAll<HTMLElement>('[data-service-card]'))
+
+    function parseMinPrice(json: string): number {
+        try {
+            const prices: string[] = JSON.parse(json)
+            const nums = prices.map((s) => parseInt(s.replace(/\D/g, ''), 10)).filter((n) => !isNaN(n))
+            return nums.length ? Math.min(...nums) : Infinity
+        } catch {
+            return Infinity
+        }
+    }
+
+    function applySort(value: string) {
+        if (!grid) return
+        const cards = Array.from(grid.querySelectorAll<HTMLElement>('[data-service-card]'))
+        const pagination = document.querySelector<HTMLElement>('[data-pagination-nav]')
+
+        if (value === 'default') {
+            originalOrder.forEach((card) => grid.appendChild(card))
+            if (pagination) pagination.style.display = ''
+            return
+        }
+
+        const sorted = [...cards].sort((a, b) => {
+            if (value === 'price-asc' || value === 'price-desc') {
+                const pa = parseMinPrice(a.dataset.variantPrices ?? '[]')
+                const pb = parseMinPrice(b.dataset.variantPrices ?? '[]')
+                return value === 'price-asc' ? pa - pb : pb - pa
+            }
+            const ta = (a.dataset.cardTitle ?? '').toLowerCase()
+            const tb = (b.dataset.cardTitle ?? '').toLowerCase()
+            return value === 'alpha-asc' ? ta.localeCompare(tb, 'ru') : tb.localeCompare(ta, 'ru')
+        })
+
+        sorted.forEach((card) => grid.appendChild(card))
+        if (pagination) pagination.style.display = 'none'
+    }
+
+    document.querySelector('[data-sort-select]')?.addEventListener('starwind-select:change', (e) => {
+        applySort((e as CustomEvent<{ value: string }>).detail?.value ?? 'default')
+    })
+</script>

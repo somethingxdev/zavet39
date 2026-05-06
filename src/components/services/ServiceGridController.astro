@@ -1,0 +1,108 @@
+---
+interface Props {
+    batchSize?: number
+}
+const { batchSize = 12 } = Astro.props
+---
+
+<div data-sentinel class="h-px"></div>
+
+<script define:vars={{ batchSize }}>
+    const BATCH = /** @type {number} */ (batchSize)
+
+    /** @type {string[]} */
+    let activeRanges = []
+    let currentSort = 'default'
+    let displayedCount = BATCH
+
+    const grid = /** @type {HTMLElement | null} */ (document.querySelector('[data-services-grid]'))
+    const sentinel = /** @type {HTMLElement | null} */ (document.querySelector('[data-sentinel]'))
+    const emptyMsg = /** @type {HTMLElement | null} */ (document.querySelector('[data-price-empty]'))
+
+    const originalOrder = Array.from(
+        /** @type {NodeListOf<HTMLElement>} */ (grid?.querySelectorAll('[data-service-card]') ?? [])
+    )
+
+    /** @param {string} json */
+    function parseMinPrice(json) {
+        try {
+            const prices = JSON.parse(json)
+            const nums = prices.map((/** @type {string} */ s) => parseInt(s.replace(/\D/g, ''), 10)).filter((/** @type {number} */ n) => !isNaN(n))
+            return nums.length ? Math.min(...nums) : Infinity
+        } catch {
+            return Infinity
+        }
+    }
+
+    /** @param {HTMLElement} card */
+    function matchesFilter(card) {
+        if (activeRanges.length === 0) return true
+        const min = parseMinPrice(card.dataset.variantPrices ?? '[]')
+        if (min === Infinity) return false
+        return activeRanges.some((range) => {
+            if (range === '0-20000') return min < 20000
+            if (range === '20000-35000') return min >= 20000 && min < 35000
+            if (range === '35000-50000') return min >= 35000 && min < 50000
+            if (range === '50000') return min >= 50000
+            return false
+        })
+    }
+
+    function getSorted() {
+        if (currentSort === 'default') return [...originalOrder]
+        const all = Array.from(/** @type {NodeListOf<HTMLElement>} */ (grid?.querySelectorAll('[data-service-card]') ?? []))
+        return all.sort((a, b) => {
+            if (currentSort === 'price-asc' || currentSort === 'price-desc') {
+                const pa = parseMinPrice(a.dataset.variantPrices ?? '[]')
+                const pb = parseMinPrice(b.dataset.variantPrices ?? '[]')
+                return currentSort === 'price-asc' ? pa - pb : pb - pa
+            }
+            const ta = (a.dataset.cardTitle ?? '').toLowerCase()
+            const tb = (b.dataset.cardTitle ?? '').toLowerCase()
+            return currentSort === 'alpha-asc' ? ta.localeCompare(tb, 'ru') : tb.localeCompare(ta, 'ru')
+        })
+    }
+
+    function render() {
+        if (!grid) return
+
+        const sorted = getSorted()
+        sorted.forEach((card) => grid.appendChild(card))
+
+        const eligible = sorted.filter(matchesFilter)
+
+        sorted.forEach((card) => {
+            const idx = eligible.indexOf(card)
+            card.style.display = idx === -1 || idx >= displayedCount ? 'none' : ''
+        })
+
+        if (emptyMsg) emptyMsg.style.display = eligible.length === 0 ? '' : 'none'
+        if (sentinel) sentinel.style.display = eligible.length > displayedCount ? '' : 'none'
+    }
+
+    document.addEventListener('services:filter-change', (/** @type {any} */ e) => {
+        activeRanges = e.detail.ranges
+        displayedCount = BATCH
+        render()
+    })
+
+    document.addEventListener('services:sort-change', (/** @type {any} */ e) => {
+        currentSort = e.detail.value
+        displayedCount = BATCH
+        render()
+    })
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting) {
+                displayedCount += BATCH
+                render()
+            }
+        },
+        { rootMargin: '300px' }
+    )
+
+    if (sentinel) observer.observe(sentinel)
+
+    render()
+</script>

@@ -28,7 +28,7 @@ const initialPrice = firstVariant?.price ?? ''
 const variantPrices = variants.map((variant) => variant.price)
 ---
 
-<Card data-service-card data-variant-prices={JSON.stringify(variantPrices)}>
+<Card data-service-card data-variant-prices={JSON.stringify(variantPrices)} data-card-title={item.data.title}>
 
     {typeLabel && <div class="absolute top-3 right-3 font-heading z-10 text-sm rounded-lg bg-primary px-3 py-1.5  text-secondary">{typeLabel}</div>}
 

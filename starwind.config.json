@@ -31,6 +31,14 @@
     {
       "name": "toast",
       "version": "1.0.1"
+    },
+    {
+      "name": "popover",
+      "version": "1.0.0"
+    },
+    {
+      "name": "checkbox",
+      "version": "1.4.2"
     }
   ]
 }
