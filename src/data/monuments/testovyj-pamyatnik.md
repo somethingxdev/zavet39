@@ -8,5 +8,7 @@ materials: Гранит
 dimensionsAndPrice:
   - dimensions: 70х50
     price: "28000"
+  - dimensions: 60х50
+    price: "30000"
 type: marble-chips
 ---
