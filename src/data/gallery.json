@@ -27,6 +27,30 @@
     {
       "image": "/src/assets/gallery/для-сайта-3.jpg",
       "alt": "тройное захоронение"
+    },
+    {
+      "image": "/src/assets/gallery/img-20210914-wa0006.jpg",
+      "alt": "Двойное захоронение"
+    },
+    {
+      "image": "/src/assets/gallery/img-20221103-wa0000.jpg",
+      "alt": "мраморная крошка"
+    },
+    {
+      "image": "/src/assets/gallery/img_20220615_192510-2.jpg",
+      "alt": "двойное захоронение"
+    },
+    {
+      "image": "/src/assets/gallery/img_20220929_132114-2.jpg",
+      "alt": "двойное 240х240 см"
+    },
+    {
+      "image": "/src/assets/gallery/img_20220913_153441.jpg",
+      "alt": "двойное захоронение"
+    },
+    {
+      "image": "/src/assets/gallery/img_20210901_150823-2.jpg",
+      "alt": "тройное захоронение"
     }
   ]
 }
