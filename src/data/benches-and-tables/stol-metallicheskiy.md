@@ -5,7 +5,7 @@ seo:
 title: стол металлический
 image: /src/assets/services/benches-and-tables/стол-металлический.jpg
 materials: Металл, керамогранит, дпк.
-type: ''
+type: tables
 dimensionsAndPrice:
 - dimensions: 40х40 см
   price: от 6000

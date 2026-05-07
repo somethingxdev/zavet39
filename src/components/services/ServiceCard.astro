@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
 
 type Props = {
-    item: CollectionEntry<'monuments' | 'landscaping' | 'complexes' | 'socles' | 'fences' | 'benches-and-tables' | 'crosses' | 'monument-design' | 'accessories'>
+    item: CollectionEntry<'monuments' | 'landscaping' | 'complexes' | 'fences' | 'benches-and-tables' | 'crosses' | 'monument-design' | 'accessories'>
     typeLabel?: string
     categorySlug: string
     class?: string
@@ -16,10 +16,10 @@ const { item, typeLabel, categorySlug, class: cardClass } = Astro.props
 const productHref = `/services/${categorySlug}/${item.id}`
 const phoneHref = 'tel:+79106367313'
 
-const variants = (item.data.dimensionsAndPrice ?? [])
+const variants = item.data.dimensionsAndPrice
     .map((variant) => ({
-        dimensions: variant.dimensions?.trim() ?? '',
-        price: variant.price?.trim() ?? '',
+        dimensions: variant.dimensions.trim(),
+        price: variant.price.trim(),
     }))
     .filter((variant) => Boolean(variant.dimensions))
 const firstVariant = variants[0]

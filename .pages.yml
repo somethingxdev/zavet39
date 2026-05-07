@@ -62,7 +62,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo
@@ -97,7 +97,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo
@@ -128,7 +128,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo
@@ -163,7 +163,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo
@@ -195,7 +195,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo
@@ -227,7 +227,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo
@@ -258,7 +258,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo
@@ -293,7 +293,7 @@ content:
         format: yaml-frontmatter
         filename: '{slug}.md'
         view:
-          fields: [title, type]
+          fields: [image, title, materials, type]
           primary: title
         fields:
           - name: seo

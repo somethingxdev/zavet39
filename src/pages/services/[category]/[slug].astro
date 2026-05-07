@@ -58,10 +58,9 @@ const TYPE_LABELS = categoryTypes.reduce<Record<string, string>>((acc, typeItem)
 const currentTypeLabel = item.data.type ? (TYPE_LABELS[item.data.type] ?? item.data.type) : ''
 const crumbs = [{ text: 'Главная', href: '/' }, { text: categoryTitle, href: `/services/${categorySlug}` }, { text: item.data.title }]
 
-const getDisplayPrice = (price: string | undefined) => (price?.trim() ? price : 'по запросу')
-const mainOptions = (item.data.dimensionsAndPrice ?? []).map((option) => ({
-    dimensions: option.dimensions?.trim() ?? '',
-    price: option.price?.trim() ?? '',
+const mainOptions = item.data.dimensionsAndPrice.map((option) => ({
+    dimensions: option.dimensions.trim(),
+    price: option.price.trim(),
 }))
 const mainOptionsWithDimensions = mainOptions.filter((option) => Boolean(option.dimensions))
 const hasMainDimensions = mainOptionsWithDimensions.length > 0

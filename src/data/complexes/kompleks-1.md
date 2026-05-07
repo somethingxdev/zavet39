@@ -5,5 +5,5 @@ materials: Материалы
 dimensionsAndPrice:
 - dimensions: Размеры
   price: 10 000
-type: ''
+type: vertical
 ---

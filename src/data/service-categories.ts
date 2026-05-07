@@ -2,7 +2,6 @@ export type ServiceCategorySlug =
   | 'monuments'
   | 'landscaping'
   | 'complexes'
-  | 'socles'
   | 'fences'
   | 'benches-and-tables'
   | 'crosses'
@@ -35,12 +34,6 @@ export const SERVICE_CATEGORIES = [
     slug: 'complexes',
     title: 'Комплексы',
     collection: 'complexes',
-    hasTypeFilters: false,
-  },
-  {
-    slug: 'socles',
-    title: 'Цоколи',
-    collection: 'socles',
     hasTypeFilters: false,
   },
   {

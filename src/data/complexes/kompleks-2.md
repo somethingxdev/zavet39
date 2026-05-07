@@ -5,5 +5,5 @@ materials: тест
 dimensionsAndPrice:
 - dimensions: тест
   price: 10 000
-type: ''
+type: vertical
 ---
