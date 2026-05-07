@@ -325,6 +325,96 @@ content:
             description: "Пример: +79106367313"
           - { name: emailLabel, label: Заголовок email, type: string }
           - { name: email, label: Email, type: string }
+          - { name: telegramUrl, label: Ссылка на Telegram, type: string }
+          - { name: maxUrl, label: Ссылка на MAX, type: string }
+          - name: footerDescription
+            label: Описание в футере
+            type: text
+          - name: workingHours
+            label: Время работы
+            type: object
+            list: true
+            fields:
+              - { name: label, label: День (или диапазон), type: string }
+              - { name: value, label: Часы, type: string }
+
+  # ---------- Страницы ----------
+  - name: pages
+    label: Страницы
+    type: group
+    items:
+      - name: home
+        label: Домашняя страница
+        type: file
+        path: src/data/home.json
+        format: json
+        fields:
+          - name: hero
+            label: Hero (главный экран)
+            type: object
+            fields:
+              - { name: titleStart, label: Заголовок (начало), type: string }
+              - { name: titleAccent, label: Заголовок (акцент, оранжевый), type: string }
+              - { name: description, label: Описание, type: text, description: "Можно использовать <b>жирный</b>" }
+              - name: primaryCta
+                label: Основная кнопка
+                type: object
+                fields:
+                  - { name: label, label: Текст, type: string }
+                  - { name: href, label: Ссылка, type: string }
+              - name: secondaryCta
+                label: Вторичная кнопка
+                type: object
+                fields:
+                  - { name: label, label: Текст, type: string }
+                  - { name: href, label: Ссылка, type: string }
+          - name: about
+            label: О нас
+            type: object
+            fields:
+              - { name: title, label: Заголовок, type: string }
+              - { name: description, label: Описание, type: text }
+              - { name: ctaLabel, label: Текст кнопки, type: string }
+              - { name: ctaHref, label: Ссылка кнопки, type: string }
+          - name: advantages
+            label: Преимущества
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.title}"
+            fields:
+              - { name: title, label: Заголовок, type: string }
+              - { name: description, label: Описание, type: text }
+              - name: icon
+                label: Иконка
+                type: select
+                options:
+                  values:
+                    - { label: Медаль, value: medal }
+                    - { label: Завод, value: factory }
+                    - { label: Знак качества, value: badge }
+                    - { label: Ключ, value: key }
+
+  # ---------- Акции ----------
+  - name: sales
+    label: Акционные предложения
+    type: file
+    path: src/data/sales.json
+    format: json
+    fields:
+      - { name: title, label: Заголовок секции, type: string }
+      - name: items
+        label: Предложения
+        type: object
+        list:
+          collapsible:
+            summary: "{fields.title} {fields.discount}"
+        fields:
+          - { name: title, label: Заголовок, type: string }
+          - { name: discount, label: Скидка (акцент), type: string }
+          - { name: description, label: Описание, type: text }
+          - { name: ctaLabel, label: Текст кнопки, type: string }
+          - { name: ctaHref, label: Ссылка кнопки, type: string }
 
 settings:
   commit:
