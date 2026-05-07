@@ -114,7 +114,7 @@ const hasMainPrice = mainVariantPrices.some((price) => Boolean(price))
                             </p>
 
                             {
-                                hasMainDimensions && (
+                                hasMainDimensions && mainOptionsWithDimensions.length > 1 && (
                                     <div data-detail-pricing data-main-variant-prices={JSON.stringify(mainVariantPrices)} class="space-y-2">
                                         <div class="flex items-center gap-3">
                                             <label class="text-secondary/60 shrink-0" for="product-size-select">Размеры:</label>
@@ -130,6 +130,15 @@ const hasMainPrice = mainVariantPrices.some((price) => Boolean(price))
                                     </div>
                                 )
                             }
+
+                            {
+                                hasMainDimensions && mainOptionsWithDimensions.length === 1 && (
+                                    <p>
+                                        <span class="mb-1 block text-secondary/60">Размеры:</span>
+                                        {mainOptionsWithDimensions[0].dimensions}
+                                    </p>
+                                )
+                            }
                         </div>
 
                         <div class="flex flex-col gap-4 md:flex-row md:items-center w-full" data-detail-order data-base-product-title={item.data.title}>
@@ -137,7 +146,7 @@ const hasMainPrice = mainVariantPrices.some((price) => Boolean(price))
                             {hasMainPrice && (
                                 <div class="border-l border-primary/60 pl-4 shrink-0">
                                     <p class="text-sm text-secondary/60">Стоимость:</p>
-                                    <p class="font-heading text-2xl" data-current-price>{`${getDisplayPrice(mainInitialPrice)} ₽`}</p>
+                                    <p class="font-heading text-2xl" data-current-price>{mainInitialPrice?.trim() ? `${mainInitialPrice} руб.` : 'по запросу'}</p>
                                 </div>
                             )}
                         </div>
@@ -239,7 +248,7 @@ const hasMainPrice = mainVariantPrices.some((price) => Boolean(price))
         const resolvedTitle = selectedDimensions ? `${baseTitle} (${selectedDimensions})` : baseTitle
 
         if (detailPriceNode) {
-            detailPriceNode.textContent = `${selectedPrice || 'по запросу'} ₽`
+            detailPriceNode.textContent = selectedPrice ? `${selectedPrice} руб.` : 'по запросу'
         }
 
         if (detailOrderForm) {
@@ -262,9 +271,11 @@ const hasMainPrice = mainVariantPrices.some((price) => Boolean(price))
         applyDetailSelection(customEvent.detail?.value ?? '0')
     }
 
-    detailSelectRoot?.addEventListener('starwind-select:change', onDetailSelectChange)
-    detailNativeSelect?.addEventListener('change', () => applyDetailSelection(detailNativeSelect.value))
-    applyDetailSelection(detailNativeSelect?.value ?? '0')
+    if (detailSelectRoot) {
+        detailSelectRoot.addEventListener('starwind-select:change', onDetailSelectChange)
+        detailNativeSelect?.addEventListener('change', () => applyDetailSelection(detailNativeSelect.value))
+        applyDetailSelection(detailNativeSelect?.value ?? '0')
+    }
 
 </script>
 

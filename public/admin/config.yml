@@ -73,12 +73,12 @@ collections:
           - { label: Комбинированный, value: 'combined' }
           - { label: Резной, value: 'carved' }
           - { label: Мраморная крошка, value: 'marble-chips' }
-  - name: improvement
+  - name: landscaping
     label: Благоустройство
-    label_singular: Improvement
+    label_singular: Landscaping
     editor:
       preview: false
-    folder: /src/data/improvement
+    folder: /src/data/landscaping
     create: true
     fields:
       - name: seo
@@ -89,10 +89,14 @@ collections:
           - { label: Title, name: title, widget: string, required: true }
           - { label: Description, name: description, widget: text, required: true }
       - { label: Название, name: title, widget: string }
-      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/improvement }
+      - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/landscaping }
       - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select
@@ -118,8 +122,12 @@ collections:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/complexes }
       - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select
@@ -149,8 +157,12 @@ collections:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/fences }
       - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select
@@ -177,8 +189,12 @@ collections:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/benches-and-tables }
       - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select
@@ -205,8 +221,12 @@ collections:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/crosses }
       - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select
@@ -232,8 +252,12 @@ collections:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/monument-design }
       - { label: Описание, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string, required: false }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select
@@ -263,8 +287,12 @@ collections:
       - { label: Название, name: title, widget: string }
       - { label: Изображение, name: image, widget: image, media_folder: /src/assets/services/accessories }
       - { label: Материалы, name: materials, widget: text }
-      - { label: Размеры, name: dimensions, widget: string }
-      - { label: Стоимость, name: price, widget: string }
+      - name: dimensionsAndPrice
+        label: Размеры и стоимость
+        widget: list
+        fields:
+          - { label: Размеры, name: dimensions, widget: string }
+          - { label: Стоимость, name: price, widget: string }
       - name: type
         label: Подкатегория
         widget: select

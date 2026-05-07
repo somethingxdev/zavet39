@@ -1,0 +1,8 @@
+[
+  { "slug": "portrait-engraving", "title": "Гравировка портрета" },
+  { "slug": "letter-engraving", "title": "Гравировка букв" },
+  { "slug": "fonts", "title": "Шрифты" },
+  { "slug": "metal-letters", "title": "Буквы из металла" },
+  { "slug": "religious-engraving", "title": "Религиозная гравировка" },
+  { "slug": "engraving-complex", "title": "Комплекс гравировки" }
+]

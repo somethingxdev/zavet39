@@ -2,9 +2,11 @@ import { file, glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection } from 'astro:content'
 
+const stringish = z.union([z.string(), z.number()]).transform((value) => String(value))
+
 const dimensionsAndPriceItemSchema = z.object({
-  dimensions: z.string().optional(),
-  price: z.string().optional(),
+  dimensions: stringish.optional(),
+  price: stringish.optional(),
 })
 
 const serviceSchema = ({ image }: { image: () => any }) =>
@@ -13,8 +15,8 @@ const serviceSchema = ({ image }: { image: () => any }) =>
     image: image(),
     materials: z.string(),
     dimensionsAndPrice: z.array(dimensionsAndPriceItemSchema).optional(),
-    dimensions: z.string().optional(),
-    price: z.string().optional(),
+    dimensions: stringish.optional(),
+    price: stringish.optional(),
     type: z.string().optional(),
   })
   .transform((data) => {
@@ -46,8 +48,8 @@ const monuments = defineCollection({
   schema: serviceSchema,
 })
 
-const curbs = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/data/curbs' }),
+const landscaping = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/data/landscaping' }),
   schema: serviceSchema,
 })
 
@@ -76,6 +78,11 @@ const crosses = defineCollection({
   schema: serviceSchema,
 })
 
+const monumentDesign = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/data/monument-design' }),
+  schema: serviceSchema,
+})
+
 const accessories = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/data/accessories' }),
   schema: serviceSchema,
@@ -99,12 +106,13 @@ const gallery = defineCollection({
 
 export const collections = {
   monuments,
-  curbs,
+  landscaping,
   complexes,
   socles,
   fences,
   'benches-and-tables': benchesAndTables,
   crosses,
+  'monument-design': monumentDesign,
   accessories,
   gallery,
 }

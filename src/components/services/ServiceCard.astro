@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/starwind/select'
 
 type Props = {
-    item: CollectionEntry<'monuments' | 'curbs' | 'complexes' | 'socles' | 'fences' | 'benches-and-tables' | 'crosses' | 'accessories'>
+    item: CollectionEntry<'monuments' | 'landscaping' | 'complexes' | 'socles' | 'fences' | 'benches-and-tables' | 'crosses' | 'monument-design' | 'accessories'>
     typeLabel?: string
     categorySlug: string
     class?: string
@@ -36,7 +36,7 @@ const variantPrices = variants.map((variant) => variant.price)
         <a href={productHref} class="group block w-full">
             <div class="relative h-50 sm:h-69 w-full overflow-hidden bg-muted">
                 <Image src={item.data.image} alt={item.data.title} class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
-               
+
             </div>
         </a>
     </CardHeader>
@@ -48,7 +48,7 @@ const variantPrices = variants.map((variant) => variant.price)
             </a>
         </CardTitle>
 
-      
+
 
         <p class="text-sm">
             <span class="font-semibold">Материалы:</span>
@@ -84,7 +84,7 @@ const variantPrices = variants.map((variant) => variant.price)
 
     <CardFooter>
         <p data-card-price class:list={['text-xl font-heading', !initialPrice && 'hidden']}>
-            Цена: {initialPrice} ₽
+            Цена: {initialPrice} руб.
         </p>
 
         <div data-card-fallback class:list={['w-full', !!initialPrice && 'hidden']}>
@@ -124,7 +124,7 @@ const variantPrices = variants.map((variant) => variant.price)
             const index = Number(indexValue)
             const nextPrice = Number.isNaN(index) ? '' : (prices[index] ?? '')
 
-            priceEl.textContent = nextPrice ? `Цена: ${nextPrice} ₽` : ''
+            priceEl.textContent = nextPrice ? `Цена: ${nextPrice} руб.` : ''
             priceEl.classList.toggle('hidden', !nextPrice)
             fallbackEl.classList.toggle('hidden', !!nextPrice)
         }

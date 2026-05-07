@@ -1,4 +1,13 @@
-export type ServiceCategorySlug = 'monuments' | 'curbs' | 'complexes' | 'socles' | 'fences' | 'benches-and-tables' | 'crosses' | 'accessories'
+export type ServiceCategorySlug =
+  | 'monuments'
+  | 'landscaping'
+  | 'complexes'
+  | 'socles'
+  | 'fences'
+  | 'benches-and-tables'
+  | 'crosses'
+  | 'monument-design'
+  | 'accessories'
 
 export type ServiceCollectionName = ServiceCategorySlug
 
@@ -17,9 +26,9 @@ export const SERVICE_CATEGORIES = [
     hasTypeFilters: true,
   },
   {
-    slug: 'curbs',
-    title: 'Бордюры',
-    collection: 'curbs',
+    slug: 'landscaping',
+    title: 'Благоустройство',
+    collection: 'landscaping',
     hasTypeFilters: false,
   },
   {
@@ -38,7 +47,7 @@ export const SERVICE_CATEGORIES = [
     slug: 'fences',
     title: 'Ограды',
     collection: 'fences',
-    hasTypeFilters: false,
+    hasTypeFilters: true,
   },
   {
     slug: 'benches-and-tables',
@@ -50,6 +59,12 @@ export const SERVICE_CATEGORIES = [
     slug: 'crosses',
     title: 'Кресты',
     collection: 'crosses',
+    hasTypeFilters: false,
+  },
+  {
+    slug: 'monument-design',
+    title: 'Оформление памятника',
+    collection: 'monument-design',
     hasTypeFilters: false,
   },
   {

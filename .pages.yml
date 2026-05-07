@@ -11,7 +11,7 @@ media:
     label: Памятники
     input: src/assets/services/monuments
     output: /src/assets/services/monuments
-  - name: improvement
+  - name: landscaping
     label: Благоустройство
     input: src/assets/services/improvement
     output: /src/assets/services/improvement
@@ -60,7 +60,7 @@ content:
         type: collection
         path: src/data/monuments
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -90,12 +90,12 @@ content:
                 - { label: Резной, value: carved }
                 - { label: Мраморная крошка, value: marble-chips }
 
-      - name: improvement
+      - name: landscaping
         label: Благоустройство
         type: collection
-        path: src/data/improvement
+        path: src/data/landscaping
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -103,10 +103,15 @@ content:
           - name: seo
             component: seo
           - { name: title, label: Название, type: string }
-          - { name: image, label: Изображение, type: image, options: { media: improvement } }
+          - { name: image, label: Изображение, type: image, options: { media: landscaping } }
           - { name: materials, label: Материалы, type: text }
-          - { name: dimensions, label: Размеры, type: string }
-          - { name: price, label: Стоимость, type: string }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
           - name: type
             label: Подкатегория
             type: select
@@ -121,7 +126,7 @@ content:
         type: collection
         path: src/data/complexes
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -131,8 +136,13 @@ content:
           - { name: title, label: Название, type: string }
           - { name: image, label: Изображение, type: image, options: { media: complexes } }
           - { name: materials, label: Материалы, type: text }
-          - { name: dimensions, label: Размеры, type: string }
-          - { name: price, label: Стоимость, type: string }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
           - name: type
             label: Подкатегория
             type: select
@@ -151,7 +161,7 @@ content:
         type: collection
         path: src/data/fences
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -161,8 +171,13 @@ content:
           - { name: title, label: Название, type: string }
           - { name: image, label: Изображение, type: image, options: { media: fences } }
           - { name: materials, label: Материалы, type: text }
-          - { name: dimensions, label: Размеры, type: string }
-          - { name: price, label: Стоимость, type: string }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
           - name: type
             label: Подкатегория
             type: select
@@ -178,7 +193,7 @@ content:
         type: collection
         path: src/data/benches-and-tables
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -188,8 +203,13 @@ content:
           - { name: title, label: Название, type: string }
           - { name: image, label: Изображение, type: image, options: { media: benches-and-tables } }
           - { name: materials, label: Материалы, type: text }
-          - { name: dimensions, label: Размеры, type: string }
-          - { name: price, label: Стоимость, type: string }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
           - name: type
             label: Подкатегория
             type: select
@@ -205,7 +225,7 @@ content:
         type: collection
         path: src/data/crosses
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -215,8 +235,13 @@ content:
           - { name: title, label: Название, type: string }
           - { name: image, label: Изображение, type: image, options: { media: crosses } }
           - { name: materials, label: Материалы, type: text }
-          - { name: dimensions, label: Размеры, type: string }
-          - { name: price, label: Стоимость, type: string }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
           - name: type
             label: Подкатегория
             type: select
@@ -231,7 +256,7 @@ content:
         type: collection
         path: src/data/monument-design
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -241,8 +266,13 @@ content:
           - { name: title, label: Название, type: string }
           - { name: image, label: Изображение, type: image, options: { media: monument-design } }
           - { name: materials, label: Описание, type: text }
-          - { name: dimensions, label: Размеры, type: string, required: false }
-          - { name: price, label: Стоимость, type: string }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
           - name: type
             label: Подкатегория
             type: select
@@ -261,7 +291,7 @@ content:
         type: collection
         path: src/data/accessories
         format: yaml-frontmatter
-        filename: "{primary}.md"
+        filename: '{primary}.md'
         view:
           fields: [title, type]
           primary: title
@@ -271,8 +301,13 @@ content:
           - { name: title, label: Название, type: string }
           - { name: image, label: Изображение, type: image, options: { media: accessories } }
           - { name: materials, label: Материалы, type: text }
-          - { name: dimensions, label: Размеры, type: string }
-          - { name: price, label: Стоимость, type: string }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
           - name: type
             label: Подкатегория
             type: select
@@ -300,7 +335,7 @@ content:
             type: object
             list:
               collapsible:
-                summary: "{fields.alt}"
+                summary: '{fields.alt}'
             fields:
               - { name: image, label: Изображение, type: image, options: { media: gallery } }
               - { name: alt, label: Alt, type: string }
@@ -316,13 +351,13 @@ content:
           - name: address
             label: Адрес
             type: text
-            description: "Можно указывать адрес в несколько строк"
+            description: 'Можно указывать адрес в несколько строк'
           - { name: phoneLabel, label: Заголовок телефонов, type: string }
           - { name: phoneDisplay, label: Телефон (для отображения), type: string }
           - name: phoneHref
             label: Телефон (для ссылки, без символов)
             type: string
-            description: "Пример: +79106367313"
+            description: 'Пример: +79106367313'
           - { name: emailLabel, label: Заголовок email, type: string }
           - { name: email, label: Email, type: string }
           - { name: telegramUrl, label: Ссылка на Telegram, type: string }
@@ -354,8 +389,8 @@ content:
             type: object
             fields:
               - { name: titleStart, label: Заголовок (начало), type: string }
-              - { name: titleAccent, label: Заголовок (акцент, оранжевый), type: string }
-              - { name: description, label: Описание, type: text, description: "Можно использовать <b>жирный</b>" }
+              - { name: titleAccent, label: Заголовок (акцент), type: string }
+              - { name: description, label: Описание, type: text, description: 'Можно использовать <b>жирный</b>' }
               - name: primaryCta
                 label: Основная кнопка
                 type: object
@@ -381,7 +416,7 @@ content:
             type: object
             list:
               collapsible:
-                summary: "{fields.title}"
+                summary: '{fields.title}'
             fields:
               - { name: title, label: Заголовок, type: string }
               - { name: description, label: Описание, type: text }
@@ -408,7 +443,7 @@ content:
         type: object
         list:
           collapsible:
-            summary: "{fields.title} {fields.discount}"
+            summary: '{fields.title} {fields.discount}'
         fields:
           - { name: title, label: Заголовок, type: string }
           - { name: discount, label: Скидка (акцент), type: string }
@@ -419,6 +454,6 @@ content:
 settings:
   commit:
     templates:
-      create: "Create {collection} “{filename}”"
-      update: "Update {collection} “{filename}”"
-      delete: "Delete {collection} “{filename}”"
+      create: 'Create {collection} “{filename}”'
+      update: 'Update {collection} “{filename}”'
+      delete: 'Delete {collection} “{filename}”'
