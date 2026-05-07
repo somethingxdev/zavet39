@@ -39,6 +39,10 @@
     {
       "name": "checkbox",
       "version": "1.4.2"
+    },
+    {
+      "name": "prose",
+      "version": "1.0.1"
     }
   ]
 }

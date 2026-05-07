@@ -67,9 +67,13 @@ const hasMainDimensions = mainOptionsWithDimensions.length > 0
 const mainVariantPrices = (hasMainDimensions ? mainOptionsWithDimensions : mainOptions).map((option) => option.price)
 const mainInitialPrice = mainOptions.find((option) => option.price)?.price ?? ''
 const hasMainPrice = mainVariantPrices.some((price) => Boolean(price))
+const pageTitle = item.data.seo?.title ?? `${item.data.title} | Завет 39`
+const pageDescription =
+    item.data.seo?.description ??
+    `${item.data.title}: изготовление на заказ в Калининграде. Материал: ${item.data.materials}. Уточните размеры, комплектацию и стоимость у салона Завет 39.`
 ---
 
-<Layout>
+<Layout title={pageTitle} description={pageDescription}>
     <div class="py-30 md:pt-50 md:pb-20">
         <div class="container">
             <div class="text-secondary">

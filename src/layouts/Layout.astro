@@ -5,6 +5,17 @@ import { Font } from 'astro:assets'
 import Header from '@/components/app/Header.astro'
 import Footer from '@/components/app/Footer.astro'
 import { Toaster } from '@/components/starwind/toast'
+
+type Props = {
+    title?: string
+    description?: string
+}
+
+const defaultTitle = 'Памятники на заказ в Калининграде | Завет 39'
+const defaultDescription =
+    'Изготовление памятников на заказ в Калининграде: гранит, мраморная крошка, комплексы, ограды и благоустройство мест захоронения. Индивидуальный расчет стоимости.'
+
+const { title = defaultTitle, description = defaultDescription } = Astro.props
 ---
 
 <!doctype html>
@@ -17,7 +28,11 @@ import { Toaster } from '@/components/starwind/toast'
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" />
         <meta name="generator" content={Astro.generator} />
-        <title>Zavet 39</title>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
     </head>
     <body class="relative" class:list={[Astro.url.pathname !== '/' && 'bg-[#F6F6F6]']}>
         <Header />
