@@ -1,4 +1,6 @@
 [
   { "slug": "socles", "title": "Подиумы" },
-  { "slug": "curbs", "title": "Бордюры" }
+  { "slug": "curbs", "title": "Бордюры" },
+  { "slug": "colored-granite", "title": "Цветной гранит" },
+  { "slug": "decorative-stone", "title": "Декоративный камень" }
 ]

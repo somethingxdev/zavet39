@@ -27,7 +27,7 @@ const serviceSchema = <T extends readonly [string, ...string[]]>(types: T) =>
 
 const monumentTypes = ['vertical', 'horizontal', 'granite-cross', 'combined', 'carved', 'marble-chips', 'faceted'] as const
 const complexTypes = ['vertical', 'horizontal', 'granite-cross', 'combined', 'carved', 'marble-chips'] as const
-const landscapingTypes = ['socles', 'curbs'] as const
+const landscapingTypes = ['socles', 'curbs', 'colored-granite', 'decorative-stone'] as const
 const fenceTypes = ['metal', 'forged', 'granite'] as const
 const benchAndTableTypes = ['benches', 'tables', 'sets'] as const
 const crossTypes = ['granite', 'metal'] as const

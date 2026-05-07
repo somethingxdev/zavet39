@@ -28,7 +28,7 @@ export const SERVICE_CATEGORIES = [
     slug: 'landscaping',
     title: 'Благоустройство',
     collection: 'landscaping',
-    hasTypeFilters: false,
+    hasTypeFilters: true,
   },
   {
     slug: 'complexes',

@@ -95,6 +95,8 @@ collections:
         options:
           - { label: Подиумы, value: 'socles' }
           - { label: Бордюры, value: 'curbs' }
+          - { label: Цветной гранит, value: 'colored-granite' }
+          - { label: Декоративный камень, value: 'decorative-stone' }
 
   - name: complexes
     label: Комплексы
