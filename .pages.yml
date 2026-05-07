@@ -60,7 +60,7 @@ content:
         type: collection
         path: src/data/monuments
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
@@ -95,7 +95,7 @@ content:
         type: collection
         path: src/data/landscaping
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
@@ -126,7 +126,7 @@ content:
         type: collection
         path: src/data/complexes
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
@@ -161,7 +161,7 @@ content:
         type: collection
         path: src/data/fences
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
@@ -193,7 +193,7 @@ content:
         type: collection
         path: src/data/benches-and-tables
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
@@ -225,7 +225,7 @@ content:
         type: collection
         path: src/data/crosses
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
@@ -256,7 +256,7 @@ content:
         type: collection
         path: src/data/monument-design
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
@@ -291,7 +291,7 @@ content:
         type: collection
         path: src/data/accessories
         format: yaml-frontmatter
-        filename: '{primary}.md'
+        filename: '{slug}.md'
         view:
           fields: [title, type]
           primary: title
