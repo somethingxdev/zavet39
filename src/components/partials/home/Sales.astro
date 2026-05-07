@@ -1,38 +1,14 @@
 ---
 import { ArrowLeft, ArrowRight } from '@lucide/astro'
 import { Button } from '@/components/starwind/button'
+import sales from '@/data/sales.json'
 
-const salesItems = [
-  {
-    title: 'Длинное акционное предложение',
-    discount: '30%',
-    description: 'Очень длинное описание условий акции',
-    cta: 'Связаться с нами',
-  },
-  {
-    title: 'Длинное акционное предложение',
-    discount: '30%',
-    description: 'Очень длинное описание условий акции',
-    cta: 'Связаться с нами',
-  },
-  {
-    title: 'Длинное акционное предложение',
-    discount: '30%',
-    description: 'Очень длинное описание условий акции',
-    cta: 'Связаться с нами',
-  },
-  {
-    title: 'Длинное акционное предложение',
-    discount: '30%',
-    description: 'Очень длинное описание условий акции',
-    cta: 'Связаться с нами',
-  },
-]
+const { title, items: salesItems } = sales
 ---
 
 <section class="py-10 sm:py-20">
   <div class="container">
-    <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl md:mb-12 lg:text-6xl">Акционное предложение</h2>
+    <h2 class="mb-10 text-center font-heading text-4xl md:text-5xl md:mb-12 lg:text-6xl">{title}</h2>
 
     <div class="embla" data-sales-embla>
       <div class="embla__viewport overflow-visible mb-10">
@@ -45,8 +21,8 @@ const salesItems = [
                     {sale.title} <span class="text-primary">{sale.discount}</span>
                   </h3>
                   <p class="text-lg text-white/80 mb-8 max-w-xs">{sale.description}</p>
-                  <Button href="#" variant="primary" class="w-full">
-                    {sale.cta}
+                  <Button href={sale.ctaHref ?? '#'} variant="primary" class="w-full">
+                    {sale.ctaLabel}
                   </Button>
                 </div>
               </div>

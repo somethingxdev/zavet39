@@ -6,12 +6,16 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/starwind/sheet'
 import MaxIcon from '@/icons/max.svg'
 import TelegramIcon from '@/icons/telegram.svg'
 import PhoneIcon from '@/icons/phone.svg'
+import contacts from '@/data/contacts.json'
+
+const phoneHref = contacts.phoneHref.startsWith('tel:') ? contacts.phoneHref : `tel:${contacts.phoneHref}`
+const telegramUrl = contacts.telegramUrl ?? '#'
+const maxUrl = contacts.maxUrl ?? '#'
 
 const navItems = [
     { label: 'Памятники', href: '/services/monuments' },
-    { label: 'Бордюры', href: '/services/curbs' },
+    { label: 'Благоустройство', href: '/services/curbs' },
     { label: 'Комплексы', href: '/services/complexes' },
-    { label: 'Цоколи', href: '/services/socles' },
     { label: 'Ограды', href: '/services/fences' },
     { label: 'Лавочки и столики', href: '/services/benches' },
     { label: 'Кресты', href: '/services/crosses' },
@@ -44,16 +48,16 @@ const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServi
             </div>
 
             <div class="hidden xl:flex items-center gap-4">
-                <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
-                <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
-                <Button class="ml-2" href="tel:+79106367313"> <PhoneIcon /> +7 (910) 636-73-13</Button>
+                <a href={maxUrl} class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
+                <a href={telegramUrl} class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
+                <Button class="ml-2" href={phoneHref}> <PhoneIcon /> {contacts.phoneDisplay}</Button>
             </div>
 
             <div class="xl:hidden flex items-center gap-3">
                 <div class="hidden md:flex items-center gap-3">
-                    <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon class="size-10" /> </a>
-                    <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon class="size-10" /> </a>
-                    <Button class="ml-2" size="sm" href="tel:+79106367313"> <PhoneIcon /> +7 (910) 636-73-13</Button>
+                    <a href={maxUrl} class="hover:-translate-y-1 transition-transform"> <MaxIcon class="size-10" /> </a>
+                    <a href={telegramUrl} class="hover:-translate-y-1 transition-transform"> <TelegramIcon class="size-10" /> </a>
+                    <Button class="ml-2" size="sm" href={phoneHref}> <PhoneIcon /> {contacts.phoneDisplay}</Button>
                 </div>
                 <Sheet>
                     <SheetTrigger class="inline-flex items-center justify-center rounded-full size-12 bg-white/10 text-white">
@@ -64,11 +68,11 @@ const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServi
                     <SheetContent side="right" class="bg-secondary text-white border-white/10 p-6">
                         <div class="flex flex-col gap-6 pt-6">
                             <div class="flex items-center gap-4">
-                                <a href="#" class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
-                                <a href="#" class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
+                                <a href={maxUrl} class="hover:-translate-y-1 transition-transform"> <MaxIcon /> </a>
+                                <a href={telegramUrl} class="hover:-translate-y-1 transition-transform"> <TelegramIcon /> </a>
                             </div>
 
-                            <Button class="w-full justify-center" href="tel:+79106367313"> <PhoneIcon /> +7 (910) 636-73-13</Button>
+                            <Button class="w-full justify-center" href={phoneHref}> <PhoneIcon /> {contacts.phoneDisplay}</Button>
 
                             <nav>
                                 <ul class="flex flex-col gap-3 text-lg">

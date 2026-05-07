@@ -50,273 +50,371 @@ components:
       - { name: description, label: Description, type: text, required: true }
 
 content:
-  # ---------- Singletons ----------
-  - name: gallery
-    label: Галерея
+  # ---------- Услуги ----------
+  - name: services
+    label: Услуги
+    type: group
+    items:
+      - name: monuments
+        label: Памятники
+        type: collection
+        path: src/data/monuments
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: monuments } }
+          - { name: materials, label: Материалы, type: text }
+          - name: dimensionsAndPrice
+            label: Размеры и стоимость
+            type: object
+            list: true
+            fields:
+              - { name: dimensions, label: Размеры, type: string }
+              - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Вертикальный, value: vertical }
+                - { label: Горизонтальный, value: horizontal }
+                - { label: Гранитный крест, value: granite-cross }
+                - { label: Комбинированный, value: combined }
+                - { label: Резной, value: carved }
+                - { label: Мраморная крошка, value: marble-chips }
+
+      - name: improvement
+        label: Благоустройство
+        type: collection
+        path: src/data/improvement
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: improvement } }
+          - { name: materials, label: Материалы, type: text }
+          - { name: dimensions, label: Размеры, type: string }
+          - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Подиумы, value: socles }
+                - { label: Бордюры, value: curbs }
+
+      - name: complexes
+        label: Комплексы
+        type: collection
+        path: src/data/complexes
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: complexes } }
+          - { name: materials, label: Материалы, type: text }
+          - { name: dimensions, label: Размеры, type: string }
+          - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Вертикальные, value: vertical }
+                - { label: Горизонтальные, value: horizontal }
+                - { label: Гранитные кресты, value: granite-cross }
+                - { label: Комбинированные, value: combined }
+                - { label: Резные, value: carved }
+                - { label: Мраморная крошка, value: marble-chips }
+
+      - name: fences
+        label: Ограды
+        type: collection
+        path: src/data/fences
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: fences } }
+          - { name: materials, label: Материалы, type: text }
+          - { name: dimensions, label: Размеры, type: string }
+          - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Металлические, value: metal }
+                - { label: Кованые, value: forged }
+                - { label: Гранитные, value: granite }
+
+      - name: benches-and-tables
+        label: Лавочки и столики
+        type: collection
+        path: src/data/benches-and-tables
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: benches-and-tables } }
+          - { name: materials, label: Материалы, type: text }
+          - { name: dimensions, label: Размеры, type: string }
+          - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Лавочки, value: benches }
+                - { label: Столики, value: tables }
+                - { label: Комплекты, value: sets }
+
+      - name: crosses
+        label: Кресты
+        type: collection
+        path: src/data/crosses
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: crosses } }
+          - { name: materials, label: Материалы, type: text }
+          - { name: dimensions, label: Размеры, type: string }
+          - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Гранитный крест, value: granite }
+                - { label: Металлический крест, value: metal }
+
+      - name: monument-design
+        label: Оформление памятника
+        type: collection
+        path: src/data/monument-design
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: monument-design } }
+          - { name: materials, label: Описание, type: text }
+          - { name: dimensions, label: Размеры, type: string, required: false }
+          - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Гравировка портрета, value: portrait-engraving }
+                - { label: Гравировка букв, value: letter-engraving }
+                - { label: Шрифты, value: fonts }
+                - { label: Буквы из металла, value: metal-letters }
+                - { label: Религиозная гравировка, value: religious-engraving }
+                - { label: Комплекс гравировки, value: engraving-complex }
+
+      - name: accessories
+        label: Аксессуары
+        type: collection
+        path: src/data/accessories
+        format: yaml-frontmatter
+        filename: "{primary}.md"
+        view:
+          fields: [title, type]
+          primary: title
+        fields:
+          - name: seo
+            component: seo
+          - { name: title, label: Название, type: string }
+          - { name: image, label: Изображение, type: image, options: { media: accessories } }
+          - { name: materials, label: Материалы, type: text }
+          - { name: dimensions, label: Размеры, type: string }
+          - { name: price, label: Стоимость, type: string }
+          - name: type
+            label: Подкатегория
+            type: select
+            required: false
+            options:
+              values:
+                - { label: Вазы, value: vases }
+                - { label: Лампады, value: lamps }
+                - { label: Крестики, value: small-crosses }
+                - { label: Цветы, value: flowers }
+
+  # ---------- Прочее ----------
+  - name: misc
+    label: Прочее
+    type: group
+    items:
+      - name: gallery
+        label: Галерея
+        type: file
+        path: src/data/gallery.json
+        format: json
+        fields:
+          - name: items
+            label: Фотографии
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.alt}"
+            fields:
+              - { name: image, label: Изображение, type: image, options: { media: gallery } }
+              - { name: alt, label: Alt, type: string }
+
+      - name: contacts
+        label: Контакты
+        type: file
+        path: src/data/contacts.json
+        format: json
+        fields:
+          - { name: pageTitle, label: Заголовок страницы, type: string }
+          - { name: addressLabel, label: Заголовок адреса, type: string }
+          - name: address
+            label: Адрес
+            type: text
+            description: "Можно указывать адрес в несколько строк"
+          - { name: phoneLabel, label: Заголовок телефонов, type: string }
+          - { name: phoneDisplay, label: Телефон (для отображения), type: string }
+          - name: phoneHref
+            label: Телефон (для ссылки, без символов)
+            type: string
+            description: "Пример: +79106367313"
+          - { name: emailLabel, label: Заголовок email, type: string }
+          - { name: email, label: Email, type: string }
+          - { name: telegramUrl, label: Ссылка на Telegram, type: string }
+          - { name: maxUrl, label: Ссылка на MAX, type: string }
+          - name: footerDescription
+            label: Описание в футере
+            type: text
+          - name: workingHours
+            label: Время работы
+            type: object
+            list: true
+            fields:
+              - { name: label, label: День (или диапазон), type: string }
+              - { name: value, label: Часы, type: string }
+
+  # ---------- Страницы ----------
+  - name: pages
+    label: Страницы
+    type: group
+    items:
+      - name: home
+        label: Домашняя страница
+        type: file
+        path: src/data/home.json
+        format: json
+        fields:
+          - name: hero
+            label: Hero (главный экран)
+            type: object
+            fields:
+              - { name: titleStart, label: Заголовок (начало), type: string }
+              - { name: titleAccent, label: Заголовок (акцент, оранжевый), type: string }
+              - { name: description, label: Описание, type: text, description: "Можно использовать <b>жирный</b>" }
+              - name: primaryCta
+                label: Основная кнопка
+                type: object
+                fields:
+                  - { name: label, label: Текст, type: string }
+                  - { name: href, label: Ссылка, type: string }
+              - name: secondaryCta
+                label: Вторичная кнопка
+                type: object
+                fields:
+                  - { name: label, label: Текст, type: string }
+                  - { name: href, label: Ссылка, type: string }
+          - name: about
+            label: О нас
+            type: object
+            fields:
+              - { name: title, label: Заголовок, type: string }
+              - { name: description, label: Описание, type: text }
+              - { name: ctaLabel, label: Текст кнопки, type: string }
+              - { name: ctaHref, label: Ссылка кнопки, type: string }
+          - name: advantages
+            label: Преимущества
+            type: object
+            list:
+              collapsible:
+                summary: "{fields.title}"
+            fields:
+              - { name: title, label: Заголовок, type: string }
+              - { name: description, label: Описание, type: text }
+              - name: icon
+                label: Иконка
+                type: select
+                options:
+                  values:
+                    - { label: Медаль, value: medal }
+                    - { label: Завод, value: factory }
+                    - { label: Знак качества, value: badge }
+                    - { label: Ключ, value: key }
+
+  # ---------- Акции ----------
+  - name: sales
+    label: Акционные предложения
     type: file
-    path: src/data/gallery.json
+    path: src/data/sales.json
     format: json
     fields:
+      - { name: title, label: Заголовок секции, type: string }
       - name: items
-        label: Фотографии
+        label: Предложения
         type: object
         list:
           collapsible:
-            summary: "{fields.alt}"
+            summary: "{fields.title} {fields.discount}"
         fields:
-          - { name: image, label: Изображение, type: image, options: { media: gallery } }
-          - { name: alt, label: Alt, type: string }
-
-  - name: contacts
-    label: Контакты
-    type: file
-    path: src/data/contacts.json
-    format: json
-    fields:
-      - { name: pageTitle, label: Заголовок страницы, type: string }
-      - { name: addressLabel, label: Заголовок адреса, type: string }
-      - name: address
-        label: Адрес
-        type: text
-        description: "Можно указывать адрес в несколько строк"
-      - { name: phoneLabel, label: Заголовок телефонов, type: string }
-      - { name: phoneDisplay, label: Телефон (для отображения), type: string }
-      - name: phoneHref
-        label: Телефон (для ссылки, без символов)
-        type: string
-        description: "Пример: +79106367313"
-      - { name: emailLabel, label: Заголовок email, type: string }
-      - { name: email, label: Email, type: string }
-
-  # ---------- Collections ----------
-  - name: monuments
-    label: Памятники
-    type: collection
-    path: src/data/monuments
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: monuments } }
-      - { name: materials, label: Материалы, type: text }
-      - name: dimensionsAndPrice
-        label: Размеры и стоимость
-        type: object
-        list: true
-        fields:
-          - { name: dimensions, label: Размеры, type: string }
-          - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Вертикальный, value: vertical }
-            - { label: Горизонтальный, value: horizontal }
-            - { label: Гранитный крест, value: granite-cross }
-            - { label: Комбинированный, value: combined }
-            - { label: Резной, value: carved }
-            - { label: Мраморная крошка, value: marble-chips }
-
-  - name: improvement
-    label: Благоустройство
-    type: collection
-    path: src/data/improvement
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: improvement } }
-      - { name: materials, label: Материалы, type: text }
-      - { name: dimensions, label: Размеры, type: string }
-      - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Подиумы, value: socles }
-            - { label: Бордюры, value: curbs }
-
-  - name: complexes
-    label: Комплексы
-    type: collection
-    path: src/data/complexes
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: complexes } }
-      - { name: materials, label: Материалы, type: text }
-      - { name: dimensions, label: Размеры, type: string }
-      - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Вертикальные, value: vertical }
-            - { label: Горизонтальные, value: horizontal }
-            - { label: Гранитные кресты, value: granite-cross }
-            - { label: Комбинированные, value: combined }
-            - { label: Резные, value: carved }
-            - { label: Мраморная крошка, value: marble-chips }
-
-  - name: fences
-    label: Ограды
-    type: collection
-    path: src/data/fences
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: fences } }
-      - { name: materials, label: Материалы, type: text }
-      - { name: dimensions, label: Размеры, type: string }
-      - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Металлические, value: metal }
-            - { label: Кованые, value: forged }
-            - { label: Гранитные, value: granite }
-
-  - name: benches-and-tables
-    label: Лавочки и столики
-    type: collection
-    path: src/data/benches-and-tables
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: benches-and-tables } }
-      - { name: materials, label: Материалы, type: text }
-      - { name: dimensions, label: Размеры, type: string }
-      - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Лавочки, value: benches }
-            - { label: Столики, value: tables }
-            - { label: Комплекты, value: sets }
-
-  - name: crosses
-    label: Кресты
-    type: collection
-    path: src/data/crosses
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: crosses } }
-      - { name: materials, label: Материалы, type: text }
-      - { name: dimensions, label: Размеры, type: string }
-      - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Гранитный крест, value: granite }
-            - { label: Металлический крест, value: metal }
-
-  - name: monument-design
-    label: Оформление памятника
-    type: collection
-    path: src/data/monument-design
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: monument-design } }
-      - { name: materials, label: Описание, type: text }
-      - { name: dimensions, label: Размеры, type: string, required: false }
-      - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Гравировка портрета, value: portrait-engraving }
-            - { label: Гравировка букв, value: letter-engraving }
-            - { label: Шрифты, value: fonts }
-            - { label: Буквы из металла, value: metal-letters }
-            - { label: Религиозная гравировка, value: religious-engraving }
-            - { label: Комплекс гравировки, value: engraving-complex }
-
-  - name: accessories
-    label: Аксессуары
-    type: collection
-    path: src/data/accessories
-    format: yaml-frontmatter
-    filename: "{primary}.md"
-    view:
-      fields: [title, type]
-      primary: title
-    fields:
-      - name: seo
-        component: seo
-      - { name: title, label: Название, type: string }
-      - { name: image, label: Изображение, type: image, options: { media: accessories } }
-      - { name: materials, label: Материалы, type: text }
-      - { name: dimensions, label: Размеры, type: string }
-      - { name: price, label: Стоимость, type: string }
-      - name: type
-        label: Подкатегория
-        type: select
-        required: false
-        options:
-          values:
-            - { label: Вазы, value: vases }
-            - { label: Лампады, value: lamps }
-            - { label: Крестики, value: small-crosses }
-            - { label: Цветы, value: flowers }
+          - { name: title, label: Заголовок, type: string }
+          - { name: discount, label: Скидка (акцент), type: string }
+          - { name: description, label: Описание, type: text }
+          - { name: ctaLabel, label: Текст кнопки, type: string }
+          - { name: ctaHref, label: Ссылка кнопки, type: string }
 
 settings:
   commit:

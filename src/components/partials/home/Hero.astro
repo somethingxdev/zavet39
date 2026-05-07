@@ -1,6 +1,9 @@
 ---
 import { Button } from '@/components/starwind/button'
 import { Image } from 'astro:assets'
+import home from '@/data/home.json'
+
+const { titleStart, titleAccent, description, primaryCta, secondaryCta } = home.hero
 ---
 
 <section class="relative pt-25 md:pt-10">
@@ -9,19 +12,16 @@ import { Image } from 'astro:assets'
     <div class="container relative pt-10 pb-20 md:pt-70 md:pb-40">
         <div class="mx-auto max-w-265 md:text-center text-white">
             <h1 class="text-[40px] leading-none sm:text-6xl lg:text-8xl font-heading mb-8">
-                Мы поможем сохранить
-                <span class="text-primary">память о близком</span>
+                {titleStart}
+                <span class="text-primary">{titleAccent}</span>
             </h1>
         </div>
 
-        <p class="text-lg sm:text-xl max-w-5xl mx-auto md:text-balance md:text-center text-white/85">
-            Наша компания предоставляет полный спектр услуг по изготовлению, оформлению и установке памятников из гранита, мрамора, мраморной крошки и других материалов. Любой вид благоустройства захоронений на территории
-            <b>Калининграда и области.</b>
-        </p>
+        <p class="text-lg sm:text-xl max-w-5xl mx-auto md:text-balance md:text-center text-white/85" set:html={description}></p>
 
         <div class="mt-10 sm:mt-18 flex flex-col items-center justify-center sm:flex-row gap-5">
-            <Button variant="primary" href="#footer" class="w-full md:w-65 text-xl">Связаться с нами</Button>
-            <Button variant="outline" href="#services" class="w-full md:w-65 text-xl">Наши услуги</Button>
+            <Button variant="primary" href={primaryCta.href} class="w-full md:w-65 text-xl">{primaryCta.label}</Button>
+            <Button variant="outline" href={secondaryCta.href} class="w-full md:w-65 text-xl">{secondaryCta.label}</Button>
         </div>
     </div>
 </section>
