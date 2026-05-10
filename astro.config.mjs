@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config'
+import sitemap from '@astrojs/sitemap'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://zavet39.ru',
@@ -33,4 +34,5 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  integrations: [sitemap()],
 })
