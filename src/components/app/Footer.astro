@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets'
 import { Mail, Phone } from '@lucide/astro'
-import logo from '@/assets/logo.svg'
 import MaxIcon from '@/icons/max.svg'
 import TelegramIcon from '@/icons/telegram.svg'
 import contacts from '@/data/contacts.json'
@@ -19,7 +18,7 @@ const footerDescription = contacts.footerDescription ?? ''
         <div class="grid items-start gap-10 lg:gap-20 lg:grid-cols-2">
             <div class="space-y-6">
                 <a href="/" class="inline-flex">
-                    <Image src={logo} alt="Завет" class="max-w-[240px] w-full" />
+                    <Image src={import('@/assets/logo.svg')} alt="Завет" class="max-w-[240px] w-full" />
                 </a>
 
                 <p class="max-w-2xl text-sm text-white/80">{footerDescription}</p>
