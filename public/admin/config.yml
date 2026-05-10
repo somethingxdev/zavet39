@@ -3,10 +3,6 @@
 backend:
   name: github
   repo: somethingxdev/zavet39
-  commit_messages:
-    create: 'Create {{collection}} «{{slug}}»'
-    update: 'Update {{collection}} «{{slug}}»'
-    delete: 'Delete {{collection}} «{{slug}}»'
 
 media_folder: /assets
 
