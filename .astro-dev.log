@@ -1,0 +1,79 @@
+[vite] connected.
+[2m19:26:37[22m [34m[types][39m Generated [2m1ms[22m
+[vite] connected.
+[2m19:26:37[22m [34m[content][39m Syncing content
+[2m19:26:37[22m [34m[content][39m Astro config changed
+[2m19:26:37[22m [34m[content][39m Clearing content store
+[2m19:26:38[22m [34m[content][39m Synced content
+[2m19:26:38[22m [34m[vite][39m Re-optimizing dependencies because vite config has changed
+[42m[1m astro [22m[49m [32mv6.3.1[39m [2mready in[22m 1801 [2mms[22m
+[2m┃[22m Local    [36mhttp://127.0.0.1:4321/[39m
+[2m19:26:38[22m [32mwatching for file changes...[39m
+[2m19:27:16[22m [34m[200][39m /services/complexes [2m112ms[22m
+[2m19:27:16[22m [34m[200][39m /services/complexes [2m113ms[22m
+[2m19:27:17[22m [34m[vite][39m [32m✨ new dependencies optimized: [33mastro/zod[32m[39m
+[2m19:27:17[22m [34m[vite][39m [32m✨ optimized dependencies changed. reloading[39m
+[2m19:27:17[22m [34m[watch][39m /src/styles/main.css
+[2m19:27:18[22m [34m[200][39m /services/complexes [2m54ms[22m
+[2m19:27:23[22m [34m[watch][39m src/components/services/ServiceCard.astro
+[2m19:27:24[22m [34m[200][39m /services/complexes [2m36ms[22m
+[2m19:27:26[22m [34m[watch][39m /src/styles/main.css
+[2m19:27:27[22m [34m[200][39m /services/complexes [2m36ms[22m
+[2m19:27:29[22m [34m[watch][39m src/components/services/ServiceCard.astro
+[2m19:27:30[22m [34m[200][39m /services/complexes [2m36ms[22m
+[2m19:27:36[22m [34m[200][39m /services/fences [2m32ms[22m
+[2m19:27:36[22m [34m[200][39m /_image [2m33ms[22m
+[2m19:27:36[22m [34m[200][39m /_image [2m34ms[22m
+[2m19:27:36[22m [34m[200][39m /_image [2m35ms[22m
+[2m19:27:36[22m [34m[200][39m /_image [2m36ms[22m
+[2m19:27:36[22m [34m[200][39m /_image [2m36ms[22m
+[2m19:27:36[22m [34m[200][39m /_image [2m36ms[22m
+[2m19:27:36[22m [34m[200][39m /_image [2m15ms[22m
+[2m19:27:40[22m [34m[200][39m /services/benches-and-tables [2m26ms[22m
+[2m19:27:40[22m [34m[200][39m /_image [2m49ms[22m
+[2m19:27:40[22m [34m[200][39m /_image [2m54ms[22m
+[2m19:27:40[22m [34m[200][39m /_image [2m99ms[22m
+[2m19:27:40[22m [34m[200][39m /_image [2m121ms[22m
+[2m19:27:42[22m [34m[200][39m /services/crosses [2m25ms[22m
+[2m19:27:42[22m [34m[200][39m /_image [2m28ms[22m
+[2m19:27:45[22m [34m[200][39m /services/monument-design [2m35ms[22m
+[2m19:27:46[22m [34m[200][39m /_image [2m176ms[22m
+[2m19:27:46[22m [34m[200][39m /_image [2m471ms[22m
+[2m19:27:46[22m [34m[200][39m /_image [2m513ms[22m
+[2m19:27:46[22m [33m[404][39m /pagefind/pagefind.js [2m3ms[22m
+[2m19:27:48[22m [34m[200][39m /services/accessories [2m30ms[22m
+[2m19:27:48[22m [34m[200][39m /_image [2m78ms[22m
+[2m19:27:49[22m [33m[404][39m /pagefind/pagefind.js [2m0ms[22m
+[2m19:27:49[22m [34m[200][39m /_image [2m65ms[22m
+[2m19:27:51[22m [34m[200][39m /works [2m55ms[22m
+[2m19:27:51[22m [34m[200][39m /_image [2m209ms[22m
+[2m19:27:51[22m [34m[200][39m /_image [2m722ms[22m
+[2m19:27:51[22m [34m[200][39m /_image [2m803ms[22m
+[2m19:27:51[22m [34m[200][39m /_image [2m848ms[22m
+[2m19:27:52[22m [34m[200][39m /_image [2m970ms[22m
+[2m19:27:52[22m [34m[200][39m /_image [2m275ms[22m
+[2m19:27:52[22m [34m[200][39m /_image [2m230ms[22m
+[2m19:27:52[22m [34m[vite][39m [32m✨ new dependencies optimized: [33mphotoswipe/lightbox, photoswipe[32m[39m
+[2m19:27:52[22m [34m[vite][39m [32m✨ optimized dependencies changed. reloading[39m
+[2m19:27:52[22m [34m[200][39m /works [2m27ms[22m
+[2m19:27:52[22m [34m[200][39m /_image [2m1493ms[22m
+[2m19:27:53[22m [34m[200][39m /_image [2m697ms[22m
+[2m19:27:56[22m [34m[200][39m /services/complexes [2m26ms[22m
+[2m19:28:28[22m [34m[watch][39m src/components/app/Header.astro
+[2m19:28:29[22m [34m[200][39m /services/complexes [2m40ms[22m
+[2m19:28:34[22m [34m[200][39m /services/accessories [2m29ms[22m
+[2m19:28:35[22m [34m[200][39m /services/monument-design [2m33ms[22m
+[2m19:28:36[22m [34m[200][39m /works [2m51ms[22m
+[2m19:28:36[22m [33m[404][39m /pagefind/pagefind.js [2m0ms[22m
+[2m19:28:44[22m [34m[200][39m /works [2m22ms[22m
+[2m19:29:00[22m [34m[watch][39m src/components/services/ServiceCard.astro
+[2m19:29:01[22m [34m[200][39m /works [2m27ms[22m
+[2m19:29:11[22m [34m[watch][39m /src/styles/main.css
+[2m19:29:11[22m [34m[200][39m /works [2m36ms[22m
+[2m19:29:27[22m [34m[200][39m /services/landscaping [2m37ms[22m
+[2m19:29:34[22m [34m[200][39m /services/monuments [2m26ms[22m
+[2m19:30:09[22m [34m[watch][39m src/components/services/ServiceCard.astro
+[2m19:30:09[22m [34m[200][39m /services/monuments [2m42ms[22m
+[2m19:30:17[22m [34m[watch][39m /src/components/app/Footer.astro?astro&type=style&index=0&lang.css, /src/styles/main.css
+[2m19:30:19[22m [34m[200][39m /services/monuments [2m37ms[22m
+[2m19:30:20[22m [34m[watch][39m /src/components/app/Footer.astro?astro&type=style&index=0&lang.css, /src/styles/main.css

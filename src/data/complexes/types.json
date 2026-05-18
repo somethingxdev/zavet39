@@ -1,0 +1,8 @@
+[
+  { "slug": "vertical", "title": "Вертикальные" },
+  { "slug": "horizontal", "title": "Горизонтальные" },
+  { "slug": "granite-cross", "title": "С гранитным крестом" },
+  { "slug": "combined", "title": "Комбинированные" },
+  { "slug": "carved", "title": "Резные" },
+  { "slug": "marble-chips", "title": "Мраморная крошка" }
+]

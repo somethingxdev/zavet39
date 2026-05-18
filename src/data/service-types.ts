@@ -1,5 +1,6 @@
 import type { ServiceCategorySlug } from '@/data/service-categories'
 import monumentTypes from '@/data/monuments/types.json'
+import complexTypes from '@/data/complexes/types.json'
 import accessoryTypes from '@/data/accessories/types.json'
 import fenceTypes from '@/data/fences/types.json'
 import crossTypes from '@/data/crosses/types.json'
@@ -14,6 +15,7 @@ export type ServiceTypeItem = {
 
 const SERVICE_TYPES_BY_CATEGORY: Partial<Record<ServiceCategorySlug, ServiceTypeItem[]>> = {
   monuments: monumentTypes,
+  complexes: complexTypes,
   fences: fenceTypes,
   accessories: accessoryTypes,
   crosses: crossTypes,

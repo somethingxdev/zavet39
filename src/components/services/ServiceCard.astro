@@ -14,18 +14,18 @@ type Props = {
 
 const { item, typeLabel, categorySlug, class: cardClass } = Astro.props
 const productHref = `/services/${categorySlug}/${item.id}`
-const phoneHref = 'tel:+79106367313'
+const phoneHref = 'tel:+79291616186'
 
 const variants = item.data.dimensionsAndPrice
-    .map((variant) => ({
+    .map((variant: any) => ({
         dimensions: variant.dimensions.trim(),
         price: variant.price.trim(),
     }))
-    .filter((variant) => Boolean(variant.dimensions))
+    .filter((variant: any) => Boolean(variant.dimensions))
 const firstVariant = variants[0]
 const initialDimensions = firstVariant?.dimensions ?? ''
 const initialPrice = firstVariant?.price ?? ''
-const variantPrices = variants.map((variant) => variant.price)
+const variantPrices = variants.map((variant: any) => variant.price)
 ---
 
 <Card data-service-card data-variant-prices={JSON.stringify(variantPrices)} data-card-title={item.data.title}>
@@ -36,7 +36,6 @@ const variantPrices = variants.map((variant) => variant.price)
         <a href={productHref} class="group block w-full">
             <div class="relative h-50 sm:h-69 w-full overflow-hidden bg-muted">
                 <Image src={item.data.image} alt={item.data.title} class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
-
             </div>
         </a>
     </CardHeader>

@@ -1,13 +1,13 @@
 ---
 import { Image } from 'astro:assets'
-import { Menu, Search } from '@lucide/astro'
+import { Menu } from '@lucide/astro'
 import { Button } from '@/components/starwind/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/starwind/sheet'
+import PagefindConfig from 'astro-pagefind/components/PagefindConfig.astro'
 import MaxIcon from '@/icons/max.svg'
 import TelegramIcon from '@/icons/telegram.svg'
 import PhoneIcon from '@/icons/phone.svg'
 import contacts from '@/data/contacts.json'
-
 const phoneHref = contacts.phoneHref.startsWith('tel:') ? contacts.phoneHref : `tel:${contacts.phoneHref}`
 const telegramUrl = contacts.telegramUrl ?? '#'
 const maxUrl = contacts.maxUrl ?? '#'
@@ -28,6 +28,7 @@ const navItems = [
 const normalizedPathname = Astro.url.pathname.replace(/\/+$/, '') || '/'
 const isServicesListPage = normalizedPathname.startsWith('/services') && !Astro.params.slug
 const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServicesListPage
+const isActiveNavItem = (href: string) => normalizedPathname === href || normalizedPathname.startsWith(`${href}/`)
 ---
 
 <header class="fixed sm:absolute left-0 md:top-5 z-50 w-full transition-all" class:list={isInnerPage ? 'bg-secondary xl:bg-transparent' : ''} data-mobile-header-shell>
@@ -42,9 +43,17 @@ const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServi
                     </div>
                 </a>
 
-                <div class="relative hidden xl:block py-4 px-5 rounded-xl text-white w-[435px] bg-white/5">
-                    <input type="text" placeholder="Поиск товаров" class="w-full outline-none placeholder:text-white/80" />
-                    <Search class="absolute right-5 top-1/2 -translate-y-1/2 size-5" />
+                <div class="relative z-20 hidden xl:block w-[435px]">
+                    <PagefindConfig instance="header-search" lang="ru" preload={true} />
+                    <pagefind-searchbox
+                        instance="header-search"
+                        class="pagefind-header-search"
+                        placeholder="Поиск товаров"
+                        hide-shortcut
+                        show-keyboard-hints="false"
+                        max-results="6"
+                    >
+                    </pagefind-searchbox>
                 </div>
             </div>
 
@@ -78,13 +87,17 @@ const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServi
                             <nav>
                                 <ul class="flex flex-col gap-3 text-lg">
                                     {
-                                        navItems.map((item) => (
+                                        navItems.map((item) => {
+                                            const isActive = isActiveNavItem(item.href)
+
+                                            return (
                                             <li>
-                                                <a href={item.href} class="text-white/90 hover:text-primary transition-colors">
+                                                <a href={item.href} aria-current={isActive ? 'page' : undefined} class:list={['transition-colors hover:text-primary', isActive ? 'text-primary' : 'text-white/90']}>
                                                     {item.label}
                                                 </a>
                                             </li>
-                                        ))
+                                            )
+                                        })
                                     }
                                 </ul>
                             </nav>
@@ -97,11 +110,16 @@ const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServi
         <nav class="hidden xl:block border-b-2 border-[#2719071A] py-4">
             <ul class="flex items-center justify-between gap-6">
                 {
-                    navItems.map((item) => (
-                        <li class=" transition-colors font-medium" class:list={isInnerPage ? 'text-secondary link-underline link-underline-black' : 'text-white/90 hover:text-primary'}>
-                            <a href={item.href}>{item.label}</a>
+                    navItems.map((item) => {
+                        const isActive = isActiveNavItem(item.href)
+                        const inactiveClass = isInnerPage ? 'text-secondary link-underline link-underline-black' : 'text-white/90 hover:text-primary'
+
+                        return (
+                        <li class="transition-colors font-medium" class:list={isActive ? 'text-primary link-underline' : inactiveClass}>
+                            <a href={item.href} aria-current={isActive ? 'page' : undefined}>{item.label}</a>
                         </li>
-                    ))
+                        )
+                    })
                 }
             </ul>
         </nav>
@@ -131,3 +149,95 @@ const isInnerPage = !['/', '/services'].includes(normalizedPathname) && !isServi
     window.addEventListener('scroll', updateHeaderOnScroll, { passive: true })
     mobileMedia.addEventListener('change', updateHeaderOnScroll)
 </script>
+
+
+<style is:global>
+.pagefind-header-search {
+    --pf-background: color-mix(in oklab, var(--color-white) 5%, transparent);
+    --pf-border: transparent;
+    --pf-border-focus: color-mix(in oklab, var(--color-white) 35%, transparent);
+    --pf-border-radius: 12px;
+    --pf-dropdown-z-index: 100;
+    --pf-font: var(--font-base);
+    --pf-hover: color-mix(in oklab, var(--color-primary) 12%, transparent);
+    --pf-input-height: 56px;
+    --pf-input-font-size: 16px;
+    --pf-outline-focus: var(--color-primary);
+    --pf-searchbox-dropdown-max-height: 360px;
+    --pf-searchbox-max-width: 435px;
+    --pf-shadow-md: 0 20px 50px rgb(0 0 0 / 0.2);
+    --pf-text: var(--color-secondary);
+    --pf-text-muted: rgb(255 255 255 / 0.8);
+    --pf-text-secondary: color-mix(in oklab, var(--color-secondary) 72%, transparent);
+}
+
+.pagefind-header-search .pf-searchbox {
+    max-width: none !important;
+    position: relative;
+    z-index: 100;
+}
+
+.pagefind-header-search .pf-searchbox-input {
+    border: 0 !important;
+    box-shadow: none !important;
+    color: white !important;
+    font-weight: 400 !important;
+    padding-inline-start: 20px !important;
+    padding-inline-end: 48px !important;
+}
+
+.pagefind-header-search .pf-searchbox-input::placeholder {
+    color: rgb(255 255 255 / 0.8) !important;
+}
+
+.pagefind-header-search .pf-searchbox-input-wrapper::before {
+    background-color: white !important;
+    height: 20px !important;
+    inset-inline-start: auto !important;
+    inset-inline-end: 20px !important;
+    top: 18px !important;
+    width: 20px !important;
+}
+
+.pagefind-header-search .pf-searchbox-input:focus {
+    background-color: white !important;
+    color: var(--color-secondary) !important;
+    padding-inline-end: 48px !important;
+}
+
+.pagefind-header-search .pf-searchbox-input:focus::placeholder {
+    color: color-mix(in oklab, var(--color-secondary) 55%, transparent) !important;
+}
+
+.pagefind-header-search .pf-searchbox-input-wrapper:has(.pf-searchbox-input:focus)::before {
+    background-color: var(--color-secondary) !important;
+}
+
+.pagefind-header-search .pf-searchbox.open .pf-searchbox-input {
+    background-color: white !important;
+    border-bottom-color: transparent !important;
+    border-bottom-left-radius: var(--pf-border-radius) !important;
+    border-bottom-right-radius: var(--pf-border-radius) !important;
+}
+
+.pagefind-header-search .pf-searchbox-dropdown {
+    background-color: white !important;
+    border: 0 !important;
+    border-radius: var(--pf-border-radius) !important;
+    box-shadow: var(--pf-shadow-md) !important;
+    margin-top: 8px !important;
+    overflow: hidden !important;
+    z-index: 100 !important;
+}
+
+.pagefind-header-search .pf-searchbox-result-title,
+.pagefind-header-search .pf-searchbox-result-excerpt,
+.pagefind-header-search .pf-searchbox-empty,
+.pagefind-header-search .pf-searchbox-loading {
+    color: var(--color-secondary) !important;
+}
+
+.pagefind-header-search .pf-searchbox-result {
+    color: var(--color-secondary) !important;
+}
+</style>

@@ -12,7 +12,19 @@
     "title": "Комбинированные"
   },
   {
+    "slug": "granite-cross",
+    "title": "Гранитные кресты"
+  },
+  {
+    "slug": "carved",
+    "title": "Резные"
+  },
+  {
     "slug": "faceted",
     "title": "Гранитные"
+  },
+  {
+    "slug": "marble-chips",
+    "title": "Мраморная крошка"
   }
 ]
