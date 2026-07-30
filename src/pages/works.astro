@@ -7,7 +7,7 @@ import 'astro-breadcrumbs/breadcrumbs.css'
 
 const items = await getCollection('gallery')
 
-const crumbs = [{ text: 'Главная', href: '/' }, { text: 'Галерея работ' }]
+const crumbs = [{ text: 'Главная', href: '/' }, { text: 'Галерея работ', href: '/works' }]
 
 const getPhotoCountLabel = (count: number) => {
   const mod10 = count % 10

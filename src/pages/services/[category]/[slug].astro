@@ -56,7 +56,11 @@ const TYPE_LABELS = categoryTypes.reduce<Record<string, string>>((acc, typeItem)
 }, {})
 
 const currentTypeLabel = item.data.type ? (TYPE_LABELS[item.data.type] ?? item.data.type) : ''
-const crumbs = [{ text: 'Главная', href: '/' }, { text: categoryTitle, href: `/services/${categorySlug}` }, { text: item.data.title }]
+const crumbs = [
+    { text: 'Главная', href: '/' },
+    { text: categoryTitle, href: `/services/${categorySlug}` },
+    { text: item.data.title, href: `/services/${categorySlug}/${item.id}` },
+]
 
 const mainOptions = item.data.dimensionsAndPrice.map((option) => ({
     dimensions: option.dimensions.trim(),

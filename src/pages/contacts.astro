@@ -29,7 +29,7 @@ const defaults: ContactsData = {
 }
 
 const contacts = { ...defaults, ...contactsRaw } as ContactsData
-const crumbs = [{ text: 'Главная', href: '/' }, { text: 'Контакты' }]
+const crumbs = [{ text: 'Главная', href: '/' }, { text: 'Контакты', href: '/contacts' }]
 
 const phoneHref = contacts.phoneHref.startsWith('tel:') ? contacts.phoneHref : `tel:${contacts.phoneHref}`
 const emailHref = contacts.email.startsWith('mailto:') ? contacts.email : `mailto:${contacts.email}`
