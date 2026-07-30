@@ -54,9 +54,16 @@ const categoryTypes = getServiceTypesByCategory(category.slug)
 const availableTypes: ServiceTypeItem[] = categoryTypes.filter((type) => allItems.some((item) => item.data.type === type.slug))
 const TYPE_LABELS = Object.fromEntries(categoryTypes.map((type) => [type.slug, type.title]))
 
+const selectedTypeItem = categoryTypes.find((type) => type.slug === selectedType)
+
 const { page } = Astro.props as { page: PagePayload }
 
-const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href: '/services' }, { text: category.title }]
+const customCrumbs = [
+    { text: 'Home', href: '/' },
+    { text: 'Услуги', href: '/services' },
+    { text: category.title, href: `/services/${category.slug}` },
+    { text: selectedTypeItem?.title ?? selectedType, href: Astro.url.pathname },
+]
 const items = page.data
 const currentPage = page.currentPage
 const lastPage = page.lastPage

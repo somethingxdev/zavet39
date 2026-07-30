@@ -61,7 +61,7 @@ const {
     availableTypes?: ServiceTypeItem[]
 }
 
-const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href: '/services' }, { text: categoryTitle }]
+const customCrumbs = [{ text: 'Home', href: '/' }, { text: 'Услуги', href: '/services' }, { text: categoryTitle, href: Astro.url.pathname }]
 const items = page.data
 const currentPage = page.currentPage
 const lastPage = page.lastPage
